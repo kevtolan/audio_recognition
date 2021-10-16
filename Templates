@@ -1,3 +1,7 @@
+Audio files: https://drive.google.com/drive/folders/1R6VjI1TQPksERSB0YAKoBwg7S9EhSQXM
+
+
+
 # Wood Frog
 WOFRITemplate1 <- makeBinTemplate("WOFRITemplate1.WAV", 
                                   t.lim = c(241.59,241.69),
@@ -5,6 +9,7 @@ WOFRITemplate1 <- makeBinTemplate("WOFRITemplate1.WAV",
                                   score.cutoff = 13,
                                   amp.cutoff = -29,  
                                   name="WOFRITemplate1")
+                                  
 WOFRITemplate2 <- makeBinTemplate("WOFRITemplate2.wav",
                                         t.lim = c(2.275,2.325),
                                         frq.lim = c(0,4), 
@@ -12,6 +17,7 @@ WOFRITemplate2 <- makeBinTemplate("WOFRITemplate2.wav",
                                         buffer = .5,
                                         score.cutoff = 16,
                                         name="WOFRITemplate2")
+
 WOFRITemplate3 <- makeBinTemplate("WOFRITemplate3.wav",
                                        t.lim = c(0.06,.16),
                                        frq.lim = c(0,6),
@@ -24,7 +30,7 @@ WOFRITemplate3 <- makeBinTemplate("WOFRITemplate3.wav",
 # Spring Peeper
 SPPEITemplate  <- makeBinTemplate("SPPEITemplate.wav",
                                   t.lim = c(.55,.9),
-                                  rq.lim = c(2,6),
+                                  frq.lim = c(2,6),
                                   amp.cutoff = -37,
                                   score.cutoff = 12,
                                   buffer = 1,
@@ -45,5 +51,4 @@ EWPWTemplate <- makeBinTemplate("EWPWTemplate.WAV",
                                 amp.cutoff = -40, 
                                 score.cutoff = 9,
                                 frq.lim = c(0,6),
-                                name = "EWPWTemplate",
-                                comment = "Audio from Larry Clarfeld")
+                                name = "EWPWTemplate")
