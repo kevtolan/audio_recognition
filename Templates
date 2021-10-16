@@ -45,4 +45,5 @@ EWPWTemplate <- makeBinTemplate("EWPWTemplate.WAV",
                                 amp.cutoff = -40, 
                                 score.cutoff = 9,
                                 frq.lim = c(0,6),
-                                name = "EWPWTemplate")
+                                name = "EWPWTemplate",
+                                comment = "Audio from Larry Clarfeld")
