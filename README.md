@@ -5,11 +5,11 @@ Audiofiles must be labeled as "yyyymmdd hhmmss.wav"
 # Software
 R,
 RStudio,
-Audacity - Trim audio, view spectros, edit frequency
+Audacity (Trim audio, view spectros, edit frequency)
 
 # R packages (plus dependencies)
-AMMonitor (collects, stores, and analyzes audio,
-AMModels (manage recognition, other models),
+AMMonitor (stores and analyzes audio),
+AMModels (manages recognition, other models),
 lubridate (relabeling audio file names),
 stringr (relabeling audio file names),
 soundecology (analyzing soundscape,
