@@ -53,3 +53,4 @@ EWPWTemplate <- makeBinTemplate("EWPWTemplate.wav",
                                  score.cutoff = 0,
                                  frq.lim = c(1,5),
                                  name = "EWPWTemplate")
+                                 
