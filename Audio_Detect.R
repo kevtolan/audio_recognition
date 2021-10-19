@@ -1,0 +1,64 @@
+library(AMMonitor)
+library(AMModels)
+library(soundecology)
+
+setwd('C:/Dropbox')
+
+db.path <- paste0(getwd(),'database/SDF791sqlite')
+conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
+RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
+
+# file rename
+## format 'yyyymmdd hhmmss.wav'
+AudioFiles <- list.files(path = "recording_drop", pattern = ".WAV", all.files = TRUE,
+                         full.names = TRUE, recursive = TRUE,
+                         ignore.case = TRUE, include.dirs = TRUE)
+AudioFiles2 <- parse_date_time(AudioFiles, "Ymd HMS", tz = 'UTC')
+AudioFiles3 <- as.character(AudioFiles2)
+AudioFiles4 <- str_replace_all(AudioFiles3,' ','_')
+AudioFiles5 <- str_replace_all(AudioFiles4,':','-')
+AudioFiles6 <- paste0('~',siteID,'_',AudioFiles5)
+AudioFiles7 <- str_replace_all(AudioFiles6,'~','recording_drop/')
+AudioFiles8 <- file.rename(AudioFiles,paste0(AudioFiles7,'.wav'))
+
+# fill recordings table
+dropboxMoveBatch(db.path = db.path,
+                 table = 'recordings', 
+                 dir.from = 'recording_drop', 
+                 dir.to = 'recordings', 
+                 token.path = 'settings/dropbox-token.RDS')
+
+#run detections
+ranscores <- scoresDetect(db.path = db.path, 
+                          directory = 'recordings', 
+                          recordingID = 'all',
+                          templateID = 'all',
+                          score.thresholds = c(13,16,12,10,0.4),
+                          #listID = 'Target Species Templates',     
+                          token.path = 'settings/dropbox-token.RDS', 
+                          db.insert = TRUE) 
+
+write.csv(ranscores,'Scores.csv', append = FALSE)
+
+
+#sound scape
+dropboxGetOneFile(
+  file = '.wav', 
+  directory = 'recordings', 
+  token.path = 'settings/dropbox-token.RDS', 
+  local.directory = getwd())
+
+wavSample <- tuneR::readWave(filename = '.wav')
+soundecology::acoustic_complexity(soundfile = wavSample)
+
+AMMonitor::soundscape(db.path = db.path,
+                      recordingID = wavSample,
+                      directory = 'recordings', 
+                      token.path = 'settings/dropbox-token.RDS', 
+                      db.insert = TRUE)
+
+
+
+# classification
+
+
