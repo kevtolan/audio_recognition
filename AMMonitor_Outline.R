@@ -34,7 +34,7 @@ saveRDS(object = soundscape, file = "ammls/soundscape.RDS")
 saveRDS(object = do_fp, file = "ammls/do_fp.RDS")
 
 # create SQLite database
-dbCreate(db.name = paste0(siteID,'.sqlite'), 
+dbCreate(db.name = paste0(getwd(),paste0('/database/',paste0(siteID,'.sqlite'))),
          file.path = paste0(getwd(),"/database")) 
 #### ALWAYS RUN
 db.path <- paste0(equipID,'.sqlite')
