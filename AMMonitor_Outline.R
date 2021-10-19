@@ -7,7 +7,7 @@ library(soundecology)
 #set recorder ID
 siteID <- 'SDF791' #Site ID
 equipID <- '21N' #recorder ID
-depoyDay <- '2021-03-25' #date deployed
+depoyDate <- '2021-03-25' #date deployed
 
 #create directories, resetWD
 ammCreateDirectories(amm.dir.name = "AMMonitor", 
@@ -172,7 +172,7 @@ RSQLite::dbWriteTable(conn = conx, name = 'deployment', value = new.deployment,
 new.schedule <- data.frame(equipmentID = equipID,
                            locationID = siteID,
                            subject = 'Vernal Pool',
-                           startDate = depoyDay,
+                           startDate = depoyDate,
                            startTime = '0000-00-00') 
 RSQLite::dbWriteTable(conn = conx, name = 'schedule', value = new.schedule,
                       row.names = FALSE, overwrite = FALSE,
