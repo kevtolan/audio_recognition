@@ -5,7 +5,7 @@ library(stringr)
 library(soundecology)
 
 #set recorder ID
-VPMonID <- 'SDF791' #Pool ID
+siteID <- 'SDF791' #Site ID
 equipID <- '21N' #recorder ID
 depoyDay <- '2021-03-25' #date deployed
 
@@ -20,9 +20,10 @@ activity <- AMModels::amModelLib(description = "This library stores models that 
 classifiers <- AMModels::amModelLib(description = "This library stores classification models (machine learning models) that can be used to predict the probability that a detected signal is from a target species.")
 soundscape <- AMModels::amModelLib(description = "This library stores results of a soundscape analysis.")
 do_fp <- AMModels::amModelLib(description = "This library stores results of dynamic occupancy analyses that can handle false positive detections.")
-info <- list(PI = 'Steve Faccio',
-             Coordinator = 'Kevin Tolan',
-             Organization = 'Vermont Center for Ecostudies')
+info <- list(Location = siteID,
+             Project = '',
+             PI = '',
+             Organization = '')
 ammlInfo(activity) <- info
 ammlInfo(classifiers) <- info
 ammlInfo(soundscape) <- info
@@ -33,10 +34,10 @@ saveRDS(object = soundscape, file = "ammls/soundscape.RDS")
 saveRDS(object = do_fp, file = "ammls/do_fp.RDS")
 
 # create SQLite database
-dbCreate(db.name = paste0(VPMonID,'.sqlite'), 
+dbCreate(db.name = paste0(siteID,'.sqlite'), 
          file.path = paste0(getwd(),"/database")) 
 #### ALWAYS RUN
-db.path <- '_________.sqlite'
+db.path <- paste0(equipID,'.sqlite')
 conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
 RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
 
@@ -138,7 +139,7 @@ RSQLite::dbWriteTable(conn = conx, name = 'library', value = new.library,
                       row.names = FALSE, overwrite = FALSE,
                       append = TRUE, header = FALSE)
 # location
-new.location <- data.frame(locationID = VPMonID,
+new.location <- data.frame(locationID = siteID,
                            type = 'Vernal Pool ARU',
                            lat = '1',
                            long = '1',
@@ -149,19 +150,19 @@ RSQLite::dbWriteTable(conn = conx, name = 'locations', value = new.location,
                       row.names = FALSE, overwrite = FALSE,
                       append = TRUE, header = FALSE)
 # accounts
-new.account <- data.frame(accountID = VPMonID)
+new.account <- data.frame(accountID = siteID)
 RSQLite::dbWriteTable(conn = conx, name = 'accounts', value = new.account,
                       row.names = FALSE, overwrite = FALSE,
                       append = TRUE, header = FALSE)
 # equipment
 new.equipment <- data.frame(equipmentID = equipID,
-                            accountID = VPMonID) 
+                            accountID = siteID) 
 RSQLite::dbWriteTable(conn = conx, name = 'equipment', value = new.equipment,
                       row.names = FALSE, overwrite = FALSE,
                       append = TRUE, header = FALSE)
 # deployment
 new.deployment <- data.frame(equipmentID = equipID,
-                             locationID = VPMonID,
+                             locationID = siteID,
                              dateDeployed = depoyDay,
                              dateRetrieved = NA) # DO NOT FILL IN DATE RETRIEVED
 RSQLite::dbWriteTable(conn = conx, name = 'deployment', value = new.deployment,
@@ -169,32 +170,13 @@ RSQLite::dbWriteTable(conn = conx, name = 'deployment', value = new.deployment,
                       append = TRUE, header = FALSE)
 # schedule
 new.schedule <- data.frame(equipmentID = equipID,
-                           locationID = VPMonID,
+                           locationID = siteID,
                            subject = 'Vernal Pool',
                            startDate = depoyDay,
                            startTime = '0000-00-00') 
 RSQLite::dbWriteTable(conn = conx, name = 'schedule', value = new.schedule,
                       row.names = FALSE, overwrite = FALSE,
                       append = TRUE, header = FALSE)
-# file rename
-# format 'yyyymmdd hhmmss.wav'
-AudioFiles <- list.files(path = "recording_drop", pattern = ".WAV", all.files = TRUE,
-                         full.names = TRUE, recursive = TRUE,
-                         ignore.case = TRUE, include.dirs = TRUE)
-AudioFiles2 <- parse_date_time(AudioFiles, "Ymd HMS", tz = 'UTC')
-AudioFiles3 <- as.character(AudioFiles2)
-AudioFiles4 <- str_replace_all(AudioFiles3,' ','_')
-AudioFiles5 <- str_replace_all(AudioFiles4,':','-')
-AudioFiles6 <- paste0('~',VPMonID,'_',AudioFiles5)
-AudioFiles7 <- str_replace_all(AudioFiles6,'~','recording_drop/')
-AudioFiles8 <- file.rename(AudioFiles,paste0(AudioFiles7,'.wav'))
-
-# fill recordings table
-dropboxMoveBatch(db.path = db.path,
-                 table = 'recordings', 
-                 dir.from = 'recording_drop', 
-                 dir.to = 'recordings', 
-                 token.path = 'settings/dropbox-token.RDS')
 #create templates 
 setwd('E:/Dropbox/AudioTemplates')
 WOFRITemplate1 <- makeBinTemplate("WOFRITemplate1.WAV", 
@@ -248,38 +230,7 @@ templatesInsert(db.path = db.path,
                 libraryID = 'bado',
                 personID = 'ktolan@vtecostudies.org')
 
-#calculate scores
-ranscores <- scoresDetect(db.path = db.path, 
-                          directory = 'recordings', 
-                          recordingID = 'all',
-                          templateID = 'all',
-                          score.thresholds = c(13,16,12,10,0.4),
-                          #listID = 'Target Species Templates',     
-                          token.path = 'settings/dropbox-token.RDS', 
-                          db.insert = TRUE) 
 
-write.csv(ranscores,'Scores.csv', append = FALSE)
-
-
-
-#sound scape
-dropboxGetOneFile(
-  file = '.wav', 
-  directory = 'recordings', 
-  token.path = 'settings/dropbox-token.RDS', 
-  local.directory = getwd())
-
-wavSample <- tuneR::readWave(filename = '.wav')
-soundecology::acoustic_complexity(soundfile = wavSample)
-
-AMMonitor::soundscape(db.path = db.path,
-                      recordingID = wavSample,
-                      directory = 'recordings', 
-                      token.path = 'settings/dropbox-token.RDS', 
-                      db.insert = TRUE)
-
-
-# classification
 
 
 
