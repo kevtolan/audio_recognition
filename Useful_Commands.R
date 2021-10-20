@@ -7,7 +7,7 @@ qry(db.path = db.path,
 RSQLite::dbReadTable(conn = conx,
                      name = 'recordings')
 
-# add column
+# add column to table
 RSQLite::dbExecute(conn = conx, 
                    statement = "ALTER TABLE people 
                                 ADD COLUMN startDate varchar;") 
