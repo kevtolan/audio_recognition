@@ -37,7 +37,7 @@ saveRDS(object = do_fp, file = "ammls/do_fp.RDS")
 dbCreate(db.name = paste0(siteID,'.sqlite'), 
          file.path = paste0(getwd(),"/database")) 
 #### ALWAYS RUN
-db.path <- paste0(getwd(),'/database/Maidstone.sqlite')
+db.path <- paste0(getwd(),paste0('/database/',paste0(siteID,'.sqlite')))
 conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
 RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
 
@@ -211,22 +211,22 @@ EWPWTemplate <- makeBinTemplate("EWPWTemplate.wav",
                                  score.cutoff = 0,
                                  frq.lim = c(1,5),
                                  name = "EWPWTemplate")
-templatesInsert(db.path = db.path, 
-                template.list = combineBinTemplates(WOFRITemplate1,WOFRITemplate3,SPPEITemplate,EWPWTemplate), 
-                libraryID = c('wofr','wofr','sppe','ewpw'),
-                personID = 'ktolan@vtecostudies.org')
-
 ### add EASO template
-
 BADOTemplate <- makeCorTemplate("BADOTemplate.wav",
                                 t.lim = c(2.65,3.35),
                                 frq.lim = c(0.25,2.5),
                                 score.cutoff = 0,
                                 name="BADOTemplate")
+setwd('C:/Dropbox')
+templatesInsert(db.path = db.path, 
+                template.list = combineBinTemplates(WOFRITemplate1,WOFRITemplate3,SPPEITemplate,EWPWTemplate), 
+                libraryID = c('wofr','wofr','sppe','ewpw'),
+                personID = 'ktolan@vtecostudies.org')
 templatesInsert(db.path = db.path, 
                 template.list = combineCorTemplates(BADOTemplate), 
                 libraryID = 'bado',
                 personID = 'ktolan@vtecostudies.org')
+
 
 
 
