@@ -212,8 +212,8 @@ EWPWTemplate <- makeBinTemplate("EWPWTemplate.wav",
                                  frq.lim = c(1,5),
                                  name = "EWPWTemplate")
 templatesInsert(db.path = db.path, 
-                template.list = combineBinTemplates(WOFRITemplate1,WOFRITemplate2,WOFRITemplate3,SPPEITemplate,EWPWTemplate), 
-                libraryID = c('wofr','wofr','wofr','sppe','ewpw'),
+                template.list = combineBinTemplates(WOFRITemplate1,WOFRITemplate3,SPPEITemplate,EWPWTemplate), 
+                libraryID = c('wofr','wofr','sppe','ewpw'),
                 personID = 'ktolan@vtecostudies.org')
 
 ### add EASO template
