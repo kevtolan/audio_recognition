@@ -39,6 +39,14 @@ SPPEITemplate  <- makeBinTemplate("SPPEITemplate.wav",
                                   name = "SPPEITemplate")
                                   
                                   
+# Eastern Whip-poor-will
+EWPWTemplate <- makeBinTemplate("EWPWTemplate.wav",
+                                 amp.cutoff = -20, 
+                                 score.cutoff = 0,
+                                 frq.lim = c(1,5),
+                                 name = "EWPWTemplate")
+                                 
+                                  
 # Barred Owl                                  
 BADOTemplate <- makeCorTemplate("BADOTemplate.wav",
                                 t.lim = c(2.65,3.35),
@@ -47,10 +55,4 @@ BADOTemplate <- makeCorTemplate("BADOTemplate.wav",
                                 name="BADOTemplate")
 
 
-# Eastern Whip-poor-will
-EWPWTemplate <- makeBinTemplate("EWPWTemplate.wav",
-                                 amp.cutoff = -20, 
-                                 score.cutoff = 0,
-                                 frq.lim = c(1,5),
-                                 name = "EWPWTemplate")
                                  
