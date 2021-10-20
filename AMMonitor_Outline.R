@@ -34,7 +34,7 @@ saveRDS(object = soundscape, file = "ammls/soundscape.RDS")
 saveRDS(object = do_fp, file = "ammls/do_fp.RDS")
 
 # create SQLite database
-dbCreate(db.name = paste0(getwd(),paste0('/database/',paste0(siteID,'.sqlite'))), 
+dbCreate(db.name = paste0(siteID,'.sqlite'), 
          file.path = paste0(getwd(),"/database")) 
 #### ALWAYS RUN
 db.path <- paste0(getwd(),'/database/Maidstone.sqlite')
@@ -178,7 +178,7 @@ RSQLite::dbWriteTable(conn = conx, name = 'schedule', value = new.schedule,
                       row.names = FALSE, overwrite = FALSE,
                       append = TRUE, header = FALSE)
 #create templates 
-setwd('E:/Dropbox/AudioTemplates')
+setwd('C:/Dropbox/AudioTemplates')
 WOFRITemplate1 <- makeBinTemplate("WOFRITemplate1.WAV", 
                                   t.lim = c(241.59,241.69),
                                   frq.lim = c(0,6),
@@ -227,8 +227,6 @@ templatesInsert(db.path = db.path,
                 template.list = combineCorTemplates(BADOTemplate), 
                 libraryID = 'bado',
                 personID = 'ktolan@vtecostudies.org')
-
-
 
 
 
