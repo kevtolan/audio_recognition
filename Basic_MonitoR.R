@@ -58,6 +58,9 @@ BinMatch <- binMatch(survey, bins,
 BinDetects <- findPeaks(BinMatch, frame = 1.01)
 plot(BinDetects)
 
+EWPWTemplate_Detects1 <- nrow(BinDetects@detections[["EWPWTemplate1"]])
+EWPWTemplate_Detects1
+
 #Cor
 CorMatch <- corMatch(survey, cortemp1,
                      show.prog = TRUE,cor.method = "pearson",time.source = "fileinfo",
@@ -65,9 +68,8 @@ CorMatch <- corMatch(survey, cortemp1,
 CorDetects <- findPeaks(CorMatch, frame = 1.01)
 plot(CorDetects)
 
-EWPWTemplate_Detects1 <- nrow(BinDetects@detections[["EWPWTemplate1"]])
-EWPWTemplate_Detects2 <- nrow(BinDetects@detections[["EWPWTemplate2"]])
-EWPWTemplate_Detects3 <- nrow(BinDetects@detections[["EWPWTemplate3"]])
+EWPWTemplate_Detects1 <- nrow(CorDetects@detections[["EWPWTemplate1"]])
 EWPWTemplate_Detects1
-EWPWTemplate_Detects2
-EWPWTemplate_Detects3
+
+
+
