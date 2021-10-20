@@ -4,7 +4,7 @@ library(soundecology)
 
 setwd('C:/Dropbox')
 
-db.path <- paste0(getwd(),'database/SDF791sqlite')
+db.path <- paste0(getwd(),'database/SDF791.sqlite')
 conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
 RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
 
