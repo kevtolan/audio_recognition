@@ -7,10 +7,10 @@ library(soundecology)
 #set recorder ID
 siteID <- 'SDF791' #Site ID
 equipID <- '21N' #recorder ID
-depoyDate <- '2021-03-25' #date deployed
+deployDate <- '2021-03-25' #date deployed
 
 #create directories, resetWD
-ammCreateDirectories(amm.dir.name = "AMMonitor", 
+ammCreateDirectories(amm.dir.name = paste0(siteID,"_AMMonitor"), 
                      file.path = "C:/Dropbox")
 
 setwd('C:/Dropbox')
@@ -21,9 +21,9 @@ classifiers <- AMModels::amModelLib(description = "This library stores classific
 soundscape <- AMModels::amModelLib(description = "This library stores results of a soundscape analysis.")
 do_fp <- AMModels::amModelLib(description = "This library stores results of dynamic occupancy analyses that can handle false positive detections.")
 info <- list(Location = siteID,
-             Project = '',
-             PI = '',
-             Organization = '')
+             Project = 'Vermont Vernal Pool Monitoring',
+             PI = 'sfaccio@vtecostudies.org',
+             Organization = 'Vermont Center for Ecostudies')
 ammlInfo(activity) <- info
 ammlInfo(classifiers) <- info
 ammlInfo(soundscape) <- info
@@ -34,10 +34,10 @@ saveRDS(object = soundscape, file = "ammls/soundscape.RDS")
 saveRDS(object = do_fp, file = "ammls/do_fp.RDS")
 
 # create SQLite database
-dbCreate(db.name = paste0(getwd(),paste0('/database/',paste0(siteID,'.sqlite'))),
+dbCreate(db.name = paste0(getwd(),paste0('/database/',paste0(siteID,'.sqlite'))), 
          file.path = paste0(getwd(),"/database")) 
 #### ALWAYS RUN
-db.path <- paste0(equipID,'.sqlite')
+db.path <- paste0(getwd(),'/database/Maidstone.sqlite')
 conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
 RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
 
@@ -163,7 +163,7 @@ RSQLite::dbWriteTable(conn = conx, name = 'equipment', value = new.equipment,
 # deployment
 new.deployment <- data.frame(equipmentID = equipID,
                              locationID = siteID,
-                             dateDeployed = depoyDay,
+                             dateDeployed = deployDate,
                              dateRetrieved = NA) # DO NOT FILL IN DATE RETRIEVED
 RSQLite::dbWriteTable(conn = conx, name = 'deployment', value = new.deployment,
                       row.names = FALSE, overwrite = FALSE,
@@ -172,7 +172,7 @@ RSQLite::dbWriteTable(conn = conx, name = 'deployment', value = new.deployment,
 new.schedule <- data.frame(equipmentID = equipID,
                            locationID = siteID,
                            subject = 'Vernal Pool',
-                           startDate = depoyDate,
+                           startDate = deployDate,
                            startTime = '0000-00-00') 
 RSQLite::dbWriteTable(conn = conx, name = 'schedule', value = new.schedule,
                       row.names = FALSE, overwrite = FALSE,
@@ -211,7 +211,6 @@ EWPWTemplate <- makeBinTemplate("EWPWTemplate.wav",
                                  score.cutoff = 0,
                                  frq.lim = c(1,5),
                                  name = "EWPWTemplate")
-BinTemplateList <- combineBinTemplates(WOFRITemplate1,WOFRITemplate2,WOFRITemplate3,SPPEITemplate,EWPWTemplate,EASOTemplate)
 templatesInsert(db.path = db.path, 
                 template.list = combineBinTemplates(WOFRITemplate1,WOFRITemplate2,WOFRITemplate3,SPPEITemplate,EWPWTemplate), 
                 libraryID = c('wofr','wofr','wofr','sppe','ewpw'),
@@ -224,13 +223,10 @@ BADOTemplate <- makeCorTemplate("BADOTemplate.wav",
                                 frq.lim = c(0.25,2.5),
                                 score.cutoff = 0,
                                 name="BADOTemplate")
-CorTemplateList <- combineCorTemplates(BADOTemplate)
 templatesInsert(db.path = db.path, 
-                template.list = BADOTemplate, 
+                template.list = combineCorTemplates(BADOTemplate), 
                 libraryID = 'bado',
                 personID = 'ktolan@vtecostudies.org')
-
-
 
 
 
