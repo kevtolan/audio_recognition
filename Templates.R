@@ -1,10 +1,5 @@
-AUDIO FILE: https://drive.google.com/drive/folders/1R6VjI1TQPksERSB0YAKoBwg7S9EhSQXM
+# TEMPLATE AUDIO FILES: https://drive.google.com/drive/folders/1R6VjI1TQPksERSB0YAKoBwg7S9EhSQXM
 
-Current templates:
-Wood Frog
-Spring Peeper
-Barred Owl
-Eastern Whip-poor-will
 
 # Wood Frog
 WOFRITemplate1 <- makeBinTemplate("WOFRITemplate1.WAV", 
