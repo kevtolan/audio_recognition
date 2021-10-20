@@ -1,5 +1,8 @@
 # TEMPLATE AUDIO FILES: https://drive.google.com/drive/folders/1R6VjI1TQPksERSB0YAKoBwg7S9EhSQXM
 
+library(tuneR)
+library(monitoR)
+library(plyr) 
 
 # Wood Frog
 WOFRITemplate1 <- makeBinTemplate("WOFRITemplate1.WAV", 
@@ -22,8 +25,6 @@ WOFRITemplate3 <- makeBinTemplate("WOFRITemplate3.wav",
                                        dens = .75,
                                        score.cutoff = 12,
                                        name="WOFRITemplate3")
-
-
 # Spring Peeper
 SPPEITemplate  <- makeBinTemplate("SPPEITemplate.wav",
                                   t.lim = c(.55,.9),
@@ -31,17 +32,13 @@ SPPEITemplate  <- makeBinTemplate("SPPEITemplate.wav",
                                   amp.cutoff = -37,
                                   score.cutoff = 12,
                                   buffer = 1,
-                                  name = "SPPEITemplate")
-                                  
-                                  
+                                  name = "SPPEITemplate")                                  
 # Eastern Whip-poor-will
 EWPWTemplate <- makeBinTemplate("EWPWTemplate.wav",
                                  amp.cutoff = -20, 
                                  score.cutoff = 0,
                                  frq.lim = c(1,5),
-                                 name = "EWPWTemplate")
-                                 
-                                  
+                                 name = "EWPWTemplate")                                                                
 # Barred Owl                                  
 BADOTemplate <- makeCorTemplate("BADOTemplate.wav",
                                 t.lim = c(2.65,3.35),
@@ -49,5 +46,28 @@ BADOTemplate <- makeCorTemplate("BADOTemplate.wav",
                                 score.cutoff = 0.4,
                                 name="BADOTemplate")
 
+bins <- combineBinTemplates(EWPWTemplate1,EWPWTemplate2)
+cors <- combineCorTemplates(EWPWTemplate1,EWPWTemplate2)
 
-                                 
+survey <- 'BITH_ XC469600.wav'
+
+#Bin
+BinMatch <- binMatch(survey, bins,
+                     show.prog = TRUE,cor.method = "pearson",time.source = "fileinfo",
+                     rec.tz = "US/Eastern")
+BinDetects <- findPeaks(BinMatch, frame = 1.01)
+plot(BinDetects)
+
+#Cor
+CorMatch <- corMatch(survey, cortemp1,
+                     show.prog = TRUE,cor.method = "pearson",time.source = "fileinfo",
+                     rec.tz = "US/Eastern")
+CorDetects <- findPeaks(CorMatch, frame = 1.01)
+plot(CorDetects)
+
+EWPWTemplate_Detects1 <- nrow(BinDetects@detections[["EWPWTemplate1"]])
+EWPWTemplate_Detects2 <- nrow(BinDetects@detections[["EWPWTemplate2"]])
+EWPWTemplate_Detects3 <- nrow(BinDetects@detections[["EWPWTemplate3"]])
+EWPWTemplate_Detects1
+EWPWTemplate_Detects2
+EWPWTemplate_Detects3
