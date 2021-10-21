@@ -15,6 +15,14 @@ ammCreateDirectories(amm.dir.name = paste0(siteID,"_AMMonitor"),
 
 setwd('C:/Dropbox')
 
+# create SQLite database
+dbCreate(db.name = paste0(siteID,'.sqlite'), 
+         file.path = paste0(getwd(),"/database")) 
+#### ALWAYS RUN
+db.path <- paste0(getwd(),paste0('/database/',paste0(siteID,'.sqlite')))
+conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
+RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
+
 # Create/save libraries and add metadata
 activity <- AMModels::amModelLib(description = "This library stores models that predict species activity patterns.")
 classifiers <- AMModels::amModelLib(description = "This library stores classification models (machine learning models) that can be used to predict the probability that a detected signal is from a target species.")
@@ -33,13 +41,6 @@ saveRDS(object = classifiers, file = "ammls/classifiers.RDS")
 saveRDS(object = soundscape, file = "ammls/soundscape.RDS")
 saveRDS(object = do_fp, file = "ammls/do_fp.RDS")
 
-# create SQLite database
-dbCreate(db.name = paste0(siteID,'.sqlite'), 
-         file.path = paste0(getwd(),"/database")) 
-#### ALWAYS RUN
-db.path <- paste0(getwd(),paste0('/database/',paste0(siteID,'.sqlite')))
-conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
-RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
 
 #### Add necessary components ####
 #people
@@ -226,7 +227,5 @@ templatesInsert(db.path = db.path,
                 template.list = combineCorTemplates(BADOTemplate), 
                 libraryID = 'bado',
                 personID = 'ktolan@vtecostudies.org')
-
-
 
 
