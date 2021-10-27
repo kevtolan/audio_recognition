@@ -45,6 +45,13 @@ ranscores <- scoresDetect(db.path = db.path,
                           token.path = 'settings/dropbox-token.RDS', 
                           db.insert = TRUE) 
 
+scores <- dbGetQuery(conn = conx, 
+                     statement = "SELECT scoreID, recordingID, templateID, 
+                                         time, scoreThreshold, score, 
+                                         manualVerifyLibraryID, manualVerifySpeciesID
+                                  FROM scores")
+write.csv(scores,paste0(siteID,'_2021_scores.csv'))
+
 #sound scape
 dropboxGetOneFile(
   file = '.wav', 
