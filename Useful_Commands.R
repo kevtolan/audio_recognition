@@ -29,4 +29,4 @@ scores <- dbGetQuery(conn = conx,
                                          time, scoreThreshold, score, 
                                          manualVerifyLibraryID, manualVerifySpeciesID
                                   FROM scores")
-write.csv(scores,paste0(siteID,'_scores.csv'))
+write.csv(scores,paste0(siteID,'_2021_scores.csv'))
