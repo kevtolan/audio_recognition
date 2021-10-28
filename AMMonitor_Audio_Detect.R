@@ -76,6 +76,9 @@ scores <- dbGetQuery(conn = conx,
                                          manualVerifyLibraryID, manualVerifySpeciesID
                                   FROM scores")
 ggplot(scores) +
-  geom_point(aes(x = time, y= recordingID))
-
+  geom_point(aes(x = time, y= recordingID)) + 
+    labs(x = 'Time',
+         y = 'RecordingID',
+         title = paste0(siteID,' Detections'))
+  
 write.csv(scores,paste0(siteID,'_2021_scores.csv'))
