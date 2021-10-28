@@ -3,6 +3,7 @@ library(AMModels)
 library(lubridate)
 library(stringr)
 library(soundecology)
+library(ggplot2)
 
 siteID <- 'NEW429' #Site ID
 equipID <- '21A' #recorder ID
@@ -68,3 +69,13 @@ AMMonitor::soundscape(db.path = db.path,
                       token.path = 'settings/dropbox-token.RDS', 
                       db.insert = TRUE)
 
+# export csv of scores
+scores <- dbGetQuery(conn = conx, 
+                     statement = "SELECT scoreID, recordingID, templateID, 
+                                         time, scoreThreshold, score, 
+                                         manualVerifyLibraryID, manualVerifySpeciesID
+                                  FROM scores")
+ggplot(scores) +
+  geom_point(aes(x = time, y= recordingID))
+
+write.csv(scores,paste0(siteID,'_2021_scores.csv'))
