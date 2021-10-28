@@ -82,3 +82,13 @@ ggplot(scores) +
          title = paste0(siteID,' Detections'))
   
 write.csv(scores,paste0(siteID,'_2021_scores.csv'))
+
+#####
+
+scores <- dbGetQuery(conn = conx, 
+                     statement = "SELECT scoreID, recordingID, templateID, 
+                                         time, scoreThreshold, score, 
+                                         manualVerifyLibraryID, manualVerifySpeciesID
+                                  FROM scores
+                                  WHERE templateID = 'WOFRITemplate1' ")
+
