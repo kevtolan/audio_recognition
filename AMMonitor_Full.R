@@ -7,8 +7,8 @@ library(ggplot2)
 
 #set recorder ID
 siteID <- 'SDF791' #Site ID
-equipID <- '21N' #recorder ID
-deployDate <- '2021-03-25' #date deployed
+equipID <- 'abc' #recorder ID
+deployDate <- '2021-01-01' #date deployed
 
 #create directories, resetWD
 ammCreateDirectories(amm.dir.name = paste0(siteID,"_AMMonitor"), 
