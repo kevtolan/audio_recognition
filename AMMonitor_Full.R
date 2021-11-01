@@ -16,6 +16,9 @@ ammCreateDirectories(amm.dir.name = paste0(siteID,"_AMMonitor"),
 
 setwd('C:/Dropbox')
 
+
+##### MANUALLY MOVE ALL FOLDERS TO DROPBOX ROOT ######
+
 # create SQLite database
 dbCreate(db.name = paste0(siteID,'.sqlite'), 
          file.path = paste0(getwd(),"/database")) 
