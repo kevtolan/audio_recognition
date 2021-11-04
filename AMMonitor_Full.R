@@ -254,19 +254,19 @@ dropboxMoveBatch(db.path = db.path,
                  token.path = 'settings/dropbox-token.RDS')
 
 #run detections
-ranscores <- scoresDetect(db.path = db.path, 
-                          directory = 'recordings', 
-                          recordingID = 'all',
-                          templateID = 'all',
-                          score.thresholds = c(13,16,12,10,0.4),
-                          #listID = 'Target Species Templates',     
-                          token.path = 'settings/dropbox-token.RDS', 
-                          db.insert = TRUE) 
+# ranscores <- scoresDetect(db.path = db.path, 
+#                           directory = 'recordings', 
+#                           recordingID = 'all',
+#                           templateID = 'all',
+#                           score.thresholds = c(13,16,12,10,0.4),
+#                           #listID = 'Target Species Templates',     
+#                           token.path = 'settings/dropbox-token.RDS', 
+#                           db.insert = TRUE) 
 
 ranscores <- scoresDetect(db.path = db.path, 
                           directory = 'recordings', 
                           recordingID = 'all',
-                          templateID = c(WOFRITemplate1,WOFRITemplate3,BADOTemplate),
+                          templateID = c('WOFRITemplate1','WOFRITemplate3','BADOTemplate'),
                           score.thresholds = c(13,12,0.4),
                           #listID = 'Target Species Templates',     
                           token.path = 'settings/dropbox-token.RDS', 
