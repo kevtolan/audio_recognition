@@ -277,7 +277,9 @@ scores <- dbGetQuery(conn = conx,
                      statement = "SELECT scoreID, recordingID, templateID, 
                                          time, scoreThreshold, score, 
                                          manualVerifyLibraryID, manualVerifySpeciesID
-                                  FROM scores")
+                                  FROM scores
+                                  WHERE templateID = 'WOFRITemplate1' ")
+
 ggplot(scores) +
   geom_point(aes(x = time, y= recordingID)) + 
   labs(x = 'Time',
