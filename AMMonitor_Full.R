@@ -264,6 +264,7 @@ dropboxMoveBatch(db.path = db.path,
 #                           db.insert = TRUE) 
 
 ranscores <- scoresDetect(db.path = db.path, 
+                          date.range = c('2021-03-20', '2021-04-20'), 
                           directory = 'recordings', 
                           recordingID = 'all',
                           templateID = c('WOFRITemplate1','WOFRITemplate3','BADOTemplate'),
