@@ -267,8 +267,8 @@ ranscores <- scoresDetect(db.path = db.path,
                           date.range = c('2021-03-20', '2021-04-20'), 
                           directory = 'recordings', 
                           recordingID = 'all',
-                          templateID = c('WOFRITemplate1','WOFRITemplate3'),
-                          score.thresholds = c(13,12),
+                          templateID = c('WOFRITemplate1'),
+                          score.thresholds = c(13),
                           #listID = 'Target Species Templates',     
                           token.path = 'settings/dropbox-token.RDS', 
                           db.insert = TRUE) 
@@ -283,7 +283,7 @@ scores <- dbGetQuery(conn = conx,
 
 ggplot(scores) +
   geom_point(aes(x = time, y= recordingID)) + 
-  labs(x = 'Time',
+  labs(x = 'Time (s)',
        y = 'RecordingID',
        title = paste0(siteID,' Detections'))
 
