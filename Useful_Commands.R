@@ -35,6 +35,12 @@ AudioFiles51 <- paste0(AudioFiles41,time)
 AudioFiles61 <- paste0(siteID,AudioFiles51)
 AudioFiles71 <- paste0(AudioFiles61,'.wav')
 
+dropboxMoveBatch(db.path = db.path,
+                 table = 'recordings', 
+                 dir.from = 'recording_drop', 
+                 dir.to = 'recordings', 
+                 token.path = 'settings/dropbox-token.RDS')
+
 
 
 
