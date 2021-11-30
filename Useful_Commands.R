@@ -65,9 +65,10 @@ scores <- dbGetQuery(conn = conx,
                                          time, scoreThreshold, score, 
                                          manualVerifyLibraryID, manualVerifySpeciesID
                                   FROM scores")
-data.count <- count(scores, "recordingID")
+
+detXcsv <- tabyl(scores, recordingID, templateID)
 
 # export csv of scores
-write.csv(scores,paste0(siteID,'_2021_scores.csv'))
+write.csv(scores,paste0(siteID,'_detx_pivot.csv'))
 
 
