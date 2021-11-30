@@ -25,22 +25,24 @@ RSQLite::dbExecute(conn = conx,
 
 
 # rename Olympus files. time <- '_20-00-00' SET TIME IN EST
+library(lubridate)
+library(stringr)
+
+siteID <- 'SDF791'
+time1 <- '20-00-00' #3pm
+time2 <- '20-00-00' #8pm
+time3 <- '20-00-00' #9pm
+
 AudioFiles11 <- list.files(path = "recording_drop", pattern = ".WAV", all.files = TRUE,
                          full.names = TRUE, recursive = TRUE,
                          ignore.case = TRUE, include.dirs = TRUE)
 AudioFiles21 <- str_sub(AudioFiles11, end=-10)
 AudioFiles31 <- parse_date_time(AudioFiles21, "ymd", tz = 'EST')
 AudioFiles41 <- as.character(AudioFiles31)
-AudioFiles51 <- paste0(AudioFiles41,time)
-AudioFiles61 <- paste0(siteID,AudioFiles51)
+#CHANGE TIME ITEM
+AudioFiles51 <- paste0(AudioFiles41,time1,'_')
+AudioFiles61 <- paste0(siteID,'_',AudioFiles51)
 AudioFiles71 <- paste0(AudioFiles61,'.wav')
-
-dropboxMoveBatch(db.path = db.path,
-                 table = 'recordings', 
-                 dir.from = 'recording_drop', 
-                 dir.to = 'recordings', 
-                 token.path = 'settings/dropbox-token.RDS')
-
 
 
 
