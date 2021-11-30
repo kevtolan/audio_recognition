@@ -59,4 +59,15 @@ AudioFiles6 <- paste0('~',siteID,'_',AudioFiles5)
 AudioFiles7 <- str_replace_all(AudioFiles6,'~','recording_drop/')
 AudioFiles8 <- file.rename(AudioFiles,paste0(AudioFiles7,'.wav'))
 
+# create dataframe of scores
+scores <- dbGetQuery(conn = conx, 
+                     statement = "SELECT scoreID, recordingID, templateID, 
+                                         time, scoreThreshold, score, 
+                                         manualVerifyLibraryID, manualVerifySpeciesID
+                                  FROM scores")
+data.count <- count(scores, "recordingID")
+
+# export csv of scores
+write.csv(scores,paste0(siteID,'_2021_scores.csv'))
+
 
