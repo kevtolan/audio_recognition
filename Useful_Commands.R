@@ -29,20 +29,33 @@ library(lubridate)
 library(stringr)
 
 siteID <- 'SDF791'
-time1 <- '20-00-00' #3pm
-time2 <- '20-00-00' #8pm
-time3 <- '20-00-00' #9pm
+time1 <- "19-00-00"
 
-AudioFiles11 <- list.files(path = "recording_drop", pattern = ".WAV", all.files = TRUE,
-                         full.names = TRUE, recursive = TRUE,
-                         ignore.case = TRUE, include.dirs = TRUE)
+AudioFiles11 <- list.files(pattern = ".WAV", all.files = TRUE,
+                             full.names = TRUE, recursive = TRUE,
+                             ignore.case = TRUE, include.dirs = TRUE)
 AudioFiles21 <- str_sub(AudioFiles11, end=-10)
 AudioFiles31 <- parse_date_time(AudioFiles21, "ymd", tz = 'EST')
 AudioFiles41 <- as.character(AudioFiles31)
 #CHANGE TIME ITEM
-AudioFiles51 <- paste0(AudioFiles41,time1,'_')
+AudioFiles51 <- paste0(AudioFiles41,'_',time1)
 AudioFiles61 <- paste0(siteID,'_',AudioFiles51)
 AudioFiles71 <- paste0(AudioFiles61,'.wav')
+AudioFiles71 <- file.rename(AudioFiles11,AudioFiles71)
+
+time2 <- '00-00-00'
+
+AudioFiles11 <- list.files(pattern = ".WAV", all.files = TRUE,
+                           full.names = TRUE, recursive = TRUE,
+                           ignore.case = TRUE, include.dirs = TRUE)
+AudioFiles21 <- str_sub(AudioFiles11, end=-10)
+AudioFiles31 <- parse_date_time(AudioFiles21, "ymd", tz = 'EST')
+AudioFiles41 <- AudioFiles31 + 86400
+AudioFiles51 <- as.character(AudioFiles41)
+AudioFiles61 <- paste0(AudioFiles51,'_',time2)
+AudioFiles71 <- paste0(siteID,'_',AudioFiles61)
+AudioFiles81 <- paste0(AudioFiles71,'.wav')
+AudioFiles91 <- file.rename(AudioFiles11,AudioFiles81)
 
 
 
@@ -60,6 +73,7 @@ AudioFiles7 <- str_replace_all(AudioFiles6,'~','recording_drop/')
 AudioFiles8 <- file.rename(AudioFiles,paste0(AudioFiles7,'.wav'))
 
 # create dataframe of scores
+library(janitor)
 scores <- dbGetQuery(conn = conx, 
                      statement = "SELECT scoreID, recordingID, templateID, 
                                          time, scoreThreshold, score, 
