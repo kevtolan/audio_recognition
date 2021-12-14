@@ -1,3 +1,6 @@
+setwd('C:/Dropbox')
+
+
 library(AMMonitor)
 library(AMModels)
 library(lubridate)
@@ -15,9 +18,6 @@ deployDate <- '2021-01-01' #date deployed
 #create directories, resetWD
 ammCreateDirectories(amm.dir.name = paste0(siteID,"_AMMonitor"), 
                      file.path = "C:/Dropbox")
-
-setwd('C:/Dropbox')
-
 
 ##### MANUALLY MOVE ALL FOLDERS TO DROPBOX ROOT ######
 
