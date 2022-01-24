@@ -1,4 +1,4 @@
-setwd('C:/Dropbox')
+setwd('E:/Dropbox')
 
 
 library(AMMonitor)
@@ -17,7 +17,7 @@ deployDate <- '2021-01-01' #date deployed
 
 #create directories, resetWD
 ammCreateDirectories(amm.dir.name = paste0(siteID,"_AMMonitor"), 
-                     file.path = "C:/Dropbox")
+                     file.path = "E:/Dropbox")
 
 ##### MANUALLY MOVE ALL FOLDERS TO DROPBOX ROOT ######
 
@@ -185,7 +185,7 @@ RSQLite::dbWriteTable(conn = conx, name = 'schedule', value = new.schedule,
                       row.names = FALSE, overwrite = FALSE,
                       append = TRUE, header = FALSE)
 #create templates 
-setwd('C:/Dropbox/AudioTemplates')
+setwd('E:/Dropbox/AudioTemplates')
 WOFRITemplate1 <- makeBinTemplate("WOFRITemplate1.WAV", 
                                   t.lim = c(241.59,241.69),
                                   frq.lim = c(0,6),
@@ -224,7 +224,7 @@ BADOTemplate <- makeCorTemplate("BADOTemplate.wav",
                                 frq.lim = c(0.25,2.5),
                                 score.cutoff = 0,
                                 name="BADOTemplate")
-setwd('C:/Dropbox')
+setwd('E:/Dropbox')
 templatesInsert(db.path = db.path, 
                 template.list = combineBinTemplates(WOFRITemplate1,WOFRITemplate3,SPPEITemplate,EWPWTemplate), 
                 libraryID = c('wofr','wofr','sppe','ewpw'),
