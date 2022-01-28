@@ -255,15 +255,6 @@ dropboxMoveBatch(db.path = db.path,
                  dir.to = 'recordings', 
                  token.path = 'settings/dropbox-token.RDS')
 
-#run detections
-# ranscores <- scoresDetect(db.path = db.path, 
-#                           directory = 'recordings', 
-#                           recordingID = 'all',
-#                           templateID = 'all',
-#                           score.thresholds = c(13,16,12,10,0.4),
-#                           #listID = 'Target Species Templates',     
-#                           token.path = 'settings/dropbox-token.RDS', 
-#                           db.insert = TRUE) 
 
 ranscores <- scoresDetect(db.path = db.path, 
                           date.range = c('2021-03-20', '2021-04-20'), 
