@@ -280,3 +280,15 @@ ggplot(scores) +
        y = 'RecordingID',
        title = paste0(siteID,' Detections'))
 
+
+
+
+#export detx count
+export <- dbGetQuery(conn = conx, 
+                    statement = "SELECT recordingID, templateID, COUNT(*)
+                                  FROM scores
+                                  GROUP BY recordingID ")
+
+write.csv(export,'paste0(siteID,_detx).csv')
+
+
