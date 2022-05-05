@@ -86,3 +86,12 @@ detXcsv <- tabyl(scores, recordingID, templateID)
 write.csv(scores,paste0(siteID,'_detx_pivot.csv'))
 
 
+
+####parsing export
+
+parsed1 <- str_replace(export$recordingID,paste0(siteID,"_"),'')
+parsed2 <- parse_date_time(parsed1, "y-m-d_H-M-S", tz = 'UTC')
+parsed3 <- as.POSIXlt(parsed2,'America/New_York')
+export$datetime <- parsed3
+
+
