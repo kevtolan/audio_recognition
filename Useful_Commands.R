@@ -99,7 +99,7 @@ parsed3 <- as.POSIXlt(parsed2,'America/New_York')
 export$datetime <- parsed3
 
 
-write.csv(export,paste0(siteID,"_detx.csv")
+write.csv(export,paste0(siteID,"_detx.csv"))
           
      
 
