@@ -283,12 +283,16 @@ ggplot(scores) +
 
 
 
-#export detx count
+####parsing export
 export <- dbGetQuery(conn = conx, 
                     statement = "SELECT recordingID, templateID, COUNT(*)
                                   FROM scores
                                   GROUP BY recordingID ")
 
-write.csv(export,'paste0(siteID,_detx).csv')
+parsed1 <- str_replace(export$recordingID,paste0(siteID,"_"),'')
+parsed2 <- parse_date_time(parsed1, "y-m-d_H-M-S", tz = 'UTC')
+parsed3 <- as.POSIXlt(parsed2,'America/New_York')
+export$datetime <- parsed3
 
 
+write.csv(export,paste0(siteID,"_detx.csv"))
