@@ -1,5 +1,4 @@
 # Thanks Mike Hallworth
-# Path to the wave file #
 
 # this lists all the *.wav files in a folder. 
 # if you have many files this will list them all with the full 
