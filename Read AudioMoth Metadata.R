@@ -1,11 +1,11 @@
-
+# Thanks Mike Hallworth
 # Path to the wave file #
 
 # this lists all the *.wav files in a folder. 
 # if you have many files this will list them all with the full 
 # directory path 
 
-wavfiles <- list.files("C:/Users/mhall/OneDrive/Desktop/",
+wavfiles <- list.files("C:/",
                 pattern = ".wav",
                 full.names = TRUE)
 
