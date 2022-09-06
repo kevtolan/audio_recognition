@@ -296,3 +296,25 @@ export$datetime <- parsed3
 
 
 write.csv(export,paste0(siteID,"_detx.csv"))
+
+
+
+# Verifying
+
+
+verifs <- scoresVerify(db.path = db.path,
+                       recordingID = 'MLS567_2020-03-30_19-00-00.wav',
+                       directory = 'recordings',
+                       templateID = 'WOFRITemplate1', 
+                       label.type = 'libraryID', 
+                       token.path = 'settings/dropbox-token.RDS',
+                       overwrite = TRUE,
+                       db.insert = TRUE)
+
+
+plotVerifications(db.path = db.path, 
+                  templateID = 'WOFRITemplate1', 
+                  score.threshold = 13, 
+                  label.type = 'libraryID', 
+                  plot.scoreID = TRUE, 
+                  new.window = FALSE)
