@@ -318,3 +318,20 @@ plotVerifications(db.path = db.path,
                   label.type = 'libraryID', 
                   plot.scoreID = TRUE, 
                   new.window = FALSE)
+
+
+### 
+
+
+WOFRIAM <- makeBinTemplate("WOFRIAM.wav",
+                           t.lim = c(0.05,0.12),
+                           frq.lim = c(0,4),
+                           score.cutoff = 10,
+                           amp.cutoff = -20,
+                           buffer = 1,
+                           name="WOFRIAM")
+
+templatesInsert(db.path = db.path, 
+                template.list = WOFRIAM, 
+                libraryID = c('wofr'),
+                personID = 'ktolan@vtecostudies.org')
