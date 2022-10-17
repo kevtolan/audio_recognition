@@ -285,8 +285,9 @@ ggplot(scores) +
 
 ####parsing export
 export <- dbGetQuery(conn = conx, 
-                    statement = "SELECT recordingID, templateID, COUNT(*)
+                     statement = "SELECT recordingID, templateID, COUNT(*)
                                   FROM scores
+                                  WHERE templateID = 'WOFRITemplate1'
                                   GROUP BY recordingID ")
 
 parsed1 <- str_replace(export$recordingID,paste0(siteID,"_"),'')
@@ -295,8 +296,25 @@ parsed3 <- as.POSIXlt(parsed2,'America/New_York')
 export$datetime <- parsed3
 
 
-write.csv(export,paste0(siteID,"_detx.csv"))
+write.csv(export,paste0(siteID,"_detx1.csv"))
 
+
+
+
+export <- dbGetQuery(conn = conx, 
+                     statement = "SELECT recordingID, templateID, COUNT(*)
+                                  FROM scores
+                                  WHERE templateID = 'WOFRITemplate3'
+                                  GROUP BY recordingID")
+
+
+parsed1 <- str_replace(export$recordingID,paste0(siteID,"_"),'')
+parsed2 <- parse_date_time(parsed1, "y-m-d_H-M-S", tz = 'UTC')
+parsed3 <- as.POSIXlt(parsed2,'America/New_York')
+export$datetime <- parsed3
+
+
+write.csv(export,paste0(siteID,"_detx3.csv"))
 
 
 # Verifying
