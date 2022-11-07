@@ -266,6 +266,18 @@ ranscores <- scoresDetect(db.path = db.path,
                           token.path = 'settings/dropbox-token.RDS', 
                           db.insert = TRUE) 
 
+
+ranscores <- scoresDetect(db.path = db.path, 
+                          date.range = c('2019-04-01', '2019-06-01'), 
+                          directory = 'recordings', 
+                          recordingID = 'all',
+                          templateID = c('WOFRITemplate3'),
+                          score.thresholds = c(9),
+                          #listID = 'Target Species Templates',     
+                          token.path = 'settings/dropbox-token.RDS', 
+                          db.insert = TRUE) 
+
+
 #plot scores
 scores <- dbGetQuery(conn = conx, 
                      statement = "SELECT scoreID, recordingID, templateID, 
