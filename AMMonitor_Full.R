@@ -8,6 +8,7 @@ library(stringr)
 library(soundecology)
 library(ggplot2)
 library(janitor)
+library(parallel)
 
 
 #set recorder ID
