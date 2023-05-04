@@ -72,6 +72,27 @@ AudioFiles6 <- paste0('~',siteID,'_',AudioFiles5)
 AudioFiles7 <- str_replace_all(AudioFiles6,'~','recording_drop/')
 AudioFiles8 <- file.rename(AudioFiles,paste0(AudioFiles7,'.wav'))
 
+
+# rename SM4 files
+AudioFiles <- list.files(path = "recording_drop", pattern = ".WAV", all.files = TRUE,
+                         full.names = TRUE, recursive = TRUE,
+                         ignore.case = TRUE, include.dirs = TRUE)
+AudioFiles2 <- substr(AudioFiles,25,43)   
+AudioFiles3 <- parse_date_time(AudioFiles2, "Ymd HMS", tz = 'UTC')
+AudioFiles4 <- as.character(AudioFiles3)
+AudioFiles5 <- str_replace_all(AudioFiles4,' ','_')
+AudioFiles6 <- str_replace_all(AudioFiles5,':','-')
+AudioFiles7 <- paste0('~',siteID,'_',AudioFiles6)
+AudioFiles8 <- str_replace_all(AudioFiles7,'~','recording_drop/')
+AudioFiles9 <- file.rename(AudioFiles,paste0(AudioFiles8,'.wav'))
+
+
+
+
+
+
+
+
 # create dataframe of scores
 library(janitor)
 scores <- dbGetQuery(conn = conx, 
