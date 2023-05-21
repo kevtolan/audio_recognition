@@ -10,6 +10,7 @@ xcode-select --install
 
 curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/Downloads/Miniconda3-latest-MacOSX-arm64.sh
 bash ~/Downloads/Miniconda3-latest-MacOSX-arm64.sh -b -p $HOME/miniconda
+# The installer prompts “Do you wish the installer to initialize Miniconda3 by running conda init?” We recommend “yes”.
 
 conda install -c apple tensorflow-deps
 
