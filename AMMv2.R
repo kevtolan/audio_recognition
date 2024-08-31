@@ -15,10 +15,7 @@ library(DBI)
 # library(usethis)
 # edit_r_environ()
 
-setwd('~/R/AMMonitor_VPMon/VPMon_AMM')
-db.path <- '~/R/AMMonitor_VPMon/VPMon_AMM/database/VPMon_AMM.sqlite'
-conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
-RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
+setwd('~/AMMv2')
 
 my_filepath <- ammCreateDirectories(
   amm_dirname = "dbExample",
@@ -28,6 +25,10 @@ dbCreate(
   new_db_name = "dbExample.sqlite",
   new_db_filepath = paste0(my_filepath, "/database"),
   db_source = "default")
+
+db.path <- '~/AMMv2/database/dbExample.sqlite'
+conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
+RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
 
 
 
