@@ -201,12 +201,9 @@ detx$NumDetx[detx$DateID == 'SDF1264_2019-04-18'] <- NA
 detx$NumDetx[detx$DateID == 'NEW1387_2024-03-21'] <- NA
 detx$NumDetx[detx$DateID == 'NEW1387_2024-05-18'] <- NA
 
-
 detx$NumDetx[detx$DateID == 'NEW51_2020-03-20'] <- 6000
 detx$NumDetx[detx$DateID == 'NEW51_2020-03-29'] <- 6000
 detx$NumDetx[detx$DateID == 'NEW51_2020-03-29'] <- 6000
-
-
 detx$NumDetx[detx$DateID == 'NEW51_2024-04-11'] <- 6000
 detx$NumDetx[detx$DateID == 'NEW51_2024-04-12'] <- 12000
 detx$NumDetx[detx$DateID == 'NEW51_2024-04-16'] <- NA
@@ -246,6 +243,37 @@ detx$NumDetx[detx$DateID == 'NEW12_2020-05-03'] <- NA
 detx$NumDetx[detx$DateID == 'NEW12_2020-05-04'] <- NA
 detx$NumDetx[detx$DateID == 'NEW12_2020-05-05'] <- NA
 
+detx$NumDetx[detx$DateID == 'MLS411_2019-03-29'] <- NA
+detx$NumDetx[detx$DateID == 'MLS411_2019-03-30'] <- NA
+detx$NumDetx[detx$DateID == 'MLS411_2019-04-02'] <- NA
+detx$NumDetx[detx$DateID == 'MLS411_2019-04-03'] <- NA
 
 detx$NumDetx[detx$DateID == 'MLS411_2021-03-26'] <- NA
 detx$NumDetx[detx$DateID == 'MLS411_2020-03-29'] <- NA
+detx$NumDetx[detx$DateID == 'MLS411_2023-04-25'] <- 100
+
+detx$NumDetx[detx$DateID == 'SDF791_2019-04-18'] <- 10
+detx$NumDetx[detx$DateID == 'SDF791_2019-05-06'] <- 100
+detx$NumDetx[detx$DateID == 'SDF791_2023-05-08'] <- 250
+
+detx$NumDetx[detx$DateID == 'STA019_2019-05-10'] <- NA
+
+detx$NumDetx[detx$DateID == 'CON019_2019-04-03'] <- NA
+detx$NumDetx[detx$DateID == 'CON019_2020-04-03'] <- NA #rain
+detx$NumDetx[detx$DateID == 'CON019_2021-03-29'] <- NA 
+detx$NumDetx[detx$DateID == 'CON019_2021-03-31'] <- 3000 
+detx$NumDetx[detx$DateID == 'CON019_2021-04-06'] <- 3000 
+detx$NumDetx[detx$DateID == 'CON019_2022-04-05'] <- NA 
+
+detx$NumDetx[detx$DateID == 'CON019_2022-04-05'] <- NA
+detx$NumDetx[detx$DateID == 'CON019_2022-04-27'] <- NA
+detx$NumDetx[detx$DateID == 'CON019_2023-04-11'] <- NA
+detx$NumDetx[detx$DateID == 'CON019_2023-04-13'] <- NA
+
+detx$NumDetx[detx$DateID == 'NEW1306_2023-04-14'] <- 6000
+detx$NumDetx[detx$DateID == 'NEW1306_2024-04-12'] <- 12000
+detx$NumDetx[detx$DateID == 'NEW1306_2024-04-13'] <- 2000
+
+detx$NumDetx[detx$DateID == 'IRR019_2023-04-02'] <- NA
+detx$NumDetx[detx$DateID == 'IRR019_2023-04-22'] <- NA
+detx$NumDetx[detx$DateID == 'IRR019_2023-04-25'] <- NA
