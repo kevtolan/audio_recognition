@@ -30,7 +30,6 @@ conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
 RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
 
 
-
 detections <- RSQLite::dbGetQuery(conn = conx,
                                   statement = "SELECT * FROM media INNER JOIN modeloutputs ON media.pk_mediaid = modeloutputs.fk_mediaid
                                 WHERE fk_taxonid = 'Wood Frog' ")
@@ -331,6 +330,8 @@ detx$NumDetx[detx$DateID == 'IRR019_2020-04-26'] <- NA
 detx$NumDetx[detx$DateID == 'IRR019_2020-04-27'] <- NA
 detx$NumDetx[detx$DateID == 'IRR019_2020-04-29'] <- NA
 detx$NumDetx[detx$DateID == 'IRR019_2020-04-30'] <- NA
+detx$NumDetx[detx$DateID == 'IRR019_2021-04-21'] <- NA
+
 detx$NumDetx[detx$DateID == 'IRR019_2023-04-02'] <- NA
 detx$NumDetx[detx$DateID == 'IRR019_2023-04-22'] <- NA
 detx$NumDetx[detx$DateID == 'IRR019_2023-04-25'] <- NA
@@ -348,6 +349,25 @@ detx$NumDetx[detx$DateID == 'NEW63_2019-04-05'] <- NA
 detx$NumDetx[detx$DateID == 'NEW94_2019-04-14'] <- NA
 detx$NumDetx[detx$DateID == 'NEW94_2019-05-11'] <- NA
 
+detx$NumDetx[detx$DateID == 'KWN581_2021-04-07'] <- 500
+detx$NumDetx[detx$DateID == 'KWN581_2021-04-20'] <- NA
+detx$NumDetx[detx$DateID == 'KWN581_2022-03-24'] <- NA
+
+detx$NumDetx[detx$DateID == 'KWN827_2020-03-17'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2020-03-19'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2020-03-20'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2020-03-21'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2020-03-23'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2020-03-26'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2020-03-27'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2020-03-29'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2020-03-30'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2020-03-31'] <- NA
+
+detx$NumDetx[detx$DateID == 'MIR019_2019-03-28'] <- NA
+detx$NumDetx[detx$DateID == 'MIR019_2019-03-29'] <- NA
+detx$NumDetx[detx$DateID == 'MIR019_2019-03-31'] <- 1
+
 
 detx <- detx %>% drop_na(NumDetx)
 detx$`Relative Call Intensity` <- detx$NumDetx
@@ -359,9 +379,9 @@ table(detx$Site, detx$Year)
 #                                   'MLS737','MLS619','MOET019',
 #                                   'SDF1734','SDF1264'),]
 
-sitedetx <- detx[detx$Site == paste0('BOD119'),]
+sitedetx <- detx[detx$Site == paste0('MIR019'),]
 # sitedetx <- detx[detx$Site == paste0(siteID),]
-view(sitedetx)
+# view(sitedetx)
 # 
 # ggplot() + 
 #   geom_line(data = sitedetx, aes(x = Day, y = NumDetx, group = Site, color = Year)) 
@@ -372,7 +392,7 @@ every_nth = function(n) {
 }
 
 
-p <- ggplot() + 
+p <- ggplot() +
   geom_jitter(data = sitedetx, aes(x = Day, y = Year, color = Year, size = `Relative Call Intensity`),  height = 0.03, fill = 'black', alpha = 0.7) +
  scale_x_discrete(breaks = every_nth(n = 3))
 p
@@ -380,8 +400,39 @@ p
 ggplotly(p)
 
 
+# sitedetxpad <- pad(sitedetx, start_val = as.POSIXct(paste0("03-01-",sitedetx$Year)))
 
-AMMonitor::launchApp()
+
+# sitedetxpad$DateID <- paste0(sitedetxpad$Site,"_",sitedetxpad$start_date)
+# sitedetxpad$Year <-  format(sitedetxpad$start_date,"%Y")
+# sitedetxpad$Day <-  format(sitedetxpad$start_date,"%m/%d")
+# 
+# sitedetxpad[is.na(sitedetxpad)] <- 0
+p <- ggplot() + 
+  geom_line(data = sitedetx, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), size=2) +
+  # geom_smooth(data = sitedetx, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), method = 'loess',  level = 0.05, size=2) +
+  geom_point(data = sitedetx, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year)) +
+  scale_x_discrete(breaks = every_nth(n = 3)) +
+  scale_color_manual(values = c("#7F58AF","#64C5EB","#E84D8A","#FEB326","blue")) +
+  theme(axis.title=element_text(size=20)) +
+  # theme(legend.position = c(.15, .65)) + 
+  theme(legend.title = element_text(face="bold", size=20)) +
+  theme(legend.text = element_text(size=15)) +
+  # theme(legend.background = element_rect(size=1.5, colour ="black")) +
+  # theme(legend.key.height= unit(3, 'cm'), legend.key.width= unit(4, 'cm')) +
+  # theme(text = element_text(size=16)) +
+  geom_hline(data = data.frame(type="A", y=0), mapping=aes(yintercept=y), size = 1) +
+  # geom_vline(xintercept = c(2,16,30,44),  linetype="dashed", size = 1) + 
+  ylim(0, NA) +
+  facet_wrap( ~Year, scales="free_y", ncol = 1) +
+  labs(title = paste(sitedetx$Site,"Wood Frog Detections"))
+p
+# geom_jitter(data = sitedetx, aes(x = Day, y = Site, color = Year, size = NumDetx),  height = 0.11, alpha = 0.7)
+# ggplotly(p)
+
+
+
+# AMMonitor::launchApp()
 
 
 
@@ -400,44 +451,6 @@ AMMonitor::launchApp()
 #NOT DELETED YET
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# learnr::available_tutorials(package = "AMMonitor")
-# learnr::run_tutorial("ammodels", package = "AMMonitor")
-
-# my_filepath <- ammCreateDirectories(
-#   amm_dirname = "VPMon_AMM",
-#   filepath = getwd())
-# 
-# dbCreate(
-#   new_db_name = "VPMon_AMM.sqlite",
-#   new_db_filepath = paste0(my_filepath, "/database"),
-#   db_source = "default")
-
-
-
 # Add file list to media
 # update <- read.csv('/Users/kevintolan/R/AMMonitor_VPMon/visits.csv')
 # dbAppendTable(conx, "visits", update)
@@ -448,7 +461,7 @@ templates <- readRDS('/Users/kevintolan/R/AMMonitor_VPMon/VPMon_AMM/ammls/templa
 mediafiles <- RSQLite::dbReadTable(conn = conx,
                             name = 'media')
 mediafiles$Site  <- str_extract(mediafiles$filename, "[^_]+")
-mediafiles <- mediafiles[mediafiles$Site == "JED019",]
+mediafiles <- mediafiles[mediafiles$Site == "MIR019",]
 # mediafiles <- mediafiles[mediafiles$Site %in% c("SDF1112",'MLS721','NEW94','NEW63'),]
 
 # mediafiles$Site  <- str_extract(mediafiles$filename, "[^_]+")
@@ -457,8 +470,8 @@ mediafiles <- mediafiles[mediafiles$Site == "JED019",]
 
 mediafiles$date <- paste0(mediafiles$start_date," ",mediafiles$start_time) %>%
                               as.POSIXlt()
-DATESTART <- as.Date("2022-03-05")
-DATESTOP <- as.Date("2022-05-05")
+DATESTART <- as.Date("2019-03-20")
+DATESTOP <- as.Date("2019-05-05")
 mediasubset <- mediafiles %>% filter(between(date, DATESTART, DATESTOP))
 
 #'template_SDF791_20210408_150000bin_thresh40'
@@ -478,8 +491,9 @@ scores <- scoresDetect(
 )
 stop <- Sys.time()
 Sys.time()
-stop - start
-
+elapse <- stop - start
+elapse
+nrow(mediasubset)/as.numeric(elapse)
 
 ##### graph
 
@@ -520,17 +534,18 @@ ggplotly(pbioph)
 
 pzone <- ggplot() + 
   # geom_jitter(data = sitedetx, aes(x = Day, y = Year, color = Year, size = NumDetx),  height = 0.03, fill = 'black', alpha = 0.7)
-  geom_jitter(data = locals.climzone.joined, aes(x = Day, y = Site, color = Year, size = NumDetx),  height = 0.05, alpha = 0.5) +
+  geom_jitter(data = locals.climzone.joined, aes(x = Day, y = Site, fill = Year, size = NumDetx),  height = 0.05, alpha = 0.5) +
   facet_wrap( ~ZONE, scales="free_y", ncol = 1) +
   scale_x_discrete(breaks = every_nth(n = 10)) 
 ggplotly(pzone)
 
 pbioph <- ggplot() + 
   # geom_jitter(data = sitedetx, aes(x = Day, y = Year, color = Year, size = NumDetx),  height = 0.03, fill = 'black', alpha = 0.7)
-  geom_jitter(data = locals.bioph.joined, aes(x = Day, y = Site, color = Year, size = NumDetx),  height = 0.11, alpha = 0.7) +
+  geom_jitter(data = locals.bioph.joined, aes(x = Day, y = Site, fill = Year, size = NumDetx),  height = 0.11, alpha = 0.7) +
   facet_wrap( ~NAME, scales="free_y", ncol = 1) +
   scale_x_discrete(breaks = every_nth(n = 10)) 
 ggplotly(pbioph)
+
 
 # pelev <- ggplot() + 
 #   # geom_jitter(data = sitedetx, aes(x = Day, y = Year, color = Year, size = NumDetx),  height = 0.03, fill = 'black', alpha = 0.7)
@@ -547,7 +562,7 @@ Sys.time()
 start <- Sys.time()
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM media
-                                WHERE filename = 'NEW63_20220318_150000.wav' ")
+                                WHERE filename = 'KWN581_20230306_1400000.wav' ")
 stop <- Sys.time()
 Sys.time()
 stop - start
@@ -693,5 +708,8 @@ unaddedfiles <- anti_join(bucketadd,medialist,by="filename")
 
 
 dbAppendTable(conx, "media", bucketadd)
+
+
+
 
 
