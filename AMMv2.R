@@ -30,6 +30,50 @@ conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
 RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
 
 
+
+mediafiles <- RSQLite::dbReadTable(conn = conx,
+                                   name = 'media')
+mediafiles$Site  <- str_extract(mediafiles$filename, "[^_]+")
+mediafiles <- mediafiles[mediafiles$Site == "NEW174",]
+# mediafiles <- mediafiles[mediafiles$Site %in% c("SDF1112",'MLS721','NEW94','NEW63'),]
+
+# mediafiles$Site  <- str_extract(mediafiles$filename, "[^_]+")
+# table(mediafiles$Site)
+##Subset 
+
+mediafiles$date <- paste0(mediafiles$start_date," ",mediafiles$start_time) %>%
+  as.POSIXlt()
+DATESTART <- as.Date("2023-03-15")
+DATESTOP <- as.Date("2023-05-15")
+mediasubset <- mediafiles %>% filter(between(date, DATESTART, DATESTOP))
+
+#'template_SDF791_20210408_150000bin_thresh40'
+#template_SDF791_20220418_150000_bin_AM1
+
+Sys.time()
+start <- Sys.time()
+scores <- scoresDetect(
+  con = conx,
+  recordingNames = mediasubset$filename,
+  templateNames = 'template_SDF791_20210408_150000bin_thresh40_cu12',
+  scoreThresholds = 12,
+  recordingRootPath = 'https://vpmon-audio.s3.amazonaws.com/',
+  ammlPath = paste0(getwd(), "/ammls"),
+  dbInsert = T,
+  showProgress = T
+)
+stop <- Sys.time()
+Sys.time()
+elapse <- stop - start
+elapse
+nrow(mediasubset)/as.numeric(elapse)
+
+
+site <- 'MON0516'
+
+mediafiles <- RSQLite::dbReadTable(conn = conx,
+                                   name = 'media')
+
 detections <- RSQLite::dbGetQuery(conn = conx,
                                   statement = "SELECT * FROM media INNER JOIN modeloutputs ON media.pk_mediaid = modeloutputs.fk_mediaid
                                 WHERE fk_taxonid = 'Wood Frog' ")
@@ -58,9 +102,11 @@ gooddetx <- gooddetx[gooddetx$value_num >= 14,]
 gooddetx$Site  <- str_extract(gooddetx$filename, "[^_]+") %>% as.factor()
 gooddetx$start_date <- as.Date(gooddetx$start_date)
 
+
 detx <- gooddetx[,c('start_date','start_time','Site')]
 
 rm(gooddetx)
+
 
 detx <- detx %>% 
   group_by(Site, start_date) %>% 
@@ -367,6 +413,15 @@ detx$NumDetx[detx$DateID == 'KWN827_2020-03-31'] <- NA
 detx$NumDetx[detx$DateID == 'MIR019_2019-03-28'] <- NA
 detx$NumDetx[detx$DateID == 'MIR019_2019-03-29'] <- NA
 detx$NumDetx[detx$DateID == 'MIR019_2019-03-31'] <- 1
+detx$NumDetx[detx$DateID == 'MIR019_2019-04-05'] <- 1
+
+detx$NumDetx[detx$DateID == 'MLS165_2021-03-30'] <- NA
+detx$NumDetx[detx$DateID == 'MLS165_2021-04-02'] <- NA
+detx$NumDetx[detx$DateID == 'MLS165_2021-04-19'] <- NA
+detx$NumDetx[detx$DateID == 'MLS165_2021-04-20'] <- NA
+
+detx$NumDetx[detx$DateID == 'MLS318_2020-03-19'] <- NA
+
 
 
 detx <- detx %>% drop_na(NumDetx)
@@ -379,7 +434,7 @@ table(detx$Site, detx$Year)
 #                                   'MLS737','MLS619','MOET019',
 #                                   'SDF1734','SDF1264'),]
 
-sitedetx <- detx[detx$Site == paste0('MIR019'),]
+sitedetx <- detx[detx$Site == site,]
 # sitedetx <- detx[detx$Site == paste0(siteID),]
 # view(sitedetx)
 # 
@@ -400,18 +455,22 @@ p
 ggplotly(p)
 
 
-# sitedetxpad <- pad(sitedetx, start_val = as.POSIXct(paste0("03-01-",sitedetx$Year)))
+sitedetxpad <- pad(sitedetx, group = "Year")
 
 
-# sitedetxpad$DateID <- paste0(sitedetxpad$Site,"_",sitedetxpad$start_date)
-# sitedetxpad$Year <-  format(sitedetxpad$start_date,"%Y")
-# sitedetxpad$Day <-  format(sitedetxpad$start_date,"%m/%d")
+sitedetxpad$DateID <- paste0(site,"_",sitedetxpad$start_date)
+sitedetxpad$Year <-  format(sitedetxpad$start_date,"%Y")
+sitedetxpad$Day <-  format(sitedetxpad$start_date,"%m/%d")
+sitedetxpad$Site <- site
+
+sitedetxpad[is.na(sitedetxpad)] <- 0
+
 # 
 # sitedetxpad[is.na(sitedetxpad)] <- 0
 p <- ggplot() + 
-  geom_line(data = sitedetx, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), size=2) +
+  geom_line(data = sitedetxpad, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), size=2) +
   # geom_smooth(data = sitedetx, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), method = 'loess',  level = 0.05, size=2) +
-  geom_point(data = sitedetx, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year)) +
+  geom_point(data = sitedetxpad, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year)) +
   scale_x_discrete(breaks = every_nth(n = 3)) +
   scale_color_manual(values = c("#7F58AF","#64C5EB","#E84D8A","#FEB326","blue")) +
   theme(axis.title=element_text(size=20)) +
@@ -457,43 +516,6 @@ p
 
 templates <- readRDS('/Users/kevintolan/R/AMMonitor_VPMon/VPMon_AMM/ammls/templateLibrary.RDS')
 
-
-mediafiles <- RSQLite::dbReadTable(conn = conx,
-                            name = 'media')
-mediafiles$Site  <- str_extract(mediafiles$filename, "[^_]+")
-mediafiles <- mediafiles[mediafiles$Site == "MIR019",]
-# mediafiles <- mediafiles[mediafiles$Site %in% c("SDF1112",'MLS721','NEW94','NEW63'),]
-
-# mediafiles$Site  <- str_extract(mediafiles$filename, "[^_]+")
-# table(mediafiles$Site)
-##Subset 
-
-mediafiles$date <- paste0(mediafiles$start_date," ",mediafiles$start_time) %>%
-                              as.POSIXlt()
-DATESTART <- as.Date("2019-03-20")
-DATESTOP <- as.Date("2019-05-05")
-mediasubset <- mediafiles %>% filter(between(date, DATESTART, DATESTOP))
-
-#'template_SDF791_20210408_150000bin_thresh40'
-#template_SDF791_20220418_150000_bin_AM1
-
-Sys.time()
-start <- Sys.time()
-scores <- scoresDetect(
-  con = conx,
-  recordingNames = mediasubset$filename,
-  templateNames = 'template_SDF791_20210408_150000bin_thresh40_cu12',
-  scoreThresholds = 12,
-  recordingRootPath = 'https://vpmon-audio.s3.amazonaws.com/',
-  ammlPath = paste0(getwd(), "/ammls"),
-  dbInsert = T,
-  showProgress = T
-)
-stop <- Sys.time()
-Sys.time()
-elapse <- stop - start
-elapse
-nrow(mediasubset)/as.numeric(elapse)
 
 ##### graph
 
