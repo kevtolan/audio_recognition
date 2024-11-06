@@ -33,8 +33,11 @@ RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
 
 mediafiles <- RSQLite::dbReadTable(conn = conx,
                                    name = 'media')
+mediafiles[mediafiles$fk_visitid == 88,]
 mediafiles$Site  <- str_extract(mediafiles$filename, "[^_]+")
-mediafiles <- mediafiles[mediafiles$Site == "NEW174",]
+mediafiles <- mediafiles[mediafiles$Site == "NEW1002",]
+# NEW447
+###### need to remove NA value from NEW388
 # mediafiles <- mediafiles[mediafiles$Site %in% c("SDF1112",'MLS721','NEW94','NEW63'),]
 
 # mediafiles$Site  <- str_extract(mediafiles$filename, "[^_]+")
@@ -43,8 +46,8 @@ mediafiles <- mediafiles[mediafiles$Site == "NEW174",]
 
 mediafiles$date <- paste0(mediafiles$start_date," ",mediafiles$start_time) %>%
   as.POSIXlt()
-DATESTART <- as.Date("2023-03-15")
-DATESTOP <- as.Date("2023-05-15")
+DATESTART <- as.Date("2023-04-15")
+DATESTOP <- as.Date("2023-04-20")
 mediasubset <- mediafiles %>% filter(between(date, DATESTART, DATESTOP))
 
 #'template_SDF791_20210408_150000bin_thresh40'
@@ -68,11 +71,12 @@ elapse <- stop - start
 elapse
 nrow(mediasubset)/as.numeric(elapse)
 
-
-site <- 'MON0516'
+site <- 'NEW450'
 
 mediafiles <- RSQLite::dbReadTable(conn = conx,
                                    name = 'media')
+  
+mediafiles[mediafiles$fk_visitid == 92,]
 
 detections <- RSQLite::dbGetQuery(conn = conx,
                                   statement = "SELECT * FROM media INNER JOIN modeloutputs ON media.pk_mediaid = modeloutputs.fk_mediaid
@@ -280,9 +284,8 @@ detx$NumDetx[detx$DateID == 'SDF1264_2019-04-18'] <- NA
 detx$NumDetx[detx$DateID == 'NEW1387_2024-03-21'] <- NA
 detx$NumDetx[detx$DateID == 'NEW1387_2024-05-18'] <- NA
 
-detx$NumDetx[detx$DateID == 'NEW51_2020-03-20'] <- 6000
-detx$NumDetx[detx$DateID == 'NEW51_2020-03-29'] <- 6000
-detx$NumDetx[detx$DateID == 'NEW51_2020-03-29'] <- 6000
+detx$NumDetx[detx$DateID == 'NEW51_2020-03-20'] <- NA
+detx$NumDetx[detx$DateID == 'NEW51_2020-03-29'] <- NA
 detx$NumDetx[detx$DateID == 'NEW51_2024-04-11'] <- 6000
 detx$NumDetx[detx$DateID == 'NEW51_2024-04-12'] <- 12000
 detx$NumDetx[detx$DateID == 'NEW51_2024-04-16'] <- NA
@@ -422,6 +425,17 @@ detx$NumDetx[detx$DateID == 'MLS165_2021-04-20'] <- NA
 
 detx$NumDetx[detx$DateID == 'MLS318_2020-03-19'] <- NA
 
+detx$NumDetx[detx$DateID == 'NEW174_2022-04-13'] <- 6000
+detx$NumDetx[detx$DateID == 'NEW174_2022-04-26'] <- 6000
+
+
+detx$NumDetx[detx$DateID == 'NEW450_2021-03-31'] <- 3000
+detx$NumDetx[detx$DateID == 'NEW450_2021-04-10'] <- 1000
+detx$NumDetx[detx$DateID == 'NEW450_2021-04-11'] <- 3000
+detx$NumDetx[detx$DateID == 'NEW450_2021-04-14'] <- 3000
+detx$NumDetx[detx$DateID == 'NEW450_2022-04-01'] <- 3000
+detx$NumDetx[detx$DateID == 'NEW450_2022-04-06'] <- 250
+
 
 
 detx <- detx %>% drop_na(NumDetx)
@@ -433,7 +447,7 @@ table(detx$Site, detx$Year)
 # sitedetx <- detx[detx$Site %in% c("WEA019", 'CALT019', 'NEW88',
 #                                   'MLS737','MLS619','MOET019',
 #                                   'SDF1734','SDF1264'),]
-
+# site <- 'NEW450'
 sitedetx <- detx[detx$Site == site,]
 # sitedetx <- detx[detx$Site == paste0(siteID),]
 # view(sitedetx)
@@ -457,7 +471,6 @@ ggplotly(p)
 
 sitedetxpad <- pad(sitedetx, group = "Year")
 
-
 sitedetxpad$DateID <- paste0(site,"_",sitedetxpad$start_date)
 sitedetxpad$Year <-  format(sitedetxpad$start_date,"%Y")
 sitedetxpad$Day <-  format(sitedetxpad$start_date,"%m/%d")
@@ -466,17 +479,19 @@ sitedetxpad$Site <- site
 sitedetxpad[is.na(sitedetxpad)] <- 0
 
 # 
-# sitedetxpad[is.na(sitedetxpad)] <- 0
+# sitedetxpad[is.na(sitedetxpa  d)] <- 0
 p <- ggplot() + 
   geom_line(data = sitedetxpad, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), size=2) +
   # geom_smooth(data = sitedetx, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), method = 'loess',  level = 0.05, size=2) +
   geom_point(data = sitedetxpad, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year)) +
   scale_x_discrete(breaks = every_nth(n = 3)) +
-  scale_color_manual(values = c("#7F58AF","#64C5EB","#E84D8A","#FEB326","blue")) +
-  theme(axis.title=element_text(size=20)) +
+  scale_color_manual(values = c("#43aa8b","#023047","#7F58AF","#64C5EB","#E84D8A","#FEB326")) +
+  theme(axis.title=element_text(size=20),
+        legend.position="none",
+        strip.text = element_text(size=12)) +
   # theme(legend.position = c(.15, .65)) + 
-  theme(legend.title = element_text(face="bold", size=20)) +
-  theme(legend.text = element_text(size=15)) +
+  # theme(legend.title = element_text(face="bold", size=20)) +
+  # theme(legend.text = element_text(size=15)) +
   # theme(legend.background = element_rect(size=1.5, colour ="black")) +
   # theme(legend.key.height= unit(3, 'cm'), legend.key.width= unit(4, 'cm')) +
   # theme(text = element_text(size=16)) +
@@ -584,7 +599,7 @@ Sys.time()
 start <- Sys.time()
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM media
-                                WHERE filename = 'KWN581_20230306_1400000.wav' ")
+                                WHERE filename = 'NEW448_20210321_150000.wav' ")
 stop <- Sys.time()
 Sys.time()
 stop - start
@@ -704,7 +719,8 @@ RSQLite::dbExecute(conn = conx,
 
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM media
-                                WHERE fk_visitid = 79  ")
+                                WHERE fk_visitid = 88  ")
+#88, 90, 91
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM modeloutputs
                                 WHERE fk_mediaid = '16462' ")
