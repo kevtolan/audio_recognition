@@ -19,7 +19,7 @@ library(DBI)
 library(sf)
 # library(parallel)
 library(plotly)
-#source("/Users/kevintolan/R/myfunctions.R")
+source("/Users/kevintolan/R/myfunctions.R")
 # library(usethis)
 # edit_r_environ()
   
@@ -30,28 +30,8 @@ conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
 RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
 
 
+mediasubset <- subset_files(conx, 'NEW383', "2023-04-10", "2023-04-15")
 
-mediafiles <- RSQLite::dbReadTable(conn = conx,
-                                   name = 'media')
-mediafiles[mediafiles$fk_visitid == 88,]
-mediafiles$Site  <- str_extract(mediafiles$filename, "[^_]+")
-mediafiles <- mediafiles[mediafiles$Site == "NEW1002",]
-# NEW447
-###### need to remove NA value from NEW388
-# mediafiles <- mediafiles[mediafiles$Site %in% c("SDF1112",'MLS721','NEW94','NEW63'),]
-
-# mediafiles$Site  <- str_extract(mediafiles$filename, "[^_]+")
-# table(mediafiles$Site)
-##Subset 
-
-mediafiles$date <- paste0(mediafiles$start_date," ",mediafiles$start_time) %>%
-  as.POSIXlt()
-DATESTART <- as.Date("2023-04-15")
-DATESTOP <- as.Date("2023-04-20")
-mediasubset <- mediafiles %>% filter(between(date, DATESTART, DATESTOP))
-
-#'template_SDF791_20210408_150000bin_thresh40'
-#template_SDF791_20220418_150000_bin_AM1
 
 Sys.time()
 start <- Sys.time()
@@ -59,7 +39,7 @@ scores <- scoresDetect(
   con = conx,
   recordingNames = mediasubset$filename,
   templateNames = 'template_SDF791_20210408_150000bin_thresh40_cu12',
-  scoreThresholds = 12,
+  # scoreThresholds = 12,
   recordingRootPath = 'https://vpmon-audio.s3.amazonaws.com/',
   ammlPath = paste0(getwd(), "/ammls"),
   dbInsert = T,
@@ -71,13 +51,11 @@ elapse <- stop - start
 elapse
 nrow(mediasubset)/as.numeric(elapse)
 
-site <- 'NEW450'
+site <- 'MLS567'
 
 mediafiles <- RSQLite::dbReadTable(conn = conx,
                                    name = 'media')
   
-mediafiles[mediafiles$fk_visitid == 92,]
-
 detections <- RSQLite::dbGetQuery(conn = conx,
                                   statement = "SELECT * FROM media INNER JOIN modeloutputs ON media.pk_mediaid = modeloutputs.fk_mediaid
                                 WHERE fk_taxonid = 'Wood Frog' ")
@@ -122,7 +100,8 @@ detx$Day <-  format(detx$start_date,"%m/%d")
 detx$DateID <-  paste0(detx$Site,'_',detx$start_date)
 
 
-# manually overwrite detections
+############# 
+#manually overwrite detections
 detx$NumDetx[detx$DateID == 'MLS737_2019-04-09'] <- NA
 detx$NumDetx[detx$DateID == 'MLS737_2019-04-13'] <- NA
 detx$NumDetx[detx$DateID == 'MLS737_2019-04-20'] <- NA
@@ -340,7 +319,6 @@ detx$NumDetx[detx$DateID == 'SDF791_2023-05-08'] <- 250
 detx$NumDetx[detx$DateID == 'STA019_2019-05-04'] <- NA
 detx$NumDetx[detx$DateID == 'STA019_2019-05-10'] <- NA
 
-
 detx$NumDetx[detx$DateID == 'CON019_2019-04-03'] <- NA
 detx$NumDetx[detx$DateID == 'CON019_2020-04-03'] <- NA #rain
 detx$NumDetx[detx$DateID == 'CON019_2021-03-29'] <- NA 
@@ -401,6 +379,20 @@ detx$NumDetx[detx$DateID == 'NEW94_2019-05-11'] <- NA
 detx$NumDetx[detx$DateID == 'KWN581_2021-04-07'] <- 500
 detx$NumDetx[detx$DateID == 'KWN581_2021-04-20'] <- NA
 detx$NumDetx[detx$DateID == 'KWN581_2022-03-24'] <- NA
+detx$NumDetx[detx$DateID == 'KWN581_2023-04-07'] <- 2500
+detx$NumDetx[detx$DateID == 'KWN581_2023-04-07'] <- 2000
+detx$NumDetx[detx$DateID == 'KWN581_2023-04-08'] <- 1000
+detx$NumDetx[detx$DateID == 'KWN581_2023-04-11'] <- 1000
+detx$NumDetx[detx$DateID == 'KWN581_2023-04-12'] <- 3000
+detx$NumDetx[detx$DateID == 'KWN581_2023-04-13'] <- 3000
+
+detx$NumDetx[detx$DateID == 'KWN827_2019-04-12'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2019-04-13'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2019-04-15'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2019-04-16'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2019-04-17'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2019-04-18'] <- NA
+detx$NumDetx[detx$DateID == 'KWN827_2019-05-04'] <- NA
 
 detx$NumDetx[detx$DateID == 'KWN827_2020-03-17'] <- NA
 detx$NumDetx[detx$DateID == 'KWN827_2020-03-19'] <- NA
@@ -412,6 +404,8 @@ detx$NumDetx[detx$DateID == 'KWN827_2020-03-27'] <- NA
 detx$NumDetx[detx$DateID == 'KWN827_2020-03-29'] <- NA
 detx$NumDetx[detx$DateID == 'KWN827_2020-03-30'] <- NA
 detx$NumDetx[detx$DateID == 'KWN827_2020-03-31'] <- NA
+
+detx$NumDetx[detx$DateID == 'KWN827_2021-03-31'] <- NA
 
 detx$NumDetx[detx$DateID == 'MIR019_2019-03-28'] <- NA
 detx$NumDetx[detx$DateID == 'MIR019_2019-03-29'] <- NA
@@ -428,16 +422,61 @@ detx$NumDetx[detx$DateID == 'MLS318_2020-03-19'] <- NA
 detx$NumDetx[detx$DateID == 'NEW174_2022-04-13'] <- 6000
 detx$NumDetx[detx$DateID == 'NEW174_2022-04-26'] <- 6000
 
-
-detx$NumDetx[detx$DateID == 'NEW450_2021-03-31'] <- 3000
+detx$NumDetx[detx$DateID == 'NEW450_2021-03-31'] <- 2000
 detx$NumDetx[detx$DateID == 'NEW450_2021-04-10'] <- 1000
 detx$NumDetx[detx$DateID == 'NEW450_2021-04-11'] <- 3000
 detx$NumDetx[detx$DateID == 'NEW450_2021-04-14'] <- 3000
 detx$NumDetx[detx$DateID == 'NEW450_2022-04-01'] <- 3000
 detx$NumDetx[detx$DateID == 'NEW450_2022-04-06'] <- 250
+detx$NumDetx[detx$DateID == 'NEW450_2023-04-13'] <- 6000
+detx$NumDetx[detx$DateID == 'NEW450_2023-04-14'] <- 12000
+detx$NumDetx[detx$DateID == 'NEW450_2024-03-29'] <- NA
+detx$NumDetx[detx$DateID == 'NEW450_2024-04-12'] <- NA
+
+detx$NumDetx[detx$DateID == 'RUB019_2019-04-10'] <- NA
+detx$NumDetx[detx$DateID == 'RUB019_2020-03-27'] <- NA
+detx$NumDetx[detx$DateID == 'RUB019_2020-03-29'] <- NA
+detx$NumDetx[detx$DateID == 'RUB019_2020-04-21'] <- NA
+detx$NumDetx[detx$DateID == 'RUB019_2020-04-29'] <- NA
+detx$NumDetx[detx$DateID == 'RUB019_2020-04-30'] <- NA
+detx$NumDetx[detx$DateID == 'RUB019_2021-04-22'] <- NA
+detx$NumDetx[detx$DateID == 'RUB019_2022-03-31'] <- NA
+detx$NumDetx[detx$DateID == 'RUB019_2022-04-01'] <- NA
+
+detx$NumDetx[detx$DateID == 'BOD119_2023-04-13'] <- 3000
+detx$NumDetx[detx$DateID == 'BOD119_2023-04-14'] <- 3000
+detx$NumDetx[detx$DateID == 'BOD119_2023-04-15'] <- 1000
+detx$NumDetx[detx$DateID == 'BOD119_2023-04-16'] <- 2000
+detx$NumDetx[detx$DateID == 'BOD119_2023-04-17'] <- 100
+detx$NumDetx[detx$DateID == 'BOD119_2024-04-11'] <- 1000
+detx$NumDetx[detx$DateID == 'BOD119_2024-04-30'] <- 100
+
+detx$NumDetx[detx$DateID == 'MON0516_2022-03-24'] <- 100
+detx$NumDetx[detx$DateID == 'MON0516_2022-03-31'] <- 100
+detx$NumDetx[detx$DateID == 'MON0516_2022-04-21'] <- 100
+detx$NumDetx[detx$DateID == 'MON0516_2022-04-25'] <- 100
+
+detx$NumDetx[detx$DateID == 'MON0516_2023-04-03'] <- NA
+detx$NumDetx[detx$DateID == 'MON0516_2023-04-05'] <- NA
+detx$NumDetx[detx$DateID == 'MON0516_2024-03-09'] <- NA
+
+detx$NumDetx[detx$DateID == 'SDF941_2022-04-26'] <- NA
+detx$NumDetx[detx$DateID == 'SDF941_2023-04-05'] <- NA
+detx$NumDetx[detx$DateID == 'SDF941_2023-04-06'] <- NA
+detx$NumDetx[detx$DateID == 'SDF941_2023-04-07'] <- NA
+detx$NumDetx[detx$DateID == 'SDF941_2023-04-08'] <- NA
+detx$NumDetx[detx$DateID == 'SDF941_2023-04-19'] <- NA
+detx$NumDetx[detx$DateID == 'SDF941_2023-04-20'] <- NA
+detx$NumDetx[detx$DateID == 'SDF941_2023-04-21'] <- NA
+detx$NumDetx[detx$DateID == 'SDF941_2023-04-22'] <- NA
+detx$NumDetx[detx$DateID == 'SDF941_2023-04-23'] <- NA
+detx$NumDetx[detx$DateID == 'SDF941_2023-04-24'] <- NA
+
+############3
+detx$NumDetx[detx$DateID == 'MLS567_2023-03-15'] <- NA
 
 
-
+  
 detx <- detx %>% drop_na(NumDetx)
 detx$`Relative Call Intensity` <- detx$NumDetx
 
@@ -447,7 +486,7 @@ table(detx$Site, detx$Year)
 # sitedetx <- detx[detx$Site %in% c("WEA019", 'CALT019', 'NEW88',
 #                                   'MLS737','MLS619','MOET019',
 #                                   'SDF1734','SDF1264'),]
-# site <- 'NEW450'
+# site <- 'SDF900'
 sitedetx <- detx[detx$Site == site,]
 # sitedetx <- detx[detx$Site == paste0(siteID),]
 # view(sitedetx)
@@ -485,7 +524,7 @@ p <- ggplot() +
   # geom_smooth(data = sitedetx, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), method = 'loess',  level = 0.05, size=2) +
   geom_point(data = sitedetxpad, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year)) +
   scale_x_discrete(breaks = every_nth(n = 3)) +
-  scale_color_manual(values = c("#43aa8b","#023047","#7F58AF","#64C5EB","#E84D8A","#FEB326")) +
+  scale_color_manual(values = c("#7F58AF","#64C5EB","#E84D8A","#FEB326","#43aa8b","#023047")) +
   theme(axis.title=element_text(size=20),
         legend.position="none",
         strip.text = element_text(size=12)) +
@@ -607,63 +646,9 @@ stop - start
 
 
 
-delete_these_files <- c('STA019_20220314_220000.wav',
-                     'STA019_20220314_220000.wav',
-                     'STA019_20220315_150000.wav',
-                     'STA019_20220315_190000.wav',
-                     'STA019_20220315_210000.wav',
-                     'STA019_20220315_220000.wav',
-                     'STA019_20220316_150000.wav',
-                     'STA019_20220316_190000.wav',
-                     'STA019_20220316_210000.wav',
-                     'STA019_20220316_220000.wav',
-                     'STA019_20220317_150000.wav',
-                     'STA019_20220317_190000.wav',
-                     'STA019_20220317_210000.wav',
-                     'STA019_20220317_220000.wav',
-                     'STA019_20220318_150000.wav',
-                     'STA019_20220318_190000.wav',
-                     'STA019_20220318_210000.wav',
-                     'STA019_20220318_220000.wav',
-                     'STA019_20220319_150000.wav',
-                     'STA019_20220319_190000.wav',
-                     'STA019_20220319_210000.wav',
-                     'STA019_20220319_220000.wav',
-                     'STA019_20220320_150000.wav',
-                     'STA019_20220320_190000.wav',
-                     'STA019_20220320_210000.wav',
-                     'STA019_20220320_220000.wav',
-                     'STA019_20220321_150000.wav',
-                     'STA019_20220321_190000.wav',
-                     'STA019_20220321_210000.wav',
-                     'STA019_20220321_220000.wav',
-                     'STA019_20220322_150000.wav',
-                     'STA019_20220322_190000.wav',
-                     'STA019_20220322_210000.wav',
-                     'STA019_20220322_220000.wav',
-                     'STA019_20220323_150000.wav',
-                     'STA019_20220323_190000.wav',
-                     'STA019_20220323_210000.wav',
-                     'STA019_20220323_220000.wav')
-for (filename in delete_these_files) {
-  query <- paste0("DELETE FROM media WHERE filename = '", filename, "';")
-    dbExecute(conx, query)
-    cat(Sys.time(),"Deleted file:", filename, "\n")
-}
-cat("All files have been processed and removed from the database.\n")
-
-
-
-# chart media
-med <- RSQLite::dbReadTable(conn = conx,
-                            name = 'Media')
-medtmp <- as.POSIXlt(med$start_date)
-med$Day <- format(as.Date(medtmp,'%Y-%m-%d %H:%M:%S'),"%m-%d")
-med$Year <- format(as.Date(medtmp,'%Y-%m-%d %H:%M:%S'),"%Y")
-med$Ordinal <- medtmp$yday
-table(med$Year)
-table(med$Day)
-plot(med$Ordinal, med$Year)
+delete_these_files <- c('NEW448_20220516_150000.wav',
+                     'NEW448_20220516_190000.wav')
+delete_media(conx, delete_these_files)
 
 
 
@@ -671,22 +656,17 @@ plot(med$Ordinal, med$Year)
 bucketlist <- get_bucket_df(
                     bucket = 'vpmon-audio',
                     max = Inf)
-
 bucketlist <- bucketlist[- grep("Misc_Audio/", bucketlist$Key),]
 bucketlist$Site  <- str_extract(bucketlist$Key, "[^_]+")
 bucketlist$filename  <- bucketlist$Key
 bucketlist$filepath <- paste0('https://vpmon-audio.s3.amazonaws.com/',bucketlist$filename)
-
 bucketlist$Date <- str_sub(bucketlist$filename, start = -19, end = -5)
-
 buckettmp <- parse_date_time(bucketlist$Date, "Y-m-d_H-M-S", tz = "America/New_York")
-
 bucketlist$Date <- buckettmp
 bucketlist$start_date <- format(buckettmp,"%Y-%m-%d")
 bucketlist$start_time <- format(buckettmp, "%H:%M:%S")
 bucketlist$year <- format(buckettmp, "%Y")
 table(bucketlist$Site,bucketlist$year)
-
 bucketlist$Size <- as.numeric(bucketlist$Size)
 sum(bucketlist$Size)/1099511627776
 
@@ -702,9 +682,38 @@ visitlist2 <- visitlist[,c("pk_visitid","fk_locationid")]
 
 
 visitlist <- visitlist$fk_locationid
+view(visitlist)
 # sitelist <- unique(bucketlist$Site)
 # diff <- setdiff(sitelist,visitlist)
 # diff
+
+
+#add files to db
+
+
+bucketadd <- bucketlist[bucketlist$Site == "SDF941",]
+
+bucketadd <- bucketadd[,c("filename","filepath",'start_date','start_time')]
+
+bucketadd$pk_mediaid <- NA
+bucketadd$fk_visitid <- 48
+bucketadd$sb_exclude <- NA
+bucketadd$fk_sciencebaseid <- NA
+bucketadd$filesize <- NA
+bucketadd$timestamp <- NA
+bucketadd$media_type <- "audio"
+
+# medialist <- DBI::dbReadTable(conx, name = 'media')
+# bucketlist$Site  <- str_extract(bucketlist$Key, "[^_]+")
+
+# unaddedfiles <- anti_join(bucketadd,medialist,by="filename")
+
+
+dbAppendTable(conx, "media", bucketadd)
+
+
+
+
 
 
 
@@ -715,37 +724,15 @@ visitlist <- visitlist$fk_locationid
 # delete
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM media
-                                WHERE filename = 'MLS737_20210520_210000.wav' ")
+                                WHERE filename = 'KWN581_20230306_140000.wav' ")
 
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM media
-                                WHERE fk_visitid = 88  ")
-#88, 90, 91
+                                WHERE fk_visitid = 48  ")
+
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM modeloutputs
                                 WHERE fk_mediaid = '16462' ")
-#add files to db
-
-
-bucketadd <- bucketlist[bucketlist$Site == "CON019",]
-
-bucketadd <- bucketadd[,c("filename","filepath",'start_date','start_time')]
-
-bucketadd$pk_mediaid <- NA
-bucketadd$fk_visitid <- 61
-bucketadd$sb_exclude <- NA
-bucketadd$fk_sciencebaseid <- NA
-bucketadd$filesize <- NA
-bucketadd$timestamp <- NA
-bucketadd$media_type <- "audio"
-
-medialist <- DBI::dbReadTable(conx, name = 'media')
-bucketlist$Site  <- str_extract(bucketlist$Key, "[^_]+")
-
-unaddedfiles <- anti_join(bucketadd,medialist,by="filename")
-
-
-dbAppendTable(conx, "media", bucketadd)
 
 
 
