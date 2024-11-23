@@ -51,7 +51,7 @@ elapse <- stop - start
 elapse
 nrow(mediasubset)/as.numeric(elapse)
 
-site <- 'MLS567'
+site <- 'SDF900'
 
 mediafiles <- RSQLite::dbReadTable(conn = conx,
                                    name = 'media')
@@ -313,7 +313,14 @@ detx$NumDetx[detx$DateID == 'MLS411_2020-03-29'] <- NA
 detx$NumDetx[detx$DateID == 'MLS411_2023-04-25'] <- 100
 
 detx$NumDetx[detx$DateID == 'SDF791_2019-04-18'] <- 10
+detx$NumDetx[detx$DateID == 'SDF791_2019-04-20'] <- 10
+detx$NumDetx[detx$DateID == 'SDF791_2019-04-29'] <- NA
+detx$NumDetx[detx$DateID == 'SDF791_2019-05-01'] <- NA
+detx$NumDetx[detx$DateID == 'SDF791_2019-05-02'] <- 5
 detx$NumDetx[detx$DateID == 'SDF791_2019-05-06'] <- 100
+detx$NumDetx[detx$DateID == 'SDF791_2021-04-14'] <- 1500
+detx$NumDetx[detx$DateID == 'SDF791_2021-04-18'] <- 50
+detx$NumDetx[detx$DateID == 'SDF791_2022-04-13'] <- 1000
 detx$NumDetx[detx$DateID == 'SDF791_2023-05-08'] <- 250
 
 detx$NumDetx[detx$DateID == 'STA019_2019-05-04'] <- NA
@@ -330,8 +337,11 @@ detx$NumDetx[detx$DateID == 'CON019_2023-04-11'] <- NA
 detx$NumDetx[detx$DateID == 'CON019_2023-04-13'] <- NA
 
 detx$NumDetx[detx$DateID == 'NEW1306_2023-04-14'] <- 6000
-detx$NumDetx[detx$DateID == 'NEW1306_2024-04-12'] <- 12000
+detx$NumDetx[detx$DateID == 'NEW1306_2023-04-17'] <- 6000
+
+detx$NumDetx[detx$DateID == 'NEW1306_2024-04-12'] <- 6000
 detx$NumDetx[detx$DateID == 'NEW1306_2024-04-13'] <- 2000
+detx$NumDetx[detx$DateID == 'NEW1306_2024-04-13'] <- 500
 
 detx$NumDetx[detx$DateID == 'IRR019_2019-03-31'] <- NA
 detx$NumDetx[detx$DateID == 'IRR019_2019-04-03'] <- NA
@@ -451,11 +461,10 @@ detx$NumDetx[detx$DateID == 'BOD119_2023-04-17'] <- 100
 detx$NumDetx[detx$DateID == 'BOD119_2024-04-11'] <- 1000
 detx$NumDetx[detx$DateID == 'BOD119_2024-04-30'] <- 100
 
-detx$NumDetx[detx$DateID == 'MON0516_2022-03-24'] <- 100
-detx$NumDetx[detx$DateID == 'MON0516_2022-03-31'] <- 100
-detx$NumDetx[detx$DateID == 'MON0516_2022-04-21'] <- 100
-detx$NumDetx[detx$DateID == 'MON0516_2022-04-25'] <- 100
-
+detx$NumDetx[detx$DateID == 'MON0516_2022-03-24'] <- NA
+detx$NumDetx[detx$DateID == 'MON0516_2022-03-31'] <- NA
+detx$NumDetx[detx$DateID == 'MON0516_2022-04-21'] <- NA
+detx$NumDetx[detx$DateID == 'MON0516_2022-04-25'] <- NA
 detx$NumDetx[detx$DateID == 'MON0516_2023-04-03'] <- NA
 detx$NumDetx[detx$DateID == 'MON0516_2023-04-05'] <- NA
 detx$NumDetx[detx$DateID == 'MON0516_2024-03-09'] <- NA
@@ -472,8 +481,56 @@ detx$NumDetx[detx$DateID == 'SDF941_2023-04-22'] <- NA
 detx$NumDetx[detx$DateID == 'SDF941_2023-04-23'] <- NA
 detx$NumDetx[detx$DateID == 'SDF941_2023-04-24'] <- NA
 
-############3
-detx$NumDetx[detx$DateID == 'MLS567_2023-03-15'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-03-15'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-03-16'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-03-17'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-03-18'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-03-19'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-03-20'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-03-21'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-03-22'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-03-23'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-03-24'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-03-25'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-03-26'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-04-02'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-04-10'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2022-03-20'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2022-04-19'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2022-04-26'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2023-04-15'] <- 100
+
+detx$NumDetx[detx$DateID == 'NEW1002_2022-04-25'] <- 500
+
+detx$NumDetx[detx$DateID == 'NEW1003_2022-04-13'] <- 100
+detx$NumDetx[detx$DateID == 'NEW1003_2022-04-19'] <- NA
+detx$NumDetx[detx$DateID == 'NEW1003_2023-04-07'] <- NA
+
+detx$NumDetx[detx$DateID == 'NEW1038_2021-03-29'] <- NA
+detx$NumDetx[detx$DateID == 'NEW1038_2023-04-30'] <- NA
+
+detx$NumDetx[detx$DateID == 'NEW1098_2023-04-16'] <- 5000
+detx$NumDetx[detx$DateID == 'NEW1098_2023-04-17'] <- 5000
+detx$NumDetx[detx$DateID == 'NEW1098_2023-04-21'] <- 5000
+detx$NumDetx[detx$DateID == 'NEW1098_2023-04-22'] <- 5000
+detx$NumDetx[detx$DateID == 'NEW1098_2023-04-23'] <- 2500
+detx$NumDetx[detx$DateID == 'NEW1098_2023-04-24'] <- 5000
+detx$NumDetx[detx$DateID == 'NEW1098_2023-04-25'] <- 1000
+
+detx$NumDetx[detx$DateID == 'SDF900_2021-04-10'] <- 5000
+detx$NumDetx[detx$DateID == 'SDF900_2021-04-11'] <- 5000
+detx$NumDetx[detx$DateID == 'SDF900_2021-04-06'] <- 5000
+
+detx$NumDetx[detx$DateID == 'SDF900_2022-04-22'] <- NA
+detx$NumDetx[detx$DateID == 'SDF900_2022-04-27'] <- NA
+detx$NumDetx[detx$DateID == 'SDF900_2022-04-28'] <- NA
+
+detx$NumDetx[detx$DateID == 'SDF900_2023-04-12'] <- 5000
+detx$NumDetx[detx$DateID == 'SDF900_2023-04-13'] <- 10000
+detx$NumDetx[detx$DateID == 'SDF900_2023-04-14'] <- 5000
+
+
+############  
 
 
   
@@ -486,7 +543,7 @@ table(detx$Site, detx$Year)
 # sitedetx <- detx[detx$Site %in% c("WEA019", 'CALT019', 'NEW88',
 #                                   'MLS737','MLS619','MOET019',
 #                                   'SDF1734','SDF1264'),]
-# site <- 'SDF900'
+# site <- 'SDF791'
 sitedetx <- detx[detx$Site == site,]
 # sitedetx <- detx[detx$Site == paste0(siteID),]
 # view(sitedetx)
@@ -502,7 +559,8 @@ every_nth = function(n) {
 
 p <- ggplot() +
   geom_jitter(data = sitedetx, aes(x = Day, y = Year, color = Year, size = `Relative Call Intensity`),  height = 0.03, fill = 'black', alpha = 0.7) +
- scale_x_discrete(breaks = every_nth(n = 3))
+ scale_x_discrete(breaks = every_nth(n = 3)) +
+  theme(legend.position="none")
 p
 # geom_jitter(data = sitedetx, aes(x = Day, y = Site, color = Year, size = NumDetx),  height = 0.11, alpha = 0.7)
 ggplotly(p)
@@ -544,8 +602,12 @@ p
 # ggplotly(p)
 
 
+delete_these_files <- c('NEW1306_20240516_220000.wav')
+delete_media(conx, delete_these_files)
 
-# AMMonitor::launchApp()
+
+
+
 
 
 
@@ -646,9 +708,6 @@ stop - start
 
 
 
-delete_these_files <- c('NEW448_20220516_150000.wav',
-                     'NEW448_20220516_190000.wav')
-delete_media(conx, delete_these_files)
 
 
 
