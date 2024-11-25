@@ -30,28 +30,7 @@ conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
 RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
 
 
-mediasubset <- subset_files(conx, 'NEW383', "2023-04-10", "2023-04-15")
-
-
-Sys.time()
-start <- Sys.time()
-scores <- scoresDetect(
-  con = conx,
-  recordingNames = mediasubset$filename,
-  templateNames = 'template_SDF791_20210408_150000bin_thresh40_cu12',
-  # scoreThresholds = 12,
-  recordingRootPath = 'https://vpmon-audio.s3.amazonaws.com/',
-  ammlPath = paste0(getwd(), "/ammls"),
-  dbInsert = T,
-  showProgress = T
-)
-stop <- Sys.time()
-Sys.time()
-elapse <- stop - start
-elapse
-nrow(mediasubset)/as.numeric(elapse)
-
-site <- 'SDF900'
+site <- 'MLS567'
 
 mediafiles <- RSQLite::dbReadTable(conn = conx,
                                    name = 'media')
@@ -102,6 +81,33 @@ detx$DateID <-  paste0(detx$Site,'_',detx$start_date)
 
 ############# 
 #manually overwrite detections
+
+detx$NumDetx[detx$DateID == 'NEW383_2020-03-20'] <- NA
+detx$NumDetx[detx$DateID == 'NEW383_2020-03-29'] <- NA
+detx$NumDetx[detx$DateID == 'NEW383_2020-04-13'] <- 10 
+
+
+
+
+detx$NumDetx[detx$DateID == 'MLS1143_2019-03-28'] <- NA
+detx$NumDetx[detx$DateID == 'MLS1143_2019-04-01'] <- NA
+detx$NumDetx[detx$DateID == 'MLS1143_2019-04-05'] <- NA
+detx$NumDetx[detx$DateID == 'MLS1143_2019-04-14'] <- 100
+detx$NumDetx[detx$DateID == 'MLS1143_2019-04-25'] <- NA
+detx$NumDetx[detx$DateID == 'MLS1143_2019-04-26'] <- NA
+detx$NumDetx[detx$DateID == 'MLS1143_2020-03-26'] <- NA
+detx$NumDetx[detx$DateID == 'MLS1143_2020-03-29'] <- NA
+detx$NumDetx[detx$DateID == 'MLS1143_2020-03-31'] <- NA
+detx$NumDetx[detx$DateID == 'MLS1143_2020-04-01'] <- 50
+detx$NumDetx[detx$DateID == 'MLS1143_2020-04-11'] <- NA
+
+
+
+detx$NumDetx[detx$DateID == 'SDF1508_2023-04-11'] <- 1000
+detx$NumDetx[detx$DateID == 'SDF1508_2023-04-12'] <- 3000
+detx$NumDetx[detx$DateID == 'SDF1508_2023-04-13'] <- 7500
+detx$NumDetx[detx$DateID == 'SDF1508_2023-04-14'] <- 2000
+
 detx$NumDetx[detx$DateID == 'MLS737_2019-04-09'] <- NA
 detx$NumDetx[detx$DateID == 'MLS737_2019-04-13'] <- NA
 detx$NumDetx[detx$DateID == 'MLS737_2019-04-20'] <- NA
@@ -382,6 +388,9 @@ detx$NumDetx[detx$DateID == 'SDF1112_2019-05-10'] <- NA
 
 detx$NumDetx[detx$DateID == 'NEW63_2019-04-04'] <- NA
 detx$NumDetx[detx$DateID == 'NEW63_2019-04-05'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-03'] <- NA
+
+detx$NumDetx[detx$DateID == 'NEW63_2024-04-07'] <- NA
 
 detx$NumDetx[detx$DateID == 'NEW94_2019-04-14'] <- NA
 detx$NumDetx[detx$DateID == 'NEW94_2019-05-11'] <- NA
@@ -495,6 +504,10 @@ detx$NumDetx[detx$DateID == 'MLS567_2020-03-25'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2020-03-26'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2020-04-02'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2020-04-10'] <- NA
+
+detx$NumDetx[detx$DateID == 'MLS567_2020-04-21'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-04-22'] <- NA
+detx$NumDetx[detx$DateID == 'MLS567_2020-04-24'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2022-03-20'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2022-04-19'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2022-04-26'] <- NA
@@ -524,10 +537,23 @@ detx$NumDetx[detx$DateID == 'SDF900_2021-04-06'] <- 5000
 detx$NumDetx[detx$DateID == 'SDF900_2022-04-22'] <- NA
 detx$NumDetx[detx$DateID == 'SDF900_2022-04-27'] <- NA
 detx$NumDetx[detx$DateID == 'SDF900_2022-04-28'] <- NA
-
 detx$NumDetx[detx$DateID == 'SDF900_2023-04-12'] <- 5000
 detx$NumDetx[detx$DateID == 'SDF900_2023-04-13'] <- 10000
 detx$NumDetx[detx$DateID == 'SDF900_2023-04-14'] <- 5000
+
+detx$NumDetx[detx$DateID == 'SDF1746_2021-04-07'] <- 5000
+detx$NumDetx[detx$DateID == 'SDF1746_2021-04-10'] <- 5000
+detx$NumDetx[detx$DateID == 'SDF1746_2021-04-11'] <- 1000
+detx$NumDetx[detx$DateID == 'SDF1746_2022-03-21'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1746_2023-04-12'] <- 5000
+detx$NumDetx[detx$DateID == 'SDF1746_2023-04-13'] <- 10000
+detx$NumDetx[detx$DateID == 'SDF1746_2023-04-15'] <- 7500
+detx$NumDetx[detx$DateID == 'SDF1746_2023-04-16'] <- 2500
+
+detx$NumDetx[detx$DateID == 'NEW448_2022-04-24'] <- 3000
+detx$NumDetx[detx$DateID == 'NEW448_2023-04-13'] <- 3000
+detx$NumDetx[detx$DateID == 'NEW448_2023-04-14'] <- 1000
+detx$NumDetx[detx$DateID == 'NEW448_2023-04-21'] <- 1000
 
 
 ############  
@@ -543,7 +569,7 @@ table(detx$Site, detx$Year)
 # sitedetx <- detx[detx$Site %in% c("WEA019", 'CALT019', 'NEW88',
 #                                   'MLS737','MLS619','MOET019',
 #                                   'SDF1734','SDF1264'),]
-# site <- 'SDF791'
+# site <- 'SDF1746'
 sitedetx <- detx[detx$Site == site,]
 # sitedetx <- detx[detx$Site == paste0(siteID),]
 # view(sitedetx)
@@ -602,8 +628,37 @@ p
 # ggplotly(p)
 
 
-delete_these_files <- c('NEW1306_20240516_220000.wav')
+delete_these_files <- c('NEW448_20240225_155630.wav',
+                        'NEW448_20240225_180000.wav')
 delete_media(conx, delete_these_files)
+
+
+
+mediasubset <- subset_files(conx, 'NEW1082', "2020-04-01", "2024-04-15")
+
+
+Sys.time()
+start <- Sys.time()
+scores <- scoresDetect(
+  con = conx,
+  recordingNames = mediasubset$filename,
+  templateNames = 'template_SDF791_20210408_150000bin_thresh40_cu12',
+  # scoreThresholds = 12,
+  recordingRootPath = 'https://vpmon-audio.s3.amazonaws.com/',
+  ammlPath = paste0(getwd(), "/ammls"),
+  dbInsert = T,
+  showProgress = T
+)
+stop <- Sys.time()
+Sys.time()
+elapse <- stop - start
+elapse
+nrow(mediasubset)/as.numeric(elapse)
+
+
+
+
+
 
 
 
