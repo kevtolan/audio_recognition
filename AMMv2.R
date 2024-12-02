@@ -10,6 +10,7 @@
 options(timeout=1000)
 library(AMMonitor)
 library(aws.s3)
+library(ggrain)
 library(tidyverse)
 library(RSQLite)
 library(elevatr)
@@ -22,15 +23,19 @@ library(plotly)
 source("/Users/kevintolan/R/myfunctions.R")
 # library(usethis)
 # edit_r_environ()
-  
+
 setwd('~/R/AMMonitor_VPMon/VPMon_AMM')
 # AMMonitor::launchApp()
 db.path <- '~/R/AMMonitor_VPMon/VPMon_AMM/database/VPMon_AMM.sqlite'
 conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
 RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
 
+every_nth = function(n) {
+  return(function(x) {x[c(TRUE, rep(FALSE, n - 1))]})
+}
 
-site <- 'MLS567'
+
+site <- 'NEW429'
 
 mediafiles <- RSQLite::dbReadTable(conn = conx,
                                    name = 'media')
@@ -41,7 +46,7 @@ detections <- RSQLite::dbGetQuery(conn = conx,
 
 detections$fk_modeloutputid <- detections$pk_modeloutputid
 
-detections2<- detections[,c('pk_mediaid','filename','fk_modelid','start_time','start_date','value_num','fk_modeloutputid')]
+detections2 <- detections[,c('pk_mediaid','filename','fk_modelid','start_time','start_date','value_num','fk_modeloutputid')]
 # names(detections)[names(detections) == 'pk_modeloutputid'] <- 'fk_modeloutputid'
 
 
@@ -82,11 +87,20 @@ detx$DateID <-  paste0(detx$Site,'_',detx$start_date)
 ############# 
 #manually overwrite detections
 
+
+detx$NumDetx[detx$DateID == 'NEW429_2022-03-26'] <- NA #ducks
+
+
+
+detx$NumDetx[detx$DateID == 'NEW447_2020-04-17'] <- 250
+detx$NumDetx[detx$DateID == 'NEW447_2020-04-18'] <- 250
+detx$NumDetx[detx$DateID == 'NEW447_2020-04-23'] <- 1000
+detx$NumDetx[detx$DateID == 'NEW447_2020-04-27'] <- 1000
+detx$NumDetx[detx$DateID == 'NEW447_2020-04-28'] <- 3000
+
 detx$NumDetx[detx$DateID == 'NEW383_2020-03-20'] <- NA
 detx$NumDetx[detx$DateID == 'NEW383_2020-03-29'] <- NA
 detx$NumDetx[detx$DateID == 'NEW383_2020-04-13'] <- 10 
-
-
 
 
 detx$NumDetx[detx$DateID == 'MLS1143_2019-03-28'] <- NA
@@ -136,6 +150,7 @@ detx$NumDetx[detx$DateID == 'MLS619_2019-04-23'] <- NA
 detx$NumDetx[detx$DateID == 'MLS619_2019-04-24'] <- NA
 detx$NumDetx[detx$DateID == 'MLS619_2019-04-25'] <- NA
 detx$NumDetx[detx$DateID == 'MLS619_2019-04-26'] <- NA
+detx$NumDetx[detx$DateID == 'MLS619_2022-04-12'] <- 3000
 detx$NumDetx[detx$DateID == 'MLS619_2023-04-06'] <- 12000
 detx$NumDetx[detx$DateID == 'MLS619_2023-04-12'] <- 600
 detx$NumDetx[detx$DateID == 'MLS619_2023-04-13'] <- 12000
@@ -217,6 +232,7 @@ detx$NumDetx[detx$DateID == 'MOET019_2020-04-30'] <- 2
 detx$NumDetx[detx$DateID == 'MOET019_2020-05-02'] <- NA
 detx$NumDetx[detx$DateID == 'MOET019_2020-05-03'] <- NA
 detx$NumDetx[detx$DateID == 'MOET019_2022-04-11'] <- NA
+detx$NumDetx[detx$DateID == 'MOET019_2022-04-26'] <- 1000
 detx$NumDetx[detx$DateID == 'MOET019_2023-05-07'] <- NA
 
 detx$NumDetx[detx$DateID == 'SDF1734_2019-04-03'] <- NA
@@ -267,7 +283,12 @@ detx$NumDetx[detx$DateID == 'SDF1264_2019-04-17'] <- NA
 detx$NumDetx[detx$DateID == 'SDF1264_2019-04-18'] <- NA
 
 detx$NumDetx[detx$DateID == 'NEW1387_2024-03-21'] <- NA
+detx$NumDetx[detx$DateID == 'NEW1387_2024-04-24'] <- NA
+detx$NumDetx[detx$DateID == 'NEW1387_2024-05-01'] <- NA
+detx$NumDetx[detx$DateID == 'NEW1387_2024-05-17'] <- NA
 detx$NumDetx[detx$DateID == 'NEW1387_2024-05-18'] <- NA
+
+
 
 detx$NumDetx[detx$DateID == 'NEW51_2020-03-20'] <- NA
 detx$NumDetx[detx$DateID == 'NEW51_2020-03-29'] <- NA
@@ -310,13 +331,17 @@ detx$NumDetx[detx$DateID == 'NEW12_2020-05-03'] <- NA
 detx$NumDetx[detx$DateID == 'NEW12_2020-05-04'] <- NA
 detx$NumDetx[detx$DateID == 'NEW12_2020-05-05'] <- NA
 
-detx$NumDetx[detx$DateID == 'MLS411_2019-03-29'] <- NA
-detx$NumDetx[detx$DateID == 'MLS411_2019-03-30'] <- NA
-detx$NumDetx[detx$DateID == 'MLS411_2019-04-02'] <- NA
-detx$NumDetx[detx$DateID == 'MLS411_2019-04-03'] <- NA
+#no MLS411 data from '19, though?
+# detx$NumDetx[detx$DateID == 'MLS411_2019-03-29'] <- NA
+# detx$NumDetx[detx$DateID == 'MLS411_2019-03-30'] <- NA
+# detx$NumDetx[detx$DateID == 'MLS411_2019-04-02'] <- NA
+# detx$NumDetx[detx$DateID == 'MLS411_2019-04-03'] <- NA
 detx$NumDetx[detx$DateID == 'MLS411_2021-03-26'] <- NA
 detx$NumDetx[detx$DateID == 'MLS411_2020-03-29'] <- NA
 detx$NumDetx[detx$DateID == 'MLS411_2023-04-25'] <- 100
+detx$NumDetx[detx$DateID == 'MLS411_2024-03-29'] <- NA
+detx$NumDetx[detx$DateID == 'MLS411_2024-04-28'] <- 500
+detx$NumDetx[detx$DateID == 'MLS411_2024-04-16'] <- 500
 
 detx$NumDetx[detx$DateID == 'SDF791_2019-04-18'] <- 10
 detx$NumDetx[detx$DateID == 'SDF791_2019-04-20'] <- 10
@@ -430,6 +455,13 @@ detx$NumDetx[detx$DateID == 'MIR019_2019-03-28'] <- NA
 detx$NumDetx[detx$DateID == 'MIR019_2019-03-29'] <- NA
 detx$NumDetx[detx$DateID == 'MIR019_2019-03-31'] <- 1
 detx$NumDetx[detx$DateID == 'MIR019_2019-04-05'] <- 1
+detx$NumDetx[detx$DateID == 'MIR019_2019-04-09'] <- NA
+detx$NumDetx[detx$DateID == 'MIR019_2019-04-09'] <- NA
+detx$NumDetx[detx$DateID == 'MIR019_2019-04-15'] <- NA
+detx$NumDetx[detx$DateID == 'MIR019_2019-04-17'] <- NA
+detx$NumDetx[detx$DateID == 'MIR019_2019-04-21'] <- NA
+detx$NumDetx[detx$DateID == 'MIR019_2019-04-23'] <- NA
+detx$NumDetx[detx$DateID == 'MIR019_2019-04-24'] <- NA
 
 detx$NumDetx[detx$DateID == 'MLS165_2021-03-30'] <- NA
 detx$NumDetx[detx$DateID == 'MLS165_2021-04-02'] <- NA
@@ -571,70 +603,96 @@ table(detx$Site, detx$Year)
 #                                   'SDF1734','SDF1264'),]
 # site <- 'SDF1746'
 sitedetx <- detx[detx$Site == site,]
-# sitedetx <- detx[detx$Site == paste0(siteID),]
-# view(sitedetx)
-# 
-# ggplot() + 
-#   geom_line(data = sitedetx, aes(x = Day, y = NumDetx, group = Site, color = Year)) 
+sitedetx$RecordingDate <- sitedetx$start_date
+sitedetx <- subset(sitedetx, select=-c(start_date))
 
 
-every_nth = function(n) {
-  return(function(x) {x[c(TRUE, rep(FALSE, n - 1))]})
-}
+first_last_dates <- sitedetx %>%
+  filter(!is.na(RecordingDate)) %>%
+  mutate(Year = format(RecordingDate, "%Y")) %>%
+  group_by(Year) %>%
+  summarise(
+    start_date = min(RecordingDate) - 1, 
+    end_date = max(RecordingDate) + 1,   
+    .groups = "drop"
+  )
+
+sitedetx <- sitedetx %>%
+  mutate(Year = format(RecordingDate, "%Y")) %>%
+  left_join(first_last_dates, by = "Year")
+
+padded_data <- sitedetx %>%
+  group_by(Year) %>%
+  group_modify(~ {
+    start_date <- unique(.x$start_date)
+    end_date <- unique(.x$end_date)
+    if (!is.na(start_date) & !is.na(end_date)) {
+      pad(.x, start_val = start_date, end_val = end_date, by = "RecordingDate")
+    } else {
+      .x
+    }
+  }) %>%
+  ungroup()
+
+
+padded_data$DateID <- paste0(site,"_",padded_data$RecordingDate)
+padded_data$Year <-  format(padded_data$RecordingDate,"%Y")
+padded_data$Day <-  format(padded_data$RecordingDate,"%m/%d")
+padded_data$Site <- site
+
+padded_data_withNAs <- padded_data
+
+padded_data <- padded_data %>%
+  mutate(`Relative Call Intensity` = ifelse(is.na(NumDetx), 0, NumDetx))
 
 
 p <- ggplot() +
-  geom_jitter(data = sitedetx, aes(x = Day, y = Year, color = Year, size = `Relative Call Intensity`),  height = 0.03, fill = 'black', alpha = 0.7) +
- scale_x_discrete(breaks = every_nth(n = 3)) +
+  geom_jitter(data = padded_data_withNAs, aes(x = Day, y = Year, color = Year, size = `Relative Call Intensity`),  height = 0.03, fill = 'black', alpha = 0.7) +
+  scale_x_discrete(breaks = every_nth(n = 3)) +
   theme(legend.position="none")
 p
 # geom_jitter(data = sitedetx, aes(x = Day, y = Site, color = Year, size = NumDetx),  height = 0.11, alpha = 0.7)
 ggplotly(p)
 
 
-sitedetxpad <- pad(sitedetx, group = "Year")
-
-sitedetxpad$DateID <- paste0(site,"_",sitedetxpad$start_date)
-sitedetxpad$Year <-  format(sitedetxpad$start_date,"%Y")
-sitedetxpad$Day <-  format(sitedetxpad$start_date,"%m/%d")
-sitedetxpad$Site <- site
-
-sitedetxpad[is.na(sitedetxpad)] <- 0
-
-# 
-# sitedetxpad[is.na(sitedetxpa  d)] <- 0
 p <- ggplot() + 
-  geom_line(data = sitedetxpad, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), size=2) +
-  # geom_smooth(data = sitedetx, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), method = 'loess',  level = 0.05, size=2) +
-  geom_point(data = sitedetxpad, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year)) +
+  geom_line(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), size=2) +
+  # geom_smooth(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), method = 'loess', level = 0.5``) +
+  geom_point(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year)) +
+  geom_area(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), alpha = .9) +
   scale_x_discrete(breaks = every_nth(n = 3)) +
   scale_color_manual(values = c("#7F58AF","#64C5EB","#E84D8A","#FEB326","#43aa8b","#023047")) +
   theme(axis.title=element_text(size=20),
         legend.position="none",
         strip.text = element_text(size=12)) +
-  # theme(legend.position = c(.15, .65)) + 
-  # theme(legend.title = element_text(face="bold", size=20)) +
-  # theme(legend.text = element_text(size=15)) +
-  # theme(legend.background = element_rect(size=1.5, colour ="black")) +
-  # theme(legend.key.height= unit(3, 'cm'), legend.key.width= unit(4, 'cm')) +
-  # theme(text = element_text(size=16)) +
   geom_hline(data = data.frame(type="A", y=0), mapping=aes(yintercept=y), size = 1) +
   # geom_vline(xintercept = c(2,16,30,44),  linetype="dashed", size = 1) + 
   ylim(0, NA) +
-  facet_wrap( ~Year, scales="free_y", ncol = 1) +
-  labs(title = paste(sitedetx$Site,"Wood Frog Detections"))
+  facet_wrap( ~ Year, scales="free_y", ncol = 1) +
+  labs(title = paste(padded_data$Site,"Wood Frog Detections")) #+
+  # coord_flip()
 p
 # geom_jitter(data = sitedetx, aes(x = Day, y = Site, color = Year, size = NumDetx),  height = 0.11, alpha = 0.7)
 # ggplotly(p)
 
+# ggplot(padded_data, aes(Year, `Relative Call Intensity`, fill = Year)) +
+#   geom_rain() +
+#   theme_classic() +
+#   theme(axis.title.x = element_blank(), 
+#         axis.text.x = element_blank(), axis.ticks.x = element_blank()) + 
+#   coord_flip()
 
-delete_these_files <- c('NEW448_20240225_155630.wav',
-                        'NEW448_20240225_180000.wav')
+
+
+
+
+
+delete_these_files <- c('NEW429_20220311_140000.wav')
 delete_media(conx, delete_these_files)
 
 
 
-mediasubset <- subset_files(conx, 'NEW1082', "2020-04-01", "2024-04-15")
+mediasubset <- subset_files(conx, 'NEW447', "2023-04-15", "2023-05-01")
 
 
 Sys.time()
@@ -849,6 +907,48 @@ RSQLite::dbExecute(conn = conx,
                                 WHERE fk_mediaid = '16462' ")
 
 
+
+stations <- locationsGetStations(
+  amm_fp = '~/R/AMMonitor_VPMon/VPMon_AMM',
+  conx,
+  noaa_token = "settings",
+  startDate = NULL,
+  endDate = NULL,
+  # minlat, minlong, maxlat, maxlong
+  bbox =  c(42.8, -73.5, 45.1, -71.4),  
+  dbInsert = FALSE,
+  disconnect = FALSE
+)
+# -73.43904261392613,26973989929895,9364526975269,1550900568005
+
+
+DBI::dbAppendTable(
+  conn = conx, 
+  name = "locations", 
+  value = stations
+)
+
+locations <- DBI::dbReadTable(conx, name = "locations")
+indices <- stats::complete.cases(locations$lat, locations$long, locations$location_type)
+locations_xy <- locations[indices, ]
+
+g <- ggplot2::ggplot(locations_xy,  aes(x = long, y = lat))  +
+  geom_point(
+    data = locations_xy, 
+    aes(x = long, y = lat, shape = location_type, color = location_type), 
+    size = 3) +
+  coord_fixed() +
+  theme(
+    legend.position = "top", 
+    legend.direction = "horizontal") + 
+  labs(
+    title = "Map of Locations",
+    x = "Longitude",
+    y = "Latitude") 
+#theme_minimal()
+
+# show the plot
+g
 
 
 
