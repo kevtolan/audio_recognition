@@ -35,7 +35,7 @@ every_nth = function(n) {
 }
 
 
-site <- 'NEW429'
+site <- 'KWN238'
 
 mediafiles <- RSQLite::dbReadTable(conn = conx,
                                    name = 'media')
@@ -86,10 +86,23 @@ detx$DateID <-  paste0(detx$Site,'_',detx$start_date)
 
 ############# 
 #manually overwrite detections
+detx$NumDetx[detx$DateID == 'KWN238_2024-04-24'] <- NA 
+
+
+
+
+detx$NumDetx[detx$DateID == 'NEW30_2021-03-28'] <- 100 
+### double check detx$NumDetx[detx$DateID == 'NEW30_2023-03-18'] <- 100
+detx$NumDetx[detx$DateID == 'NEW30_2023-03-29'] <- NA 
 
 
 detx$NumDetx[detx$DateID == 'NEW429_2022-03-26'] <- NA #ducks
-
+detx$NumDetx[detx$DateID == 'NEW429_2023-04-03'] <- 3000 
+detx$NumDetx[detx$DateID == 'NEW429_2023-04-04'] <- 3000 
+detx$NumDetx[detx$DateID == 'NEW429_2023-04-06'] <- 500 
+detx$NumDetx[detx$DateID == 'NEW429_2024-03-29'] <- 2000 
+detx$NumDetx[detx$DateID == 'NEW429_2024-03-31'] <- 500 
+detx$NumDetx[detx$DateID == 'NEW429_2024-04-01'] <- 1000 
 
 
 detx$NumDetx[detx$DateID == 'NEW447_2020-04-17'] <- 250
@@ -410,6 +423,16 @@ detx$NumDetx[detx$DateID == 'SDF1112_2019-04-28'] <- 3000
 detx$NumDetx[detx$DateID == 'SDF1112_2019-05-03'] <- NA
 detx$NumDetx[detx$DateID == 'SDF1112_2019-05-09'] <- NA
 detx$NumDetx[detx$DateID == 'SDF1112_2019-05-10'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1112_2022-04-22'] <- 50
+detx$NumDetx[detx$DateID == 'SDF1112_2023-04-15'] <- 750
+detx$NumDetx[detx$DateID == 'SDF1112_2023-04-16'] <- 500
+detx$NumDetx[detx$DateID == 'SDF1112_2024-04-12'] <- 500
+detx$NumDetx[detx$DateID == 'SDF1112_2024-04-13'] <- 500
+detx$NumDetx[detx$DateID == 'SDF1112_2024-04-15'] <- 500
+detx$NumDetx[detx$DateID == 'SDF1112_2024-04-15'] <- 100
+detx$NumDetx[detx$DateID == 'SDF1112_2024-04-24'] <- NA
+
+
 
 detx$NumDetx[detx$DateID == 'NEW63_2019-04-04'] <- NA
 detx$NumDetx[detx$DateID == 'NEW63_2019-04-05'] <- NA
@@ -686,33 +709,34 @@ p
 
 
 
+# 
+# delete_these_files <- c('NEW30_20230310_200000.wav',
+#                         'NEW30_20230312_150000.wav')
+# delete_media(conx, delete_these_files)
 
-delete_these_files <- c('NEW429_20220311_140000.wav')
-delete_media(conx, delete_these_files)
-
-
-
-mediasubset <- subset_files(conx, 'NEW447', "2023-04-15", "2023-05-01")
-
-
-Sys.time()
-start <- Sys.time()
-scores <- scoresDetect(
-  con = conx,
-  recordingNames = mediasubset$filename,
-  templateNames = 'template_SDF791_20210408_150000bin_thresh40_cu12',
-  # scoreThresholds = 12,
-  recordingRootPath = 'https://vpmon-audio.s3.amazonaws.com/',
-  ammlPath = paste0(getwd(), "/ammls"),
-  dbInsert = T,
-  showProgress = T
-)
-stop <- Sys.time()
-Sys.time()
-elapse <- stop - start
-elapse
-nrow(mediasubset)/as.numeric(elapse)
-
+  
+  
+  mediasubset <- subset_files(conx, 'KWN238', "2024-04-20", "2024-05-01")
+  
+  
+  Sys.time()
+  start <- Sys.time()
+  scores <- scoresDetect(
+    con = conx,
+    recordingNames = mediasubset$filename,
+    templateNames = 'template_SDF791_20210408_150000bin_thresh40_cu12',
+    # scoreThresholds = 12,
+    recordingRootPath = 'https://vpmon-audio.s3.amazonaws.com/',
+    ammlPath = paste0(getwd(), "/ammls"),
+    dbInsert = T,
+    showProgress = T
+  )
+  stop <- Sys.time()
+  Sys.time()
+  elapse <- stop - start
+  elapse
+  nrow(mediasubset)/as.numeric(elapse)
+  
 
 
 
@@ -863,12 +887,12 @@ view(visitlist)
 #add files to db
 
 
-bucketadd <- bucketlist[bucketlist$Site == "SDF941",]
+bucketadd <- bucketlist[bucketlist$Site == "KWN934",]
 
 bucketadd <- bucketadd[,c("filename","filepath",'start_date','start_time')]
 
 bucketadd$pk_mediaid <- NA
-bucketadd$fk_visitid <- 48
+bucketadd$fk_visitid <- 109
 bucketadd$sb_exclude <- NA
 bucketadd$fk_sciencebaseid <- NA
 bucketadd$filesize <- NA
@@ -900,7 +924,7 @@ RSQLite::dbExecute(conn = conx,
 
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM media
-                                WHERE fk_visitid = 48  ")
+                                WHERE fk_visitid = 13  ")
 
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM modeloutputs
