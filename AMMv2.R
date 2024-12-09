@@ -35,7 +35,7 @@ every_nth = function(n) {
 }
 
 
-site <- 'KWN238'
+site <- 'KWN473'
 
 mediafiles <- RSQLite::dbReadTable(conn = conx,
                                    name = 'media')
@@ -89,12 +89,26 @@ detx$DateID <-  paste0(detx$Site,'_',detx$start_date)
 detx$NumDetx[detx$DateID == 'KWN238_2024-04-24'] <- NA 
 
 
+detx$NumDetx[detx$DateID == 'KWN473_2020-03-16'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN473_2020-03-17'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN473_2020-03-20'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN473_2020-03-21'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN473_2020-03-23'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN473_2020-03-27'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN473_2020-04-02'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN473_2020-04-05'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN473_2020-04-06'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN473_2020-04-10'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN473_2020-04-11'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN473_2020-04-12'] <- 100 
+detx$NumDetx[detx$DateID == 'KWN473_2020-04-15'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN473_2020-04-16'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN473_2020-04-17'] <- NA 
 
 
 detx$NumDetx[detx$DateID == 'NEW30_2021-03-28'] <- 100 
 ### double check detx$NumDetx[detx$DateID == 'NEW30_2023-03-18'] <- 100
 detx$NumDetx[detx$DateID == 'NEW30_2023-03-29'] <- NA 
-
 
 detx$NumDetx[detx$DateID == 'NEW429_2022-03-26'] <- NA #ducks
 detx$NumDetx[detx$DateID == 'NEW429_2023-04-03'] <- 3000 
@@ -441,6 +455,15 @@ detx$NumDetx[detx$DateID == 'NEW63_2019-05-03'] <- NA
 detx$NumDetx[detx$DateID == 'NEW63_2024-04-07'] <- NA
 
 detx$NumDetx[detx$DateID == 'NEW94_2019-04-14'] <- NA
+detx$NumDetx[detx$DateID == 'NEW94_2019-04-15'] <- NA
+detx$NumDetx[detx$DateID == 'NEW94_2019-04-16'] <- NA
+detx$NumDetx[detx$DateID == 'NEW94_2019-04-17'] <- NA
+detx$NumDetx[detx$DateID == 'NEW94_2019-04-18'] <- NA
+detx$NumDetx[detx$DateID == 'NEW94_2019-04-19'] <- NA
+detx$NumDetx[detx$DateID == 'NEW94_2019-04-20'] <- NA
+detx$NumDetx[detx$DateID == 'NEW94_2019-04-21'] <- NA
+detx$NumDetx[detx$DateID == 'NEW94_2019-04-22'] <- 2000
+detx$NumDetx[detx$DateID == 'NEW94_2019-04-22'] <- 5000
 detx$NumDetx[detx$DateID == 'NEW94_2019-05-11'] <- NA
 
 detx$NumDetx[detx$DateID == 'KWN581_2021-04-07'] <- 500
@@ -680,11 +703,12 @@ ggplotly(p)
 
 p <- ggplot() + 
   geom_line(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), size=2) +
-  # geom_smooth(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), method = 'loess', level = 0.5``) +
+  # geom_smooth(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), method = "loess", size=2) +
   geom_point(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year)) +
-  geom_area(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), alpha = .9) +
+  geom_area(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, fill = Year), alpha = .9) +
   scale_x_discrete(breaks = every_nth(n = 3)) +
   scale_color_manual(values = c("#7F58AF","#64C5EB","#E84D8A","#FEB326","#43aa8b","#023047")) +
+  scale_fill_manual(values = c("#7F58AF","#64C5EB","#E84D8A","#FEB326","#43aa8b","#023047")) +
   theme(axis.title=element_text(size=20),
         legend.position="none",
         strip.text = element_text(size=12)) +
@@ -709,10 +733,17 @@ p
 
 
 
-# 
-# delete_these_files <- c('NEW30_20230310_200000.wav',
-#                         'NEW30_20230312_150000.wav')
-# delete_media(conx, delete_these_files)
+
+delete_these_files <- c('KWN473_20200313_150000.wav',
+                        'KWN473_20200313_200000.wav',
+                        'KWN473_20200313_220000.wav',
+                        'KWN473_20200314_150000.wav',
+                        'KWN473_20200314_200000.wav',
+                        'KWN473_20200314_220000.wav',
+                        'KWN473_20200315_150000.wav',
+                        'KWN473_20200315_200000.wav',
+                        'KWN473_20200315_220000.wav')
+delete_media(conx, delete_these_files)
 
   
   
