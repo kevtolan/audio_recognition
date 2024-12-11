@@ -35,7 +35,7 @@ every_nth = function(n) {
 }
 
 
-site <- 'KWN473'
+site <- 'NEW319'
 
 mediafiles <- RSQLite::dbReadTable(conn = conx,
                                    name = 'media')
@@ -86,8 +86,27 @@ detx$DateID <-  paste0(detx$Site,'_',detx$start_date)
 
 ############# 
 #manually overwrite detections
-detx$NumDetx[detx$DateID == 'KWN238_2024-04-24'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-03-29'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-01'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-02'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-03'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-05'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-06'] <- 1 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-09'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-10'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-11'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-12'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-16'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-17'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-18'] <- 1 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-21'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-22'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-23'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW319_2020-04-27'] <- NA 
 
+
+
+detx$NumDetx[detx$DateID == 'KWN238_2024-04-24'] <- NA 
 
 detx$NumDetx[detx$DateID == 'KWN473_2020-03-16'] <- NA 
 detx$NumDetx[detx$DateID == 'KWN473_2020-03-17'] <- NA 
@@ -127,7 +146,16 @@ detx$NumDetx[detx$DateID == 'NEW447_2020-04-28'] <- 3000
 
 detx$NumDetx[detx$DateID == 'NEW383_2020-03-20'] <- NA
 detx$NumDetx[detx$DateID == 'NEW383_2020-03-29'] <- NA
-detx$NumDetx[detx$DateID == 'NEW383_2020-04-13'] <- 10 
+detx$NumDetx[detx$DateID == 'NEW383_2020-04-13'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW383_2020-04-17'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW383_2020-04-21'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW383_2021-04-02'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW383_2021-04-07'] <- 500 
+detx$NumDetx[detx$DateID == 'NEW383_2021-04-28'] <- 50 
+detx$NumDetx[detx$DateID == 'NEW383_2023-04-02'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW383_2023-04-03'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW383_2023-04-07'] <- NA 
+detx$NumDetx[detx$DateID == 'NEW383_2023-04-08'] <- NA 
 
 
 detx$NumDetx[detx$DateID == 'MLS1143_2019-03-28'] <- NA
@@ -219,6 +247,8 @@ detx$NumDetx[detx$DateID == 'WEA019_2023-05-16'] <- NA
 detx$NumDetx[detx$DateID == 'WEA019_2024-03-27'] <- NA
 detx$NumDetx[detx$DateID == 'WEA019_2024-03-20'] <- NA
 
+detx$NumDetx[detx$DateID == 'NEW88_2021-03-31'] <- 1000 # check other times on date
+detx$NumDetx[detx$DateID == 'NEW88_2022-04-26'] <- 6000
 detx$NumDetx[detx$DateID == 'NEW88_2024-03-20'] <- NA
 detx$NumDetx[detx$DateID == 'NEW88_2024-05-17'] <- NA
 
@@ -267,8 +297,24 @@ detx$NumDetx[detx$DateID == 'SDF1734_2019-04-04'] <- NA
 detx$NumDetx[detx$DateID == 'SDF1734_2019-04-15'] <- NA
 detx$NumDetx[detx$DateID == 'SDF1734_2019-04-16'] <- NA
 detx$NumDetx[detx$DateID == 'SDF1734_2019-04-18'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1734_2019-04-24'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1734_2019-04-25'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1734_2019-04-26'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1734_2019-04-27'] <- NA
 detx$NumDetx[detx$DateID == 'SDF1734_2019-04-29'] <- NA
 detx$NumDetx[detx$DateID == 'SDF1734_2019-05-01'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1734_2019-05-03'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1734_2019-05-04'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1734_2019-05-05'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1734_2019-05-08'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1734_2019-05-12'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1734_2019-05-13'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1734_2019-05-14'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1734_2019-05-15'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1734_2019-05-16'] <- NA
+
+
+
 detx$NumDetx[detx$DateID == 'SDF1734_2024-03-10'] <- NA
 detx$NumDetx[detx$DateID == 'SDF1734_2024-03-21'] <- NA
 detx$NumDetx[detx$DateID == 'SDF1734_2024-04-29'] <- NA
@@ -381,8 +427,18 @@ detx$NumDetx[detx$DateID == 'SDF791_2021-04-18'] <- 50
 detx$NumDetx[detx$DateID == 'SDF791_2022-04-13'] <- 1000
 detx$NumDetx[detx$DateID == 'SDF791_2023-05-08'] <- 250
 
+
+
+detx$NumDetx[detx$DateID == 'STA019_2019-04-20'] <- 1
+detx$NumDetx[detx$DateID == 'STA019_2019-04-21'] <- NA
+detx$NumDetx[detx$DateID == 'STA019_2019-04-22'] <- NA
+detx$NumDetx[detx$DateID == 'STA019_2019-04-23'] <- NA
+detx$NumDetx[detx$DateID == 'STA019_2019-04-25'] <- NA
 detx$NumDetx[detx$DateID == 'STA019_2019-05-04'] <- NA
 detx$NumDetx[detx$DateID == 'STA019_2019-05-10'] <- NA
+## check 5/25?
+
+
 
 detx$NumDetx[detx$DateID == 'CON019_2019-04-03'] <- NA
 detx$NumDetx[detx$DateID == 'CON019_2020-04-03'] <- NA #rain
@@ -450,7 +506,32 @@ detx$NumDetx[detx$DateID == 'SDF1112_2024-04-24'] <- NA
 
 detx$NumDetx[detx$DateID == 'NEW63_2019-04-04'] <- NA
 detx$NumDetx[detx$DateID == 'NEW63_2019-04-05'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-04-09'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-04-10'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-04-12'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-04-13'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-04-26'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-04-27'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-04-28'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-04-30'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-01'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-02'] <- NA
 detx$NumDetx[detx$DateID == 'NEW63_2019-05-03'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-04'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-05'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-06'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-07'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-08'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-09'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-10'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-11'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-12'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-13'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-14'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-15'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-16'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-17'] <- NA
+detx$NumDetx[detx$DateID == 'NEW63_2019-05-18'] <- NA
 
 detx$NumDetx[detx$DateID == 'NEW63_2024-04-07'] <- NA
 
@@ -463,7 +544,12 @@ detx$NumDetx[detx$DateID == 'NEW94_2019-04-19'] <- NA
 detx$NumDetx[detx$DateID == 'NEW94_2019-04-20'] <- NA
 detx$NumDetx[detx$DateID == 'NEW94_2019-04-21'] <- NA
 detx$NumDetx[detx$DateID == 'NEW94_2019-04-22'] <- 2000
-detx$NumDetx[detx$DateID == 'NEW94_2019-04-22'] <- 5000
+detx$NumDetx[detx$DateID == 'NEW94_2019-04-23'] <- 5000
+detx$NumDetx[detx$DateID == 'NEW94_2019-05-06'] <- NA
+detx$NumDetx[detx$DateID == 'NEW94_2019-05-07'] <- NA
+detx$NumDetx[detx$DateID == 'NEW94_2019-05-08'] <- NA
+detx$NumDetx[detx$DateID == 'NEW94_2019-05-09'] <- NA
+detx$NumDetx[detx$DateID == 'NEW94_2019-05-10'] <- NA
 detx$NumDetx[detx$DateID == 'NEW94_2019-05-11'] <- NA
 
 detx$NumDetx[detx$DateID == 'KWN581_2021-04-07'] <- 500
@@ -525,7 +611,8 @@ detx$NumDetx[detx$DateID == 'NEW450_2021-04-11'] <- 3000
 detx$NumDetx[detx$DateID == 'NEW450_2021-04-14'] <- 3000
 detx$NumDetx[detx$DateID == 'NEW450_2022-04-01'] <- 3000
 detx$NumDetx[detx$DateID == 'NEW450_2022-04-06'] <- 250
-detx$NumDetx[detx$DateID == 'NEW450_2023-04-13'] <- 6000
+detx$NumDetx[detx$DateID == 'NEW450_2022-04-13'] <- 6000
+detx$NumDetx[detx$DateID == 'NEW450_2022-04-26'] <- 2500
 detx$NumDetx[detx$DateID == 'NEW450_2023-04-14'] <- 12000
 detx$NumDetx[detx$DateID == 'NEW450_2024-03-29'] <- NA
 detx$NumDetx[detx$DateID == 'NEW450_2024-04-12'] <- NA
@@ -705,7 +792,7 @@ p <- ggplot() +
   geom_line(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), size=2) +
   # geom_smooth(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year), method = "loess", size=2) +
   geom_point(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, color = Year)) +
-  geom_area(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, fill = Year), alpha = .9) +
+  geom_area(data = padded_data, aes(x = Day, y = `Relative Call Intensity`, group = Year, fill = Year), alpha = .5) +
   scale_x_discrete(breaks = every_nth(n = 3)) +
   scale_color_manual(values = c("#7F58AF","#64C5EB","#E84D8A","#FEB326","#43aa8b","#023047")) +
   scale_fill_manual(values = c("#7F58AF","#64C5EB","#E84D8A","#FEB326","#43aa8b","#023047")) +
@@ -742,7 +829,10 @@ delete_these_files <- c('KWN473_20200313_150000.wav',
                         'KWN473_20200314_220000.wav',
                         'KWN473_20200315_150000.wav',
                         'KWN473_20200315_200000.wav',
-                        'KWN473_20200315_220000.wav')
+                        'KWN473_20200315_220000.wav',
+                        'NEW383_20210323_150000.wav',
+                        'NEW383_20220319_150000.wav',
+                        'NEW88_20230326_150000.wav')
 delete_media(conx, delete_these_files)
 
   
