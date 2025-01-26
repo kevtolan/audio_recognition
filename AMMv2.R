@@ -33,12 +33,11 @@ every_nth = function(n) {
   return(function(x) {x[c(TRUE, rep(FALSE, n - 1))]})
 }
 
-
-site <- 'MLS1315'
+site <- 'MLS318'
 
 # a <- RSQLite::dbReadTable(conn = conx,
 #                                    name = 'annotations')
-
+###########
 
 mediafiles <- RSQLite::dbReadTable(conn = conx,
                                    name = 'media')
@@ -106,6 +105,111 @@ detx <- bind_rows(detx,annotations)
 
 ############# 
 #manually overwrite detections
+detx$NumDetx[detx$DateID == 'JED019_2019-04-03'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2019-04-05'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2019-04-07'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2019-04-09'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2019-04-12'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2019-04-25'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2019-04-26'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2019-04-27'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2019-04-29'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2019-05-01'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2019-05-03'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2019-05-04'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2021-03-14'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2021-03-30'] <- NA 
+detx$NumDetx[detx$DateID == 'JED019_2021-03-31'] <- 1500 
+detx$NumDetx[detx$DateID == 'JED019_2021-04-05'] <- 5000
+detx$NumDetx[detx$DateID == 'JED019_2021-04-06'] <- 8000
+detx$NumDetx[detx$DateID == 'JED019_2021-04-10'] <- 9000
+detx$NumDetx[detx$DateID == 'JED019_2021-04-11'] <- 10000
+detx$NumDetx[detx$DateID == 'JED019_2021-04-12'] <- 2000
+detx$NumDetx[detx$DateID == 'JED019_2022-03-21'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2022-03-29'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2022-04-06'] <- 1000
+detx$NumDetx[detx$DateID == 'JED019_2022-04-08'] <- 4000 #distant
+detx$NumDetx[detx$DateID == 'JED019_2022-04-11'] <- 8000 #distant
+detx$NumDetx[detx$DateID == 'JED019_2022-04-20'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2022-04-21'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2022-04-25'] <- 100 # add 
+detx$NumDetx[detx$DateID == 'JED019_2022-04-28'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2022-04-29'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2022-04-30'] <- NA
+
+detx$NumDetx[detx$DateID == 'JED019_2023-04-02'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2023-04-10'] <- 500
+detx$NumDetx[detx$DateID == 'JED019_2023-04-11'] <- 8000
+detx$NumDetx[detx$DateID == 'JED019_2023-04-12'] <- 9000
+detx$NumDetx[detx$DateID == 'JED019_2023-04-13'] <- 7000
+detx$NumDetx[detx$DateID == 'JED019_2023-04-14'] <- 10000
+detx$NumDetx[detx$DateID == 'JED019_2023-04-15'] <- 1000
+detx$NumDetx[detx$DateID == 'JED019_2023-04-16'] <- 750
+detx$NumDetx[detx$DateID == 'JED019_2023-04-17'] <- 10
+detx$NumDetx[detx$DateID == 'JED019_2024-03-21'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2024-03-23'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2024-03-29'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2024-04-06'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2024-04-09'] <- 100
+detx$NumDetx[detx$DateID == 'JED019_2024-04-10'] <- 6000
+detx$NumDetx[detx$DateID == 'JED019_2024-04-11'] <- 5000
+detx$NumDetx[detx$DateID == 'JED019_2024-04-12'] <- 500
+detx$NumDetx[detx$DateID == 'JED019_2024-04-13'] <- 1000
+detx$NumDetx[detx$DateID == 'JED019_2024-04-16'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2024-04-24'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2024-04-28'] <- NA
+detx$NumDetx[detx$DateID == 'JED019_2024-04-30'] <- NA
+
+
+##########
+detx$NumDetx[detx$DateID == 'KWN19_2020-03-19'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-03-20'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-03-21'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-03-22'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-03-23'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-03-24'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-03-25'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-03-26'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-03-27'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-03-28'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-03-29'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-03-30'] <- 4000 
+detx$NumDetx[detx$DateID == 'KWN19_2020-03-31'] <- 7500 
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-02'] <- 4500
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-03'] <- 10000
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-06'] <- 8000
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-07'] <- 4700
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-08'] <- 4500
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-09'] <- NA
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-10'] <- NA
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-11'] <- NA
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-12'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-13'] <- 7000 
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-14'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-15'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-16'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-17'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-18'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-19'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-20'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-21'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-22'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2020-04-23'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2021-03-20'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2021-03-27'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2021-03-31'] <- 6000 
+detx$NumDetx[detx$DateID == 'KWN19_2021-04-04'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2021-04-05'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2021-04-07'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2021-04-08'] <- NA 
+detx$NumDetx[detx$DateID == 'KWN19_2021-04-15'] <- 500 
+
+
+detx$NumDetx[detx$DateID == 'SDF1508_2023-04-11'] <- 1000
+detx$NumDetx[detx$DateID == 'SDF1508_2023-04-12'] <- 3000
+detx$NumDetx[detx$DateID == 'SDF1508_2023-04-13'] <- 7500
+detx$NumDetx[detx$DateID == 'SDF1508_2023-04-14'] <- 2000
+
 
 detx$NumDetx[detx$DateID == 'MLS1315_2022-04-05'] <- 500
 detx$NumDetx[detx$DateID == 'MLS1315_2022-04-07'] <- 250
@@ -113,11 +217,10 @@ detx$NumDetx[detx$DateID == 'MLS1315_2022-04-11'] <- 10
 detx$NumDetx[detx$DateID == 'MLS1315_2022-04-13'] <- 50
 detx$NumDetx[detx$DateID == 'MLS1315_2022-04-18'] <- NA
 detx$NumDetx[detx$DateID == 'MLS1315_2022-04-21'] <- NA
+detx$NumDetx[detx$DateID == 'MLS1315_2023-03-25'] <- NA
 
+detx$NumDetx[detx$DateID == 'MLS1315_2024-04-12'] <- NA
 
-
-
-##########
 detx$NumDetx[detx$DateID == 'MLS567_2020-03-15'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2020-03-16'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2020-03-17'] <- NA
@@ -148,54 +251,7 @@ detx$NumDetx[detx$DateID == 'MLS567_2022-04-19'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2022-04-26'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2023-04-15'] <- 100
 
-detx$NumDetx[detx$DateID == 'JED019_2019-04-03'] <- NA 
-detx$NumDetx[detx$DateID == 'JED019_2019-04-05'] <- NA 
-detx$NumDetx[detx$DateID == 'JED019_2019-04-07'] <- NA 
-detx$NumDetx[detx$ DateID == 'JED019_2019-04-09'] <- NA 
-detx$NumDetx[detx$DateID == 'JED019_2019-04-12'] <- NA 
-detx$NumDetx[detx$DateID == 'JED019_2019-04-25'] <- NA 
-detx$NumDetx[detx$DateID == 'JED019_2019-04-26'] <- NA 
-detx$NumDetx[detx$DateID == 'JED019_2019-04-27'] <- NA 
-detx$NumDetx[detx$DateID == 'JED019_2019-04-29'] <- NA 
-detx$NumDetx[detx$DateID == 'JED019_2019-05-01'] <- NA 
-detx$NumDetx[detx$DateID == 'JED019_2019-05-03'] <- NA 
-detx$NumDetx[detx$DateID == 'JED019_2019-05-04'] <- NA 
-detx$NumDetx[detx$DateID == 'JED019_2021-03-14'] <- NA 
-detx$NumDetx[detx$DateID == 'JED019_2021-03-30'] <- NA 
-detx$NumDetx[detx$DateID == 'JED019_2021-03-30'] <- 1500 
-detx$NumDetx[detx$DateID == 'JED019_2021-04-06'] <- 5000
-detx$NumDetx[detx$DateID == 'JED019_2021-04-06'] <- 8000
-detx$NumDetx[detx$DateID == 'JED019_2021-04-12'] <- 2000
-detx$NumDetx[detx$DateID == 'JED019_2022-03-21'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2022-03-29'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2022-04-20'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2022-04-21'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2022-04-25'] <- 100
-detx$NumDetx[detx$DateID == 'JED019_2022-04-28'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2022-04-29'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2022-04-30'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2023-04-02'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2023-04-10'] <- 500
-detx$NumDetx[detx$DateID == 'JED019_2023-04-11'] <- 8000
-detx$NumDetx[detx$DateID == 'JED019_2023-04-12'] <- 9000
-detx$NumDetx[detx$DateID == 'JED019_2023-04-13'] <- 7000
-detx$NumDetx[detx$DateID == 'JED019_2023-04-14'] <- 10000
-detx$NumDetx[detx$DateID == 'JED019_2023-04-15'] <- 1000
-detx$NumDetx[detx$DateID == 'JED019_2023-04-16'] <- 750
-detx$NumDetx[detx$DateID == 'JED019_2023-04-17'] <- 10
-detx$NumDetx[detx$DateID == 'JED019_2024-03-21'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2024-03-23'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2024-03-29'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2024-04-06'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2024-04-09'] <- 100
-detx$NumDetx[detx$DateID == 'JED019_2024-04-10'] <- 6000
-detx$NumDetx[detx$DateID == 'JED019_2024-04-11'] <- 5000
-detx$NumDetx[detx$DateID == 'JED019_2024-04-12'] <- 500
-detx$NumDetx[detx$DateID == 'JED019_2024-04-13'] <- 1000
-detx$NumDetx[detx$DateID == 'JED019_2024-04-16'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2024-04-24'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2024-04-28'] <- NA
-detx$NumDetx[detx$DateID == 'JED019_2024-04-30'] <- NA
+
 
 detx$NumDetx[detx$DateID == 'KWN827_2019-04-12'] <- NA
 detx$NumDetx[detx$DateID == 'KWN827_2019-04-13'] <- NA
@@ -241,39 +297,7 @@ detx$NumDetx[detx$DateID == 'KWN827_2020-04-29'] <- NA
 detx$NumDetx[detx$DateID == 'KWN827_2020-04-30'] <- NA
 detx$NumDetx[detx$DateID == 'KWN827_2021-03-31'] <- NA
 
-detx$NumDetx[detx$DateID == 'KWN19_2020-03-20'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-03-21'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-03-22'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-03-23'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-03-24'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-03-25'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-03-26'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-03-27'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-03-28'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-03-29'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-03-30'] <- 4000 
-detx$NumDetx[detx$DateID == 'KWN19_2020-03-31'] <- 7500 
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-02'] <- 4500
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-03'] <- 10000
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-06'] <- 8000
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-07'] <- 4700
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-08'] <- 4500
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-09'] <- NA
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-10'] <- NA
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-11'] <- NA
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-12'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-13'] <- 7000 
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-14'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-15'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-16'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-17'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-18'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-19'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-20'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-21'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-22'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2020-04-23'] <- NA 
-detx$NumDetx[detx$DateID == 'KWN19_2021-04-15'] <- 500 
+
 
 
 detx$NumDetx[detx$DateID == 'KWN305_2019-04-03'] <- NA 
@@ -448,10 +472,7 @@ detx$NumDetx[detx$DateID == 'MLS1143_2022-04-21'] <- 500
 detx$NumDetx[detx$DateID == 'MLS1143_2023-04-12'] <- 10000
 
 
-detx$NumDetx[detx$DateID == 'SDF1508_2023-04-11'] <- 1000
-detx$NumDetx[detx$DateID == 'SDF1508_2023-04-12'] <- 3000
-detx$NumDetx[detx$DateID == 'SDF1508_2023-04-13'] <- 7500
-detx$NumDetx[detx$DateID == 'SDF1508_2023-04-14'] <- 2000
+
 
 detx$NumDetx[detx$DateID == 'MLS737_2019-04-09'] <- NA
 detx$NumDetx[detx$DateID == 'MLS737_2019-04-13'] <- NA
@@ -634,8 +655,6 @@ detx$NumDetx[detx$DateID == 'SDF736_2024-04-19'] <- 500
 detx$NumDetx[detx$DateID == 'SDF736_2024-04-23'] <- 100
 detx$NumDetx[detx$DateID == 'SDF736_2024-04-23'] <- 250
 
-
-
 detx$NumDetx[detx$DateID == 'SDF1264_2019-04-17'] <- NA
 detx$NumDetx[detx$DateID == 'SDF1264_2019-04-18'] <- NA
 
@@ -644,7 +663,6 @@ detx$NumDetx[detx$DateID == 'NEW1387_2024-04-24'] <- NA
 detx$NumDetx[detx$DateID == 'NEW1387_2024-05-01'] <- NA
 detx$NumDetx[detx$DateID == 'NEW1387_2024-05-17'] <- NA
 detx$NumDetx[detx$DateID == 'NEW1387_2024-05-18'] <- NA
-
 
 detx$NumDetx[detx$DateID == 'NEW51_2020-03-20'] <- NA
 detx$NumDetx[detx$DateID == 'NEW51_2020-03-29'] <- NA
@@ -694,6 +712,9 @@ detx$NumDetx[detx$DateID == 'MLS411_2020-04-02'] <- NA
 detx$NumDetx[detx$DateID == 'MLS411_2020-04-03'] <- NA
 detx$NumDetx[detx$DateID == 'MLS411_2020-04-05'] <- NA
 detx$NumDetx[detx$DateID == 'MLS411_2020-04-06'] <- NA
+detx$NumDetx[detx$DateID == 'MLS411_2020-04-09'] <- NA
+detx$NumDetx[detx$DateID == 'MLS411_2020-04-10'] <- NA 
+detx$NumDetx[detx$DateID == 'MLS411_2020-04-11'] <- NA 
 detx$NumDetx[detx$DateID == 'MLS411_2020-04-14'] <- NA
 detx$NumDetx[detx$DateID == 'MLS411_2020-04-15'] <- NA
 detx$NumDetx[detx$DateID == 'MLS411_2020-04-16'] <- 20
@@ -725,7 +746,6 @@ detx$NumDetx[detx$DateID == 'MLS411_2024-03-29'] <- NA
 detx$NumDetx[detx$DateID == 'MLS411_2024-04-28'] <- 500
 detx$NumDetx[detx$DateID == 'MLS411_2024-04-16'] <- 500
 
-
 detx$NumDetx[detx$DateID == 'SDF791_2019-04-18'] <- 10
 detx$NumDetx[detx$DateID == 'SDF791_2019-04-20'] <- 10
 detx$NumDetx[detx$DateID == 'SDF791_2019-04-29'] <- NA
@@ -737,7 +757,6 @@ detx$NumDetx[detx$DateID == 'SDF791_2021-04-18'] <- 50
 detx$NumDetx[detx$DateID == 'SDF791_2022-04-13'] <- 1000
 detx$NumDetx[detx$DateID == 'SDF791_2023-05-08'] <- 250
 
-
 detx$NumDetx[detx$DateID == 'STA019_2019-04-20'] <- 1
 detx$NumDetx[detx$DateID == 'STA019_2019-04-21'] <- NA
 detx$NumDetx[detx$DateID == 'STA019_2019-04-22'] <- NA
@@ -746,7 +765,6 @@ detx$NumDetx[detx$DateID == 'STA019_2019-04-25'] <- NA
 detx$NumDetx[detx$DateID == 'STA019_2019-05-04'] <- NA
 detx$NumDetx[detx$DateID == 'STA019_2019-05-10'] <- NA
 ## check 5/25?
-
 
 detx$NumDetx[detx$DateID == 'CON019_2019-04-03'] <- NA
 detx$NumDetx[detx$DateID == 'CON019_2020-04-03'] <- NA #rain
@@ -935,8 +953,8 @@ detx$NumDetx[detx$DateID == 'MLS165_2023-04-25'] <- 4000
 detx$NumDetx[detx$DateID == 'MLS165_2023-04-26'] <- 100
 detx$NumDetx[detx$DateID == 'MLS165_2023-04-28'] <- 750
 
-
 detx$NumDetx[detx$DateID == 'MLS318_2020-03-19'] <- NA
+detx$NumDetx[detx$DateID == 'MLS318_2023-04-14'] <- 500
 
 detx$NumDetx[detx$DateID == 'NEW174_2022-04-13'] <- 6000
 detx$NumDetx[detx$DateID == 'NEW174_2022-04-26'] <- 6000
@@ -1051,8 +1069,6 @@ detx$NumDetx[detx$DateID == 'NEW448_2024-02-25'] <- NA
 
 
 ############  
-
-  
 detx <- detx %>% drop_na(NumDetx)
 detx$`Relative Call Intensity` <- detx$NumDetx
 
@@ -1145,7 +1161,7 @@ p
 delete_these_files <- c()
 
 # source("/Users/kevintolan/R/myfunctions.R")
--
+
 # db_connection_details <- list(
 #   drv = RSQLite::SQLite(),
 #   dbname = '~/R/AMMonitor_VPMon/VPMon_AMM/database/VPMon_AMM.sqlite'
@@ -1153,13 +1169,10 @@ delete_these_files <- c()
 
 
 
-mediasubset <- subset_files(conx, 'MLS1315', "2024-01-15", "2024-07-01")
+mediasubset <- subset_files(conx, 'MLS318', "2020-01-15", "2020-07-01")
 # delete_media_parallel(db_connection_details, mediasubset$filename)
 
-delete <- c('MLS495_20220321_150000.wav',
-'MLS495_20220322_150000.wav','MLS495_20220321_190000.wav',
-'MLS495_20220321_210000.wav','MLS495_20220321_220000.wav',
-'MLS495_20220322_190000.wav','MLS495_20220322_210000.wav')
+delete <- c()
 
 delete_media(conx, mediasubset$filename)
 
@@ -1167,13 +1180,12 @@ delete_media(conx, delete)
 
 
 ## nmeed to run KWN934
-mediasubset <- subset_files(conx, 'MLS1315', "2024-03-15", "2024-05-01")
+mediasubset <- subset_files(conx, 'MLS1315', "2024-04-01", "2024-05-01")
 
 
   
-  Sys.time()
-  start <- Sys.time()
-  scores <- scoresDetect(
+start <- Sys.time()
+scores <- scoresDetect(
     con = conx,
     recordingNames = mediasubset$filename,
     templateNames = 'template_SDF791_20210408_150000bin_thresh40_cu12',
@@ -1183,11 +1195,10 @@ mediasubset <- subset_files(conx, 'MLS1315', "2024-03-15", "2024-05-01")
     dbInsert = T,
     showProgress = T
   )
-  stop <- Sys.time()
-  Sys.time()
-  elapse <- stop - start
+stop <- Sys.time()
+elapse <- stop - start
   elapse
-  nrow(mediasubset)/as.numeric(elapse)
+nrow(mediasubset)/as.numeric(elapse)
   
 
 
@@ -1367,6 +1378,14 @@ dbAppendTable(conx, "media", bucketadd)
 
 
 
+visitlist <- DBI::dbReadTable(conx, name = 'visits')
+
+
+visitlist2 <- visitlist[,c("pk_visitid","fk_locationid")]
+
+
+visitlist <- visitlist$fk_locationid
+view(visitlist)
 
 #### Commands
 # delete
@@ -1376,7 +1395,7 @@ RSQLite::dbExecute(conn = conx,
 
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM media
-                                WHERE fk_visitid = 117  ")
+                                WHERE fk_visitid = 123  ")
 
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM modeloutputs
