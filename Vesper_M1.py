@@ -34,4 +34,11 @@ cd "/Users/"
 vesper_admin runserver
 
 localhost:8000
+
+
+
+### activate
+cd "/Users/kevintolan/Python/Vesper/"
+conda activate vesper-0.4.14  
+vesper_admin runserver
   
