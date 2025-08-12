@@ -34,7 +34,7 @@ every_nth = function(n) {
   return(function(x) {x[c(TRUE, rep(FALSE, n - 1))]})
 }
 
-site <- 'SDF736'
+site <- 'KWN305'
 
 # a <- RSQLite::dbReadTable(conn = conx,
 #                                    name = 'annotations')
@@ -117,7 +117,6 @@ detx$NumDetx[detx$DateID == 'NEW5_2025-03-21'] <- 100 #distant calls
 detx$NumDetx[detx$DateID == 'NEW5_2025-03-24'] <- 0 #ducks
 detx$NumDetx[detx$DateID == 'NEW5_2025-03-27'] <- 250
 detx$NumDetx[detx$DateID == 'NEW5_2025-03-30'] <- 0
-
 detx$NumDetx[detx$DateID == 'NEW5_2025-04-10'] <- 2000
 detx$NumDetx[detx$DateID == 'NEW5_2025-04-15'] <- 1000
 detx$NumDetx[detx$DateID == 'NEW5_2025-04-12'] <- 1000
@@ -156,7 +155,6 @@ detx$NumDetx[detx$DateID == 'JED019_2022-04-25'] <- 100 # add
 detx$NumDetx[detx$DateID == 'JED019_2022-04-28'] <- NA
 detx$NumDetx[detx$DateID == 'JED019_2022-04-29'] <- NA
 detx$NumDetx[detx$DateID == 'JED019_2022-04-30'] <- NA
-
 detx$NumDetx[detx$DateID == 'JED019_2023-04-02'] <- NA
 detx$NumDetx[detx$DateID == 'JED019_2023-04-10'] <- 500
 detx$NumDetx[detx$DateID == 'JED019_2023-04-11'] <- 8000
@@ -179,7 +177,9 @@ detx$NumDetx[detx$DateID == 'JED019_2024-04-16'] <- NA
 detx$NumDetx[detx$DateID == 'JED019_2024-04-24'] <- NA
 detx$NumDetx[detx$DateID == 'JED019_2024-04-28'] <- NA
 detx$NumDetx[detx$DateID == 'JED019_2024-04-30'] <- NA
-
+detx$NumDetx[detx$DateID == 'JED019_2025-04-03'] <- 100
+detx$NumDetx[detx$DateID == 'JED019_2025-04-05'] <- 250
+detx$NumDetx[detx$DateID == 'JED019_2025-04-12'] <- NA
 
 detx$NumDetx[detx$DateID == 'KWN19_2020-03-19'] <- NA
 detx$NumDetx[detx$DateID == 'KWN19_2020-03-20'] <- NA
@@ -317,9 +317,6 @@ detx$NumDetx[detx$DateID == 'KWN827_2020-04-28'] <- NA
 detx$NumDetx[detx$DateID == 'KWN827_2020-04-29'] <- NA
 detx$NumDetx[detx$DateID == 'KWN827_2020-04-30'] <- NA
 detx$NumDetx[detx$DateID == 'KWN827_2021-03-31'] <- NA
-
-
-
 
 detx$NumDetx[detx$DateID == 'KWN305_2019-04-03'] <- NA
 detx$NumDetx[detx$DateID == 'KWN305_2019-04-11'] <- NA
@@ -513,6 +510,8 @@ detx$NumDetx[detx$DateID == 'MLS737_2024-04-02'] <- 3000
 detx$NumDetx[detx$DateID == 'MLS737_2024-04-10'] <- 6000
 detx$NumDetx[detx$DateID == 'MLS737_2024-04-11'] <- 7500
 detx$NumDetx[detx$DateID == 'MLS737_2024-04-12'] <- 3000
+detx$NumDetx[detx$DateID == 'MLS737_2025-03-22'] <- 2000
+detx$NumDetx[detx$DateID == 'MLS737_2025-03-31'] <- 100
 detx$NumDetx[detx$DateID == 'MLS737_2025-04-01'] <- 1000
 detx$NumDetx[detx$DateID == 'MLS737_2025-04-04'] <- 2000
 detx$NumDetx[detx$DateID == 'MLS737_2025-04-14'] <- 100
@@ -1061,6 +1060,9 @@ detx$NumDetx[detx$DateID == 'SDF941_2023-04-21'] <- NA
 detx$NumDetx[detx$DateID == 'SDF941_2023-04-22'] <- NA
 detx$NumDetx[detx$DateID == 'SDF941_2023-04-23'] <- NA
 detx$NumDetx[detx$DateID == 'SDF941_2023-04-24'] <- NA
+
+detx$NumDetx[detx$DateID == 'SDF941_2024-04-11'] <- 11000
+
 detx$NumDetx[detx$DateID == 'SDF941_2025-04-04'] <- 5000
 detx$NumDetx[detx$DateID == 'SDF941_2025-04-06'] <- 10000
 
@@ -1207,7 +1209,7 @@ p
 
 
 
-delete_these_files <- c()
+# delete_these_files <- c()
 
 # source("/Users/kevintolan/R/myfunctions.R")
 
@@ -1229,9 +1231,7 @@ delete_these_files <- c()
 
 table(detx$Site, detx$Year)
 
-mediasubset <- subset_files(conx, 'SDF1508', "2025-04-01", "2025-05-01")
-
-
+mediasubset <- subset_files(conx, 'KWN305', "2025-03-20", "2025-03-29")
 
 start <- Sys.time()
 print(start)
@@ -1439,11 +1439,11 @@ view(visitlist)
 # delete
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM media
-                                WHERE filename = 'MON0516_19691231_194504.wav' ")
+                                WHERE filename = 'KWN305_20250328_150000.wav' ")
 
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM media
-                                WHERE fk_visitid = 137  ")
+                                WHERE fk_visitid = 171  ")
 
 xRSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM modelsoutputs
