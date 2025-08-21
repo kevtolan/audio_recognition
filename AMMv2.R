@@ -48,7 +48,7 @@ detections <- RSQLite::dbGetQuery(conn = conx,
                                 WHERE fk_taxonid = 'Wood Frog' ")
 
 annotations <- RSQLite::dbGetQuery(conn = conx,
-                                  statement = "SELECT * FROM media INNER JOIN annotations ON media.pk_mediaid = annotations.fk_mediaid
+                                   statement = "SELECT * FROM media INNER JOIN annotations ON media.pk_mediaid = annotations.fk_mediaid
                                 WHERE fk_taxonid = 'Wood Frog' ")
 
 
@@ -351,7 +351,12 @@ detx$NumDetx[detx$DateID == 'KWN305_2023-04-16'] <- 2500
 detx$NumDetx[detx$DateID == 'KWN305_2023-04-17'] <- 1500
 detx$NumDetx[detx$DateID == 'KWN305_2023-04-18'] <- 25
 detx$NumDetx[detx$DateID == 'KWN305_2024-04-16'] <- 100
-
+detx$NumDetx[detx$DateID == 'KWN305_2025-04-09'] <- 25
+detx$NumDetx[detx$DateID == 'KWN305_2025-04-15'] <- 3000
+detx$NumDetx[detx$DateID == 'KWN305_2025-04-17'] <- 500
+detx$NumDetx[detx$DateID == 'KWN305_2025-04-18'] <- 100
+detx$NumDetx[detx$DateID == 'KWN305_2025-04-19'] <- 2500
+detx$NumDetx[detx$DateID == 'KWN305_2025-04-22'] <- 50
 
 detx$NumDetx[detx$DateID == 'KWN316_2024-04-10'] <- 5000
 detx$NumDetx[detx$DateID == 'KWN316_2024-04-12'] <- 500
@@ -1203,8 +1208,7 @@ p <- ggplot() +
   geom_hline(data = data.frame(type="A", y=0), mapping=aes(yintercept=y), size = 1) +
   # geom_vline(xintercept = c(2,16,30,44),  linetype="dashed", size = 1) +
   ylim(0, NA) +
-  facet_wrap( ~ Year, scales="free_y", ncol = 1) +
-  labs(title = paste(padded_data$Site,"Wood Frog Detections"))
+  facet_wrap( ~ Year, scales="free_y", ncol = 1)
 p
 
 
@@ -1219,13 +1223,13 @@ p
 # )
 
 
-#delete files
-# mediasubset <- subset_files(conx, 'xxxx', "2025-04-15", "2025-04-01")
-# delete_media(conx, mediasubset$filename)
-#
-# delete <- c('SDF941_20240418_210000.wav')
-# delete_media(conx, delete)
-#
+# delete files
+# mediasubset <- subset_files(conx, 'NEW450', "2023-05-08", "2023-05-25")
+delete_media(conx, mediasubset$filename)
+
+delete <- c('SDF941_20240418_210000.wav')
+delete_media(conx, delete)
+
 
 ## nmeed to run KWN934
 
@@ -1437,9 +1441,11 @@ view(visitlist)
 
 #### Commands
 # delete
+
+
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM media
-                                WHERE filename = 'KWN305_20250328_150000.wav' ")
+                                WHERE filename = 'KWN473_20250430_190000.wav' ")
 
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM media
