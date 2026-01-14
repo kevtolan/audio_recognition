@@ -25,7 +25,7 @@ source("/Users/kevintolan/R/myfunctions.R")
 # edit_r_environ()
 
 setwd('~/R/AMMonitor_VPMon/VPMon_AMM')
-# AMMonitor::launchApp()
+# launchApp()
 db.path <- '~/R/AMMonitor_VPMon/VPMon_AMM/database/VPMon_AMM.sqlite'
 conx <- RSQLite::dbConnect(drv = dbDriver('SQLite'), dbname = db.path)
 RSQLite::dbExecute(conn = conx, statement = "PRAGMA foreign_keys = ON;")
@@ -34,7 +34,7 @@ every_nth = function(n) {
   return(function(x) {x[c(TRUE, rep(FALSE, n - 1))]})
 }
 
-site <- 'KWN305'
+site <- 'SDF736'
 
 # a <- RSQLite::dbReadTable(conn = conx,
 #                                    name = 'annotations')
@@ -105,6 +105,10 @@ annotations <- annotations %>% select(Site, start_date, NumDetx, Day, Year, Date
 detx <- bind_rows(detx,annotations)
 
 #############
+
+detx$NumDetx[detx$DateID == 'NEW1465_2025-04-09'] <- NA
+
+detx$NumDetx[detx$DateID == 'NEW1192_2025-04-05'] <- NA
 
 detx$NumDetx[detx$DateID == 'NEW388_2025-04-06'] <- NA
 
@@ -223,14 +227,12 @@ detx$NumDetx[detx$DateID == 'KWN19_2021-04-07'] <- NA
 detx$NumDetx[detx$DateID == 'KWN19_2021-04-08'] <- NA
 detx$NumDetx[detx$DateID == 'KWN19_2021-04-15'] <- 500
 
-
 detx$NumDetx[detx$DateID == 'SDF1508_2023-04-11'] <- 1000
 detx$NumDetx[detx$DateID == 'SDF1508_2023-04-12'] <- 3000
 detx$NumDetx[detx$DateID == 'SDF1508_2023-04-13'] <- 7500
 detx$NumDetx[detx$DateID == 'SDF1508_2023-04-14'] <- 2000
 detx$NumDetx[detx$DateID == 'SDF1508_2025-04-21'] <- 250
 detx$NumDetx[detx$DateID == 'SDF1508_2025-04-24'] <- 500
-
 
 detx$NumDetx[detx$DateID == 'MLS1315_2022-04-05'] <- 500
 detx$NumDetx[detx$DateID == 'MLS1315_2022-04-07'] <- 250
@@ -239,8 +241,9 @@ detx$NumDetx[detx$DateID == 'MLS1315_2022-04-13'] <- 50
 detx$NumDetx[detx$DateID == 'MLS1315_2022-04-18'] <- NA
 detx$NumDetx[detx$DateID == 'MLS1315_2022-04-21'] <- NA
 detx$NumDetx[detx$DateID == 'MLS1315_2023-03-25'] <- NA
-
 detx$NumDetx[detx$DateID == 'MLS1315_2024-04-12'] <- NA
+
+
 
 detx$NumDetx[detx$DateID == 'MLS567_2020-03-15'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2020-03-16'] <- NA
@@ -271,6 +274,7 @@ detx$NumDetx[detx$DateID == 'MLS567_2022-03-20'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2022-04-19'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2022-04-26'] <- NA
 detx$NumDetx[detx$DateID == 'MLS567_2023-04-15'] <- 100
+detx$NumDetx[detx$DateID == 'MLS567_2025-04-10'] <- NA
 
 
 
@@ -433,6 +437,7 @@ detx$NumDetx[detx$DateID == 'NEW447_2023-04-20'] <- 50
 detx$NumDetx[detx$DateID == 'NEW447_2024-04-08'] <- 50
 
 detx$NumDetx[detx$DateID == 'NEW447_2025-04-27'] <- NA
+
 
 detx$NumDetx[detx$DateID == 'NEW383_2020-03-20'] <- NA
 detx$NumDetx[detx$DateID == 'NEW383_2020-03-29'] <- NA
@@ -737,6 +742,7 @@ detx$NumDetx[detx$DateID == 'NEW12_2020-05-02'] <- NA
 detx$NumDetx[detx$DateID == 'NEW12_2020-05-03'] <- NA
 detx$NumDetx[detx$DateID == 'NEW12_2020-05-04'] <- NA
 detx$NumDetx[detx$DateID == 'NEW12_2020-05-05'] <- NA
+
 
 detx$NumDetx[detx$DateID == 'MLS411_2020-03-29'] <- NA
 detx$NumDetx[detx$DateID == 'MLS411_2020-03-30'] <- NA
@@ -1065,11 +1071,16 @@ detx$NumDetx[detx$DateID == 'SDF941_2023-04-21'] <- NA
 detx$NumDetx[detx$DateID == 'SDF941_2023-04-22'] <- NA
 detx$NumDetx[detx$DateID == 'SDF941_2023-04-23'] <- NA
 detx$NumDetx[detx$DateID == 'SDF941_2023-04-24'] <- NA
-
 detx$NumDetx[detx$DateID == 'SDF941_2024-04-11'] <- 11000
-
 detx$NumDetx[detx$DateID == 'SDF941_2025-04-04'] <- 5000
 detx$NumDetx[detx$DateID == 'SDF941_2025-04-06'] <- 10000
+detx$NumDetx[detx$DateID == 'SDF941_2025-04-10'] <- 3000
+detx$NumDetx[detx$DateID == 'SDF941_2025-04-14'] <- 6000
+detx$NumDetx[detx$DateID == 'SDF941_2025-04-15'] <- 6000
+detx$NumDetx[detx$DateID == 'SDF941_2025-04-16'] <- 500
+detx$NumDetx[detx$DateID == 'SDF941_2025-04-17'] <- 6000
+detx$NumDetx[detx$DateID == 'SDF941_2025-04-19'] <- 10000
+
 
 detx$NumDetx[detx$DateID == 'NEW1002_2022-04-25'] <- 500
 
@@ -1112,6 +1123,8 @@ detx$NumDetx[detx$DateID == 'SDF1746_2023-04-12'] <- 5000
 detx$NumDetx[detx$DateID == 'SDF1746_2023-04-13'] <- 10000
 detx$NumDetx[detx$DateID == 'SDF1746_2023-04-15'] <- 7500
 detx$NumDetx[detx$DateID == 'SDF1746_2023-04-16'] <- 2500
+detx$NumDetx[detx$DateID == 'SDF1746_2024-02-28'] <- NA
+detx$NumDetx[detx$DateID == 'SDF1746_2024-03-31'] <- 10 #SDF1746_20240402_220000.wav mannually check
 detx$NumDetx[detx$DateID == 'SDF1746_2024-04-03'] <- NA
 detx$NumDetx[detx$DateID == 'SDF1746_2024-04-06'] <- NA
 
@@ -1212,7 +1225,6 @@ p <- ggplot() +
 p
 
 
-
 # delete_these_files <- c()
 
 # source("/Users/kevintolan/R/myfunctions.R")
@@ -1224,18 +1236,19 @@ p
 
 
 # delete files
-# mediasubset <- subset_files(conx, 'NEW450', "2023-05-08", "2023-05-25")
+mediasubset <- subset_files(conx, 'SDF1746', "2024-04-06", "2024-10-01")
+
+# mediasubset <- subset_files(conx, 'KWN934', "2025-01-06", "2025-10-01")
 delete_media(conx, mediasubset$filename)
 
-delete <- c('SDF941_20240418_210000.wav')
-delete_media(conx, delete)
+# delete <- c('SDF941_20240418_210000.wav')
+# delete_media(conx, delete)
 
 
 ## nmeed to run KWN934
 
-table(detx$Site, detx$Year)
-
-mediasubset <- subset_files(conx, 'KWN305', "2025-03-20", "2025-03-29")
+# table(detx$Site, detx$Year)
+mediasubset <- subset_files(conx, 'SDF736', "2025-04-01", "2025-05-01")
 
 start <- Sys.time()
 print(start)
@@ -1243,7 +1256,7 @@ scores <- scoresDetect(
     con = conx,
     recordingNames = mediasubset$filename,
     templateNames = 'template_SDF791_20210408_150000bin_thresh40_cu12',
-    # scoreThresholds = 12,
+    # scoreThresholds = 12, # doesnt work, but use 14 during analysis
     recordingRootPath = 'https://vpmon-audio.s3.amazonaws.com/',
     ammlPath = paste0(getwd(), "/ammls"),
     dbInsert = T,
@@ -1279,13 +1292,71 @@ nrow(mediasubset)/as.numeric(elapse)
 templates <- readRDS('/Users/kevintolan/R/AMMonitor_VPMon/VPMon_AMM/ammls/templateLibrary.RDS')
 
 
-##### graph
+##### graph all sites
+detx <- detx %>% drop_na(NumDetx)
+
+detx$RTI <- detx$NumDetx
+detx$RecordingDate <- detx$start_date
+detx <- subset(detx, select=-c(start_date,NumDetx))
+
+
+
+first_last_dates <- detx %>%
+  filter(!is.na(RecordingDate)) %>%
+  mutate(Year = format(RecordingDate, "%Y")) %>%
+  group_by(Site, Year) %>%
+  summarise(
+    start_date = min(RecordingDate) - 1,
+    end_date = max(RecordingDate) + 1,
+    .groups = "drop")
+
+
+detx_joined <- detx %>%
+  mutate(Year = format(RecordingDate, "%Y")) %>%
+  group_by(Site) %>%
+  left_join(first_last_dates, by = c("Site","Year"))
+
+
+detx_padded <- detx_joined %>%
+  group_by(Site, Year) %>%
+  group_modify(~ {
+    start_date <- unique(.x$start_date)
+    end_date <- unique(.x$end_date)
+    if (!is.na(start_date) & !is.na(end_date)) {
+      pad(.x, start_val = start_date, end_val = end_date, by = "RecordingDate")
+    } else {
+      .x
+    }
+  }) %>%
+  ungroup()
+
+detx_padded$DateID <- paste0(detx_padded$Site,"_",detx_padded$RecordingDate)
+detx_padded$Year <-  format(detx_padded$RecordingDate,"%Y")
+detx_padded$Day <-  format(detx_padded$RecordingDate,"%m/%d")
+
+padded_data <- detx_padded %>%
+  mutate(RTI = ifelse(is.na(RTI), 0, RTI))
+
+padded_data$Bin <- ifelse(padded_data$RTI == 0, 0, 1)
+
+padded_data <- padded_data %>% select(-c("DateID","start_date","end_date"))
+# yearly_data <- padded_data_export
+# yearly_data$Ordinal <- yday(yearly_data$RecordingDate)
+# yearly_data_filt <- yearly_data[yearly_data$Ordinal >= 61,]
+# yearly_data_filt <- yearly_data_filt[yearly_data_filt$Ordinal <= 140,]
+
+
+
+yearly_data <- padded_data
+yearly_data$Ordinal <- yday(yearly_data$RecordingDate)
+yearly_data_filt <- yearly_data[yearly_data$Ordinal >= 61,]
+yearly_data_filt <- yearly_data_filt[yearly_data_filt$Ordinal <= 140,]
+
 
 locallist <- DBI::dbReadTable(conx, name = 'locations')
-locallist <- locallist %>% drop_na(lat)
-
+locallist <- locallist %>% filter(location_type == "monitoring_station",) %>% drop_na(lat)
 locals.sp <- st_as_sf(locallist, coords=c('long','lat'), crs=4326)
-# locals.sp <- get_elev_point(locals.sp)
+locals.sp <- get_elev_point(locals.sp)
 
 bioph <- st_read('~/R/AMMonitor_VPMon/VPMon_AMM/spatials/Biophysical_Regions.shp')
 climzone <- st_read('~/R/AMMonitor_VPMon/VPMon_AMM/spatials/Climate_Zones.shp')
@@ -1296,25 +1367,74 @@ sf_use_s2(FALSE)
 locals.bioph <- st_intersection(locals.sp,bioph)
 locals.climzone <- st_intersection(locals.sp,climzone)
 
-# sitedetxfull <- detx[detx$Site %in% c("WEA019", 'CALT019', 'NEW88','MLS737','MLS619','MOET019','SDF1734'),]
-sitedetxfull <- detx
 
 every_nth = function(n) {
   return(function(x) {x[c(TRUE, rep(FALSE, n - 1))]})
 }
 
-locals.bioph.joined <- full_join(sitedetxfull, locals.bioph, by=c("Site"="pk_locationid"))
-locals.bioph.joined <- locals.bioph.joined %>% drop_na(NumDetx)
 
-locals.climzone.joined <- full_join(sitedetxfull, locals.climzone, by=c("Site"="pk_locationid"))
-locals.climzone.joined <- locals.climzone.joined %>% drop_na(NumDetx)
+# sitedetxfull <- detx[detx$Site %in% c("WEA019", 'CALT019', 'NEW88','MLS737','MLS619','MOET019','SDF1734'),]
+# sitedetxfull <- detx
 
-pbioph <- ggplot() +
-  # geom_jitter(data = sitedetx, aes(x = Day, y = Year, color = Year, size = NumDetx),  height = 0.03, fill = 'black', alpha = 0.7)
-  geom_jitter(data = locals.bioph.joined, aes(x = Day, y = Site, fill = Year, size = NumDetx),  height = 0.15, alpha = 0.6) +
-  facet_wrap( ~NAME, scales="free_y", ncol = 1) +
-  scale_x_discrete(breaks = every_nth(n = 10))
-ggplotly(pbioph)
+
+locals.bioph.joined <- full_join(yearly_data_filt, locals.bioph, by=c("Site"="pk_locationid"))
+# locals.bioph.joined <- locals.bioph.joined %>% drop_na(RTI)
+
+locals.bioph.joined <- full_join(locals.bioph.joined, locals.climzone, by=c("Site"="pk_locationid"))
+
+locals.bioph.joined <- locals.bioph.joined %>%
+  ungroup() %>%
+  # filter(!is.na(NAME)) %>%
+  filter(!is.na(Year)) %>%
+  dplyr::select(Site,Year,Day,RecordingDate,Bin,Ordinal,NAME,ZONE,elevation.x) %>%
+  rename(CallDetected = Bin,
+         Elevation = elevation.x) %>%
+  mutate(quantile_bins = as.factor(ntile(Elevation, 4)))
+
+
+locals.bioph.joined2 <- locals.bioph.joined[locals.bioph.joined$Ordinal >= 85,]
+locals.bioph.joined2 <- locals.bioph.joined2[locals.bioph.joined2$Ordinal <= 128,]
+
+
+ggplot() +
+  geom_col(data = locals.bioph.joined2, aes(x = Day, y = CallDetected, group = NAME, fill = NAME)) +
+  # scale_fill_manual(values = c("#7F58AF","#64C5EB","#023047","#FEB326","#43aa8b","#E84D8A","black","white","blue")) +
+  scale_fill_manual(values = c(
+    "#FEB326", "#43aa8b", "#7F58AF", "#F4A261","#64C5EB",
+    "#E63946", "#023047","#2A9D8F", "#E84D8A" )) +
+  ylim(1,NA) +
+  facet_wrap(~Year, scale = "free_y", ncol = 1) +
+  scale_x_discrete(breaks = every_nth(n = 7)) +
+  theme(axis.title=element_text(size=15, face = "bold"),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        strip.text = element_text(size=18, face = "bold"),
+        axis.text=element_text(size=13),
+        legend.title = element_text(size = 15,face="bold"),
+        legend.text = element_text(size = 13),
+        plot.title = element_text(size = 22, color = "black", face = "bold", hjust = 0.5)) +
+  geom_hline(data = data.frame(type="A", y=1), mapping=aes(yintercept=y), size = 1) +
+  labs(
+    y = "Relative Wood Frog Call Intensity",
+    title = "Wood Frog Chorus Phenology by Biophysical Region",
+    color = "Biophysical Region",
+    fill = "Biophysical Region")
+
+
+
+
+
+
+
+
+
+
+# pbioph <- ggplot() +
+#   # geom_jitter(data = sitedetx, aes(x = Day, y = Year, color = Year, size = NumDetx),  height = 0.03, fill = 'black', alpha = 0.7)
+#   geom_jitter(data = locals.bioph.joined, aes(x = Day, y = Site, fill = Year, size = NumDetx),  height = 0.15, alpha = 0.6) +
+#   facet_wrap( ~NAME, scales="free_y", ncol = 1) +
+#   scale_x_discrete(breaks = every_nth(n = 10))
+# ggplotly(pbioph)
 
 pzone <- ggplot() +
   # geom_jitter(data = sitedetx, aes(x = Day, y = Year, color = Year, size = NumDetx),  height = 0.03, fill = 'black', alpha = 0.7)
@@ -1436,8 +1556,8 @@ visitlist <- DBI::dbReadTable(conx, name = 'visits')
 visitlist2 <- visitlist[,c("pk_visitid","fk_locationid")]
 
 
-visitlist <- visitlist$fk_locationid
-view(visitlist)
+# visitlist <- visitlist$fk_locationid
+view(visitlist2)
 
 #### Commands
 # delete
@@ -1449,7 +1569,7 @@ RSQLite::dbExecute(conn = conx,
 
 RSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM media
-                                WHERE fk_visitid = 171  ")
+                                WHERE fk_visitid = 160  ")
 
 xRSQLite::dbExecute(conn = conx,
                    statement = "DELETE FROM modelsoutputs
