@@ -335,7 +335,7 @@ annotation_viewer_tables_server <- function(id, selectedUser = reactive(NA), act
           ),
           sortable = FALSE,
           defaultExpanded = TRUE,
-          selection = "single", 
+          selection = "multiple", 
           onClick = "select"
         ),
         "tagger-audio" = ,
@@ -403,7 +403,7 @@ annotation_viewer_tables_server <- function(id, selectedUser = reactive(NA), act
           sortable = FALSE,
           groupBy = 'pk_annotationid',
           defaultExpanded = TRUE,
-          selection = "single", 
+          selection = "multiple", 
           onClick = "select"
         )
       )
