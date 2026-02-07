@@ -2067,39 +2067,39 @@ audio_player_server <- function(id, selectedUser = NA, active = reactive(TRUE), 
       }
     }, ignoreInit = TRUE)
     
-    observe({
-      req(metadata_cache)
-      if (
-        metadata_cache$i_cache_end != 0 && (
-          any(metadata_cache$cache$annotations[,c('is_add', 'is_delete')] == 1) ||
-          any(metadata_cache$cache$annotags[,c('is_add', 'is_delete')] == 1) ||
-          any(metadata_cache$cache$annotationverifications[,c('is_add', 'is_delete')] == 1) ||
-          any(metadata_cache$cache$annotagverifications[,c('is_add', 'is_delete')] == 1) ||
-          any(metadata_cache$cache$modelverifications[,c('is_add', 'is_delete')] == 1) ||
-          any(metadata_cache$cache$mediatags[,c('is_add', 'is_delete')] == 1) ||
-          any(metadata_cache$cache$mediatagverifications[,c('is_add', 'is_delete')] == 1)
-        )
-      ) {
-        updateActionButton(
-          session = session, 
-          inputId = 'save_metadata', 
-          label = 'Save Labels',
-          icon = icon('warning')
-        )
-        shinyjs::enable('save_metadata')
-      } else {
-        updateActionButton(
-          session = session, 
-          inputId = 'save_metadata', 
-          label = 'Save Labels',
-          icon = character(0)
-        )
-        shinyjs::disable('save_metadata')
-      }
-    }) |> bindEvent(
-      metadata_cache$cache,
-      save_metadata_now()
+observe({
+  req(metadata_cache)
+  if (
+    isTRUE(metadata_cache$i_cache_end != 0) && (
+      isTRUE(any(metadata_cache$cache$annotations[,c('is_add', 'is_delete')] == 1, na.rm = TRUE)) ||
+      isTRUE(any(metadata_cache$cache$annotags[,c('is_add', 'is_delete')] == 1, na.rm = TRUE)) ||
+      isTRUE(any(metadata_cache$cache$annotationverifications[,c('is_add', 'is_delete')] == 1, na.rm = TRUE)) ||
+      isTRUE(any(metadata_cache$cache$annotagverifications[,c('is_add', 'is_delete')] == 1, na.rm = TRUE)) ||
+      isTRUE(any(metadata_cache$cache$modelverifications[,c('is_add', 'is_delete')] == 1, na.rm = TRUE)) ||
+      isTRUE(any(metadata_cache$cache$mediatags[,c('is_add', 'is_delete')] == 1, na.rm = TRUE)) ||
+      isTRUE(any(metadata_cache$cache$mediatagverifications[,c('is_add', 'is_delete')] == 1, na.rm = TRUE))
     )
+  ) {
+    updateActionButton(
+      session = session, 
+      inputId = 'save_metadata', 
+      label = 'Save Labels',
+      icon = icon('warning')
+    )
+    shinyjs::enable('save_metadata')
+  } else {
+    updateActionButton(
+      session = session, 
+      inputId = 'save_metadata', 
+      label = 'Save Labels',
+      icon = character(0)
+    )
+    shinyjs::disable('save_metadata')
+  }
+}) |> bindEvent(
+  metadata_cache$cache,
+  save_metadata_now()
+)
     
     observeEvent(input$save_metadata, {
       save_metadata_now(TRUE)
