@@ -2,8 +2,9 @@
 
 remotes::install_github("kevtolan/AMMonitor_Tolan_Version")
 
-source("~/R/AMMonitor-test-clone/inst/birdnet/birdSpeciesList.R")
-source("~/R/AMMonitor-test-clone/inst/birdnet/birdsDetect.R")
+source(system.file("birdnet/Register_BirdNET_Model.R", package = "AMMonitor"))   # adds the BirdNET_v2.4 row to models
+source(system.file("birdnet/Register_BirdNET_Species.R", package = "AMMonitor")) # adds your species list to taxa
+
 
 #remotes::install_gitlab(
 #  repo = "vtcfwru/ammonitor@AMMonitor2.2",
