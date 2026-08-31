@@ -2,7 +2,8 @@
 
 remotes::install_github("kevtolan/AMMonitor_Tolan_Version")
 
-
+source("birdnet/birdSpeciesList.R")
+source("birdnet/birdsDetect.R")
 
 #remotes::install_gitlab(
 #  repo = "vtcfwru/ammonitor@AMMonitor2.2",
