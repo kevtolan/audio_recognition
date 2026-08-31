@@ -1,11 +1,16 @@
 
-remotes::install_gitlab(
-  repo = "vtcfwru/ammonitor@AMMonitor2.2",
-  auth_token = Sys.getenv("GITLAB_PAT"),
-  host = "code.usgs.gov",
-  build_vignettes = FALSE,
-  dependencies = TRUE,
-  upgrade = "never")
+
+remotes::install_github("kevtolan/AMMonitor_Tolan_Version")
+
+
+
+#remotes::install_gitlab(
+#  repo = "vtcfwru/ammonitor@AMMonitor2.2",
+#  auth_token = Sys.getenv("GITLAB_PAT"),
+#  host = "code.usgs.gov",
+#  build_vignettes = FALSE,
+#  dependencies = TRUE,
+#  upgrade = "never")
 ##### if it times out during download, use this and add "# R_MAX_VSIZE=100Gb" to the Renvir file
 # library(usethis)
 # edit_r_environ()
