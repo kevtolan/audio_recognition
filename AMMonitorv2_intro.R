@@ -20,7 +20,7 @@ library(AMMonitor)
 library(tidyverse)
 library(RSQLite)
 library(DBI)
-
+library(birdnetR)
 #for other functions
 # library(sf) # spatial analysis
 # library(aws.s3) # to host audio use Amazon's web services
