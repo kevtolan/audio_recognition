@@ -84,6 +84,7 @@ scores <- scoresDetect(
 
 source(system.file("birdnet/Register_BirdNET_Model.R", package = "AMMonitor"))   # adds the BirdNET_v2.4 row to models
 source(system.file("birdnet/Register_BirdNET_Species.R", package = "AMMonitor")) # adds your species list to taxa
+birdSpeciesList("~/R/AMMonitor_VPMon/birdnet_species_list.csv")
 
 birdsDetect(con,
     recordingNames = "all",
